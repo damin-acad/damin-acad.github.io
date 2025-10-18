@@ -1,0 +1,4 @@
+User-agent: *
+Disallow:
+
+Sitemap: https://danial-amin.github.io/sitemap.xml

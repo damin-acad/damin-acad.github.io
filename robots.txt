@@ -1,4 +1,4 @@
 User-agent: *
 Disallow:
 
-Sitemap: https://danial-amin.github.io/sitemap.xml
+Sitemap: https://damin-acad.github.io/sitemap.xml

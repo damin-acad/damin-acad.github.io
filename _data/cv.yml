@@ -1,0 +1,338 @@
+- title: General Information
+  type: map
+  contents:
+    - name: Full Name
+      value: Danial Amin
+    - name: Title
+      value: Doctoral Student | Doctoral Researcher
+    - name: Phone
+      value: +358 46 801 4291
+    - name: Email
+      value: writetodanialamin@gmail.com
+    - name: Location
+      value: Espoo, Finland
+    - name: LinkedIn
+      value: <a href="https://linkedin.com/in/danialamin">linkedin.com/in/danialamin</a>
+    - name: Portfolio
+      value: <a href="https://danial-amin.github.io/">danial-amin.github.io</a>
+    - name: GitHub
+      value: <a href="https://github.com/danial-amin">github.com/danial-amin</a>
+    - name: Google Scholar
+      value: <a href="https://scholar.google.com/citations?user=anC0OlUAAAAJ">Google Scholar Profile</a>
+    - name: ORCID
+      value: <a href="https://orcid.org/0009-0000-7597-2267">0009-0000-7597-2267</a>
+    - name: Team
+      value: <a href="https://personateam.xyz/">personateam.xyz</a>
+    - name: Languages
+      value: English (C1), French (A1), Urdu (C2), Punjabi (C1)
+
+- title: Profile Summary
+  type: text
+  contents: As a PhD candidate, my research combines expertise in data science, machine learning, and large language models to address stereotype leakage and bias in AI-generated user representations, particularly for marginalized communities. I develop demographically accurate and culturally grounded personas using retrieval-augmented generation (RAG) frameworks and open-source LLMs. My work emphasizes inclusive data collection, rigorous evaluation methodologies, and ethical frameworks, ensuring that AI systems authentically represent underrepresented groups and align with the principles of responsible AI.
+
+- title: Research Interests
+  type: nested_list
+  contents:
+    - title: AI Ethics and Bias Mitigation
+      items:
+        - Stereotype leakage and bias in AI-generated user representations
+        - Ethical frameworks for AI systems serving marginalized communities
+        - Algorithmic fairness in persona development
+    - title: Human-Computer Interaction
+      items:
+        - AI-generated personas for social good
+        - Inclusive design methodologies
+        - Cross-cultural AI applications
+    - title: Machine Learning Applications
+      items:
+        - Large language models for user representation
+        - Retrieval-augmented generation frameworks
+        - Generative AI and evaluation methodologies
+        
+- title: Education
+  type: time_table
+  contents:
+    - title: Doctor of Science in Business Administration and Economics
+      institution: University of Vaasa, Finland
+      year: 2025 - Present
+      description:
+        - On-Campus, Finland
+    - title: Masters in Business Administration
+      institution: Rennes School of Business
+      year: 2023 - 2024
+      description:
+        - On-Campus, France
+    - title: Micro Masters in Statistics and Data Science
+      institution: Massachusetts Institute of Technology
+      year: 2019 - 2023
+      description:
+        - Distance Learning, USA
+    - title: Micro Masters in Business - Data, Insights, and Analytics
+      institution: University of Wisconsin, Madison
+      year: 2022 - 2023
+      description:
+        - Distance Learning, USA
+    - title: Micro Masters in Data Science
+      institution: University of California San Diego
+      year: 2021 - 2023
+      description:
+        - Distance Learning, USA
+    - title: Design Thinking
+      institution: Rochester Institute of Technology
+      year: 2022 - 2023
+      description:
+        - Distance Learning, USA
+    - title: B.S. in Aerospace Engineering
+      institution: Institute of Space Technology
+      year: 2013 - 2017
+      description:
+        - On-Campus, Pakistan
+
+- title: Experience
+  type: time_table
+  contents:
+    - title: AI Research Scientist
+      institution: Samsung Design Innovation Center
+      year: 2024 - Present
+      description:
+        - Developing the internal design companion for product and computational designers, combining the Generative and Predictive AI solutions to support data-driven design optimization
+        - Spearheading development of multi-stages unstructured DB to act as ground truth for the LLM to enhance the data-driven design optimization process at SDIC
+    - title: AI & Data Science Lead
+      institution: i13 Ventures Studio
+      year: 2023 - 2024
+      description:
+        - Developed an LLM-based venture innovator, improving product performance by grounding and contextualizing the model through multi-query, re-ranking RAG algorithms
+        - Created AI-based financial advisor, optimizing savings and investment plans by 25% through explainable AI advice using observer/observee agentic framework
+        - Designed short, medium, and long-term strategy for business incubation using generative AI, enhancing incubation cycle impact by 30% with a focus on explainability
+        - Mentored and nurtured startups, increasing implementation of AI solutions by 50%, focusing on ethical AI and bias mitigation in emerging markets of South Africa
+        - Envisioned AI and ML strategy, leading to a 15% improvement in organizational efficiency
+    - title: Head of Data Analytics | Lead Data Scientist
+      institution: Abacus Global
+      year: 2023
+      description:
+        - Improved data processing speed by 40% and predictive analytics model accuracy by 25% through the implementation of a big data analytics framework
+        - Led a cross-functional team to drive data-centric strategies, addressing biases and ensuring fair data practices
+        - Developed solutions that improved customer satisfaction by 30% by addressing biases in data analysis
+    - title: Lead Data Scientist
+      institution: Automat Solutions Inc
+      year: 2022 - 2023
+      description:
+        - Built machine learning pipelines for battery performance prediction, achieving 95% accuracy by accurately estimating the algorithmic uncertainties
+        - Optimized battery material performance, increasing throughput by 40%, by using a combination of optimization algorithms
+        - Automated ML pipelines, classifying chemical compositions with 90% precision, focusing on explainability and fairness
+    - title: Lead ML Engineer
+      institution: Omdena Inc
+      year: 2021 - 2022
+      description:
+        - Improved image classification model accuracy by 12%, leading a team of 5 engineers to tackle recall minimization by incorporating HIL feedback
+        - Developed an object recognition pipeline, enhancing detection accuracy by 15%, with a focus on reducing bias in image datasets
+    - title: Assistant Manager
+      institution: Government of Pakistan
+      year: 2017 - 2022
+      description:
+        - Implemented a fuel consumption estimator, increasing accuracy by 72%, by developing surrogate model
+        - Developed a SMART Maintenance System, optimizing schedules for 52 aircraft components through anomaly detection algorithm in time series data
+        - Introduced AI-enabled early warning systems, reducing flight risks by 27% through risk assessment models
+    - title: Teaching Assistant
+      institution: Institute of Space Technology
+      year: 2016 - 2017
+      description:
+        - Assisted in Aero-Vehicle Performance and Design courses by providing hands-on tutorials and problem-solving exercises
+        - Supported course material development, enhancing the learning experience for over 100 students by focusing on hands-on and applied content
+
+- title: Skills and Competencies
+  type: nested_list
+  contents:
+    - title: Research Interests
+      items:
+        - AI-Generated Personas for Social Good
+        - Bias Detection and Mitigation in AI Systems
+        - Ethical AI for Marginalized Communities
+        - Data-Driven Persona Creation
+        - Generative AI and Deepfake Technologies
+        - Cross-Cultural AI Applications
+        - Algorithmic Fairness in Persona Development
+        - AI Ethics and Policy Making
+        - Inclusive Design for Global South
+        - Quantitative and Qualitative Persona Evaluation Methods
+    - title: AI & Data Science
+      items:
+        - Predictive Machine Learning
+        - Reinforcement Learning
+        - Deep Learning, Deep Neural Networks
+        - RNNs & GANs
+        - Bayesian Optimization
+        - Generative AI, Large Language Models
+        - Explainable AI
+        - Retrieval Augmented Generation
+        - Exploratory Data Analytics
+        - Predictive and Prescriptive Analytics
+        - Time Series Analysis & Forecasting
+    - title: Programming Languages & Libraries
+      items:
+        - Python, R, MATLAB, LabVIEW, SQL
+        - PyTorch, TensorFlow, Keras
+        - PySpark, Pandas, SciPy, Scikit-learn
+        - Matplotlib, Seaborn
+        - NLTK, SpaCy
+        - LangChain, LangSmith
+        - Docker, Dragonfly
+    - title: Software & Developer Tools
+      items:
+        - Tableau, Power BI, Looker
+        - Minitab, SPSS
+        - Visual Studio, PyCharm
+        - Anaconda, JupyterLab
+        - Docker
+    - title: Cloud Architecture
+      items:
+        - Microsoft Azure
+        - Google Cloud Platform
+        - Amazon Web Services
+
+- title: Publications
+  type: time_table
+  contents:
+    - title: "How Is Generative AI Used for Persona Development?: A Systematic Review of 52 Research Articles"
+      year: 2025
+      description:
+        - "Authors: Amin, D., Salminen, J., Ahmed, F., Tervola, M.H. S., Sethi, S. & Jansen, B."
+        - "Journal: ACM Transactions on Computer-Human Interactions [Under Review]"
+        - "<a href='https://arxiv.org/pdf/2504.04927'>Preprint Available</a>"
+    - title: "Toward using personas for inclusive design: The question of quantifying diversity in persona sets"
+      year: 2025
+      description:
+        - "Authors: Amin, D., Salminen, J., Jansen, B., & Sethi, S."
+        - "Conference: AAAI/ACM Conference on AI, Ethics, and Society [Under Review]"
+    - title: "Generative AI Personas Considered Harmful? Examining the Risks of Algorithmic User Representations in HCI Design"
+      year: 2025
+      description:
+        - "Authors: Amin, D., Salminen, J., Jansen, B., Shin, J., & Kim, D. H."
+        - "Journal: International Journal of Human-Computer Studies [Under Review]"
+    - title: "Large language models (LLMs) in human-computer interaction: Using LLM-generated personas to model everything from minority views to entire ecosystems"
+      year: 2024
+      description:
+        - "Authors: Amin, D., Salminen, J., Jansen, B., Kaate, I., & Akhtar, W."
+        - "Book Chapter: In Artificial Intelligence & Large Language Models: A Scientific Perspective [In press]"
+        - "Publisher: CRC Press"
+    - title: "\"When AI Writes Personas\": Analyzing Lexical Diversity in LLM-Generated Persona Descriptions"
+      year: 2025
+      description:
+        - "Authors: Sethi, S., Salminen, J., Amin, D., & J., Jansen, B."
+        - "Conference: Extended Abstracts of CHI'2025"
+        - "<a href='https://doi.org/10.1145/3706599.3719712'>DOI: 10.1145/3706599.3719712</a>"
+    - title: "The Role of National Centers in Sustainable Development of Pakistan"
+      year: 2021
+      description:
+        - "Authors: Naqvi, N., Ahmed, F., Ahmed, U., Amin, D., & Malik, F."
+        - "Conference: International Conference on Aerospace Science and Engineering"
+        - "<a href='https://doi.org/10.1109/ICASE54940.2021.9904199'>IEEE Xplore</a>"
+
+- title: Projects
+  type: time_table
+  contents:
+    - title: PEP-Persona Ecosystem Playground
+      year: Current
+      description:
+        - Developing an interactive playground to support interaction of representative personas of different stakeholders among themselves and with human-in-loop
+        - Developing a framework to isolate user representation from the user information
+        - "Tech Stack: Python, LangChain, Pinecone, Azure, LangServe, FastAPI"
+    - title: Bob-The Startup Advisor
+      year: Current
+      description:
+        - Created a selection and scoring agent to assist innovation hubs around the globe in evaluating and selecting startups in emerging markets holistically using LLMs
+        - Developed and deployed an enterprise level contextualized and grounded large language model for supporting startups through ideation and incubation stage
+        - "Tech Stack: Python, LangChain, Pinecone, Azure, LangServe, FastAPI"
+    - title: Bayesian Optimization Network for Chemical Composition Optimization
+      year: 2022
+      description:
+        - Implemented a project for generating chemical compositions and optimizing the process using targeted DNNs through BO, Active Learning, and Meta-learning models
+        - "Tech Stack: Python, DragonFly, Bayesian Neural Networks, Genetic/Evolutionary Algorithms"
+    - title: "AI‑Shyr: Where ML meets poetry"
+      year: 2021
+      description:
+        - A pre-LLM based poetry generator for Urdu language using corpus of local poets
+        - "Tech Stack: Python, Streamlit, RNNs, LSTM, nGrams, SpaCy, NLTK"
+
+- title: Honors and Awards
+  type: time_table
+  contents:
+    - year: 2023-24
+      items:
+        - Climate Change Scholar for French Excellence Scholarship by Campus France
+    - year: 2022
+      items:
+        - Forward Fellow for McKinsey Forward Program by McKinsey
+        - Next Generation Tech Booster Scholarship for Data Science Track by Udacity
+        - AWS Scholarship for ML Engineering Program by Udacity
+        - Honors for Applied Data Science Lab by World Quant University
+    - year: 2021
+      items:
+        - Future Learn Award for Thriving in Digital Workplace by University of Leeds
+        - Future Learn Award for Solving Problem with Technology by University of Leeds
+    - year: 2017
+      items:
+        - Salutatorian for Class of 2017 by Institute of Space Technology
+        - Outstanding Talent Award for Class of 2017 by Institute of Space Technology
+    - year: 2016-2017
+      items:
+        - International Achievement Award for Class of 2017 by Institute of Space Technology
+    - year: 2016
+      items:
+        - National Champion for Office Specialization by Microsoft
+    - year: 2015
+      items:
+        - Bronze Medal for Poster Competition by Asian Science Camp
+    - year: 2013-17
+      items:
+        - Cum Laude for Class of 2017 by Institute of Space Technology
+
+- title: Certifications
+  type: time_table
+  contents:
+    - title: Professional Certificate in Artificial Intelligence and Machine Learning
+      institution: European IT Certification Academy
+      year: 2024
+      description:
+        - "<a href='https://www.eitci.org/certificatesupplement?id=EITCA/AI/SLJ24004790&t=7dDBxKK7GnF2ms3k'>EITCA Certificate</a>"
+    - title: Program in Data Science and ML - Making Data-Driven Decisions
+      institution: MIT Institute for Data, Systems, & Society
+      year: 2023
+    - title: Professional Certificate in Data Analytics
+      institution: Google
+      year: 2023
+    - title: Professional Certificate in Project Management
+      institution: Google
+      year: 2022
+    - title: Professional Certificate in Data Science
+      institution: IBM
+      year: 2022
+    - title: Specialization in Deep Learning
+      institution: Deeplearning.ai
+      year: 2022
+    - title: Specialization in Natural Language Processing
+      institution: Deeplearning.ai
+      year: 2022
+    - title: Specialization in Reinforcement Learning
+      institution: University of Alberta
+      year: 2022
+    - title: Nano degree in AI Programming with Python
+      institution: Udacity
+      year: 2022
+
+- title: Participation & Volunteering
+  type: time_table
+  contents:
+    - year: 2025
+      items:
+        - Program Committee Member, WebScience Conference
+    - year: 2024
+      items:
+        - "Participant, Hi Paris Summer School for AI & Data for Science, Business and Society"
+    - year: 2017-23
+      items:
+        - Facilitator, Space Summer School at National Center of GIS & Space Applications
+        - Resource Person, World Space Week at Institute of Space Technology
+    - year: 2017-21
+      items:
+        - "Keynote Speaker, 5th - 7th International Conference on Aerospace Science and Engineering"

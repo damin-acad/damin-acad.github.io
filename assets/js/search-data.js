@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-building-agentic-ai-patterns-that-work-traps-that-don-39-t",
+        },{id: "post-how-not-to-supervise-seven-principles-that-actually-matter",
+        
+          title: "How Not to Supervise - Seven Principles That Actually Matter",
+        
+        description: "Hard-won lessons from the field on what actually works when building AI agent systems. Skip the hype, learn the patterns.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/not-to-supervise/";
+          
+        },
+      },{id: "post-building-agentic-ai-patterns-that-work-traps-that-don-39-t",
         
           title: "Building Agentic AI - Patterns That Work, Traps That Don&#39;t",
         

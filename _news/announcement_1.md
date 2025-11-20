@@ -1,8 +1,8 @@
 ---
 layout: post
-date: 2025-10-09
+date: 2025-10-17
 inline: true
 related_posts: false
 ---
 
-The article on Synthetic Users is published in Augmented Humans 2025 Proceedings on October 9, 2025. <a href='https://dl.acm.org/doi/10.1145/3745900.3746108' target=blank>read here</a>
+My first, first author article, outlining the challenges of Generative AI personas has been published in International Journal of Human Computer Studies (IJHCS). The article provides twenty challenges that the ressearchers and practioners in HCI community can face, when dealing with Generative AI personas. <a href='https://doi.org/10.1016/j.ijhcs.2025.103657' target=blank>read here</a>

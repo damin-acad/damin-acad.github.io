@@ -1,8 +1,9 @@
 ---
 layout: post
-date: 2025-06-21
+date: 2025-10-09
 inline: true
 related_posts: false
 ---
 
-I graduated from <a href='https://www.rennes-sb.com/' target=blank>Rennes School of Business</a> as an MBA graduate with distinction under the French Excellence Scholarship Program for Climate Change 2023-2024. <a href='https://www.linkedin.com/feed/update/urn:li:activity:7342474322545995776/' target=blank>read here</a>
+The article on Synthetic Users is published in Augmented Humans 2025 Proceedings on October 9, 2025. <a href='https://dl.acm.org/doi/10.1145/3745900.3746108' target=blank>read here</a>
+

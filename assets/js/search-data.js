@@ -310,14 +310,14 @@ ninja.data = [{
           description: "",
           section: "Books",handler: () => {
               window.location.href = "/books/the_godfather/";
-            },},{id: "news-the-article-on-synthetic-users-is-published-in-augmented-humans-2025-proceedings-on-october-9-2025-read-here",
+            },},{id: "news-i-graduated-from-rennes-school-of-business-as-an-mba-graduate-with-distinction-under-the-french-excellence-scholarship-program-for-climate-change-2023-2024-read-here",
+          title: 'I graduated from Rennes School of Business as an MBA graduate with distinction...',
+          description: "",
+          section: "News",},{id: "news-the-article-on-synthetic-users-is-published-in-augmented-humans-2025-proceedings-on-october-9-2025-read-here",
           title: 'The article on Synthetic Users is published in Augmented Humans 2025 Proceedings on...',
           description: "",
           section: "News",},{id: "news-my-first-lead-author-article-exploring-the-challenges-of-generative-ai-personas-has-just-been-published-in-the-international-journal-of-human-computer-studies-ijhcs-the-paper-highlights-twenty-critical-challenges-that-researchers-and-practitioners-in-the-hci-community-may-face-when-working-with-generative-ai-personas-read-here",
           title: 'My first lead-author article, exploring the challenges of Generative AI personas, has just...',
-          description: "",
-          section: "News",},{id: "news-i-graduated-from-rennes-school-of-business-as-an-mba-graduate-with-distinction-under-the-french-excellence-scholarship-program-for-climate-change-2023-2024-read-here",
-          title: 'I graduated from Rennes School of Business as an MBA graduate with distinction...',
           description: "",
           section: "News",},{id: "news-i-recently-presented-our-work-in-progress-at-quant-ux-conference-a-conference-focused-on-bringing-quantux-researchers-from-both-industry-and-academia-together-read-slides-here",
           title: 'I recently presented our work in progress at Quant UX Conference, a conference...',

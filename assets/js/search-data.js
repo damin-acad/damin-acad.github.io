@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-the-personality-problem-why-your-llm-39-s-character-matters-more-than-its-iq",
+        },{id: "post-why-human-ai-interaction-will-always-need-humans",
+        
+          title: "Why Human-AI Interaction Will Always Need Humans",
+        
+        description: "From aerospace engineering to AI research—why the shift toward fully agentic systems makes human-computer interaction more essential, not less.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/why-hci/";
+          
+        },
+      },{id: "post-the-personality-problem-why-your-llm-39-s-character-matters-more-than-its-iq",
         
           title: "The Personality Problem - Why Your LLM&#39;s Character Matters More Than Its IQ...",
         

@@ -328,6 +328,11 @@ filtered_bibtex_keywords:
     selected,
     slides,
     supp,
+    url_code,
+    url_data,
+    url_poster,
+    url_slides,
+    url_video,
     video,
     website,
   ]

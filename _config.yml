@@ -320,6 +320,7 @@ filtered_bibtex_keywords:
     code,
     google_scholar_id,
     html,
+    img,
     inspirehep_id,
     pdf,
     poster,

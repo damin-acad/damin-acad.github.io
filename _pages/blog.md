@@ -119,6 +119,10 @@ pagination:
   {% endif %}
 
   {% for post in postlist %}
+    {%- comment -%} Skip featured posts in the list since they're shown as cards above {%- endcomment -%}
+    {% if post.featured == true %}
+      {% continue %}
+    {% endif %}
 
   {% if post.external_source == blank %}
     {% assign read_time = post.content | number_of_words | divided_by: 180 | plus: 1 %}

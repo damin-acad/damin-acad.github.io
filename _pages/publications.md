@@ -13,8 +13,76 @@ nav_order: 2
 
 {% include bib_search.liquid %}
 
+<!-- Publication Filters -->
+
+{% include publication_filters.liquid %}
+
+<script src="{{ '/assets/js/publication-filters.js' | relative_url | bust_file_cache }}" type="module"></script>
+
 <div class="publications">
 
 {% bibliography %}
 
 </div>
+
+<script>
+// Reorder publications to show published first, then in-review, grouped by year
+// This runs after DOM is loaded and before filter script
+(function() {
+  function reorderPublications() {
+    const publicationsContainer = document.querySelector(".publications");
+    if (!publicationsContainer) return;
+
+    // Get all year groups (h2 or h3 with class bibliography)
+    const yearHeaders = Array.from(publicationsContainer.querySelectorAll("h2.bibliography, h3.bibliography"));
+    
+    yearHeaders.forEach(yearHeader => {
+      // Find the OL list that follows this header
+      let yearList = yearHeader.nextElementSibling;
+      while (yearList && yearList.tagName !== "OL") {
+        yearList = yearList.nextElementSibling;
+      }
+      if (!yearList || yearList.tagName !== "OL") return;
+
+      const items = Array.from(yearList.querySelectorAll("li"));
+      
+      // Separate published and in-review items
+      const publishedItems = [];
+      const inReviewItems = [];
+      
+      items.forEach(item => {
+        const entry = item.querySelector(".publication-entry");
+        if (entry) {
+          if (entry.dataset.status === "published") {
+            publishedItems.push(item);
+          } else {
+            inReviewItems.push(item);
+          }
+        } else {
+          // Fallback: check if item contains "Published" text
+          const itemText = item.textContent.toLowerCase();
+          if (itemText.includes("published")) {
+            publishedItems.push(item);
+          } else {
+            inReviewItems.push(item);
+          }
+        }
+      });
+      
+      // Clear the list and add published first, then in-review
+      if (publishedItems.length > 0 || inReviewItems.length > 0) {
+        yearList.innerHTML = "";
+        publishedItems.forEach(item => yearList.appendChild(item));
+        inReviewItems.forEach(item => yearList.appendChild(item));
+      }
+    });
+  }
+
+  // Run on DOMContentLoaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', reorderPublications);
+  } else {
+    reorderPublications();
+  }
+})();
+</script>

@@ -1,3 +1,73 @@
-<div class="publications">
+<div class="publications selected-papers">
   {% bibliography --group_by none --query @*[selected=true]* %}
 </div>
+
+<script>
+// Reorder selected papers to show first-authored published papers first, then the rest
+(function() {
+  function reorderSelectedPapers() {
+    const selectedPapersContainer = document.querySelector(".selected-papers");
+    if (!selectedPapersContainer) return;
+
+    // Try to find bibliography - could be .bibliography class or just an ol
+    let bibliography = selectedPapersContainer.querySelector(".bibliography");
+    if (!bibliography) {
+      bibliography = selectedPapersContainer.querySelector("ol");
+    }
+    if (!bibliography) return;
+
+    const items = Array.from(bibliography.querySelectorAll("li"));
+    if (items.length === 0) return;
+    
+    // Separate into: first-authored published, other published, first-authored in-review, other in-review
+    const firstAuthoredPublished = [];
+    const otherPublished = [];
+    const firstAuthoredInReview = [];
+    const otherInReview = [];
+    
+    items.forEach(item => {
+      const entry = item.querySelector(".publication-entry");
+      if (entry) {
+        const isFirstAuthor = entry.dataset.firstAuthor === "true";
+        const isPublished = entry.dataset.status === "published";
+        
+        if (isFirstAuthor && isPublished) {
+          firstAuthoredPublished.push(item);
+        } else if (isPublished) {
+          otherPublished.push(item);
+        } else if (isFirstAuthor) {
+          firstAuthoredInReview.push(item);
+        } else {
+          otherInReview.push(item);
+        }
+      } else {
+        // Fallback: if no entry found, check note field
+        const itemText = item.textContent.toLowerCase();
+        const isPublished = itemText.includes("published");
+        if (isPublished) {
+          otherPublished.push(item);
+        } else {
+          otherInReview.push(item);
+        }
+      }
+    });
+    
+    // Clear and reorder only if we have items to reorder
+    if (firstAuthoredPublished.length > 0 || otherPublished.length > 0 || 
+        firstAuthoredInReview.length > 0 || otherInReview.length > 0) {
+      bibliography.innerHTML = "";
+      firstAuthoredPublished.forEach(item => bibliography.appendChild(item));
+      otherPublished.forEach(item => bibliography.appendChild(item));
+      firstAuthoredInReview.forEach(item => bibliography.appendChild(item));
+      otherInReview.forEach(item => bibliography.appendChild(item));
+    }
+  }
+
+  // Run on DOMContentLoaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', reorderSelectedPapers);
+  } else {
+    reorderSelectedPapers();
+  }
+})();
+</script>

@@ -1,6 +1,6 @@
 ---
 ---
-<div class="row">
+<div class="row publication-row">
   {% if site.enable_publication_thumbnails %}
     <div class="col col-sm-2 abbr">
       {%- if entry.abbr -%}
@@ -54,7 +54,38 @@
   {% endif %}
 
   <!-- Entry bib key -->
-  <div id="{{ entry.key }}" class="{% if site.enable_publication_thumbnails %}col-sm-8{% else %}col-sm-10{% endif %}">
+  {% assign is_first_author = false %}
+  {% if entry.author_array.size > 0 %}
+    {% assign first_author = entry.author_array[0] %}
+    {% assign first_author_last = first_author.last | regex_replace: '[*∗†‡§¶‖&^]', '' %}
+    {% if site.scholar.last_name contains first_author_last %}
+      {% if site.scholar.first_name contains first_author.first %}
+        {% assign is_first_author = true %}
+      {% endif %}
+    {% endif %}
+  {% endif %}
+  {% assign is_published = false %}
+  {% if entry.note %}
+    {% assign note_lower = entry.note | downcase %}
+    {% if note_lower contains 'published' %}
+      {% assign is_published = true %}
+    {% endif %}
+  {% endif %}
+  {% assign is_journal = false %}
+  {% if entry.type == 'article' %}
+    {% assign is_journal = true %}
+  {% endif %}
+  {% assign is_conference = false %}
+  {% assign proceedings = 'inproceedings,incollection' | split: ',' %}
+  {% if proceedings contains entry.type %}
+    {% assign is_conference = true %}
+  {% endif %}
+  <div id="{{ entry.key }}" 
+       class="{% if site.enable_publication_thumbnails %}col-sm-8{% else %}col-sm-10{% endif %} publication-entry"
+       data-publication-type="{% if is_journal %}journal{% elsif is_conference %}conference{% else %}other{% endif %}"
+       data-first-author="{% if is_first_author %}true{% else %}false{% endif %}"
+       data-status="{% if is_published %}published{% else %}in-review{% endif %}"
+       data-year="{{ entry.year }}">
     <!-- Title -->
     <div class="title">{{ entry.title }}</div>
     <!-- Author -->

@@ -1,0 +1,68 @@
+<div class="publication-filters mb-4">
+  <div class="filter-buttons d-flex flex-wrap gap-2 mb-3">
+    <button class="btn btn-sm btn-outline-primary filter-btn active" data-filter="all">
+      All
+    </button>
+    <button class="btn btn-sm btn-outline-primary filter-btn" data-filter="published">
+      Published
+    </button>
+    <button class="btn btn-sm btn-outline-primary filter-btn" data-filter="in-review">
+      In Review
+    </button>
+    <button class="btn btn-sm btn-outline-primary filter-btn" data-filter="first-author">
+      First Author
+    </button>
+    <button class="btn btn-sm btn-outline-primary filter-btn" data-filter="journal">
+      Journal Articles
+    </button>
+    <button class="btn btn-sm btn-outline-primary filter-btn" data-filter="conference">
+      Conference Articles
+    </button>
+  </div>
+</div>
+
+<style>
+.publication-filters {
+  margin-bottom: 1.5rem;
+}
+
+.filter-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.filter-btn {
+  transition: all 0.2s ease;
+}
+
+.filter-btn.active {
+  background-color: #007bff;
+  color: white;
+  border-color: #007bff;
+}
+
+.filter-btn:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.publication-entry.hidden {
+  display: none;
+}
+
+.bibliography > li.hidden {
+  display: none;
+}
+
+h2.bibliography.hidden,
+h3.bibliography.hidden {
+  display: none;
+}
+
+.bibliography > ol.hidden {
+  display: none;
+}
+</style>
+

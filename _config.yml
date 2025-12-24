@@ -51,6 +51,7 @@ footer_fixed: true
 search_enabled: true
 socials_in_search: true
 posts_in_search: true
+publications_in_search: true
 bib_search: true
 
 # Dimensions

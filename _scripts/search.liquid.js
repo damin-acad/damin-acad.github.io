@@ -78,6 +78,52 @@ ninja.data = [
       },
     {%- endfor -%}
   {%- endif -%}
+  {%- if site.publications_in_search != false -%}
+    {%- comment -%} Access bibliography entries - site.bibliography is a hash {%- endcomment -%}
+    {%- if site.bibliography -%}
+      {%- for pair in site.bibliography -%}
+        {%- assign entry_key = pair[0] -%}
+        {%- assign entry = pair[1] -%}
+        {%- if entry.title -%}
+          {
+            {%- assign title = entry.title | escape | strip -%}
+            {%- assign venue = "" -%}
+            {%- if entry.type == 'article' and entry.journal -%}
+              {%- assign venue = entry.journal -%}
+            {%- elsif entry.booktitle -%}
+              {%- assign venue = entry.booktitle -%}
+            {%- endif -%}
+            {%- assign description = "" -%}
+            {%- if venue != "" -%}
+              {%- assign description = venue -%}
+            {%- endif -%}
+            {%- if entry.year -%}
+              {%- if description != "" -%}
+                {%- assign description = description | append: " (" | append: entry.year | append: ")" -%}
+              {%- else -%}
+                {%- assign description = entry.year -%}
+              {%- endif -%}
+            {%- endif -%}
+            {%- if entry.note -%}
+              {%- assign note_clean = entry.note | strip_html | strip -%}
+              {%- if description != "" -%}
+                {%- assign description = description | append: " • " | append: note_clean -%}
+              {%- else -%}
+                {%- assign description = note_clean -%}
+              {%- endif -%}
+            {%- endif -%}
+            id: "pub-{{ entry.key }}",
+            title: "{{ title | truncatewords: 15 }}",
+            description: "{{ description | strip_html | strip_newlines | escape | strip }}",
+            section: "Publications",
+            handler: () => {
+              window.location.href = "{{ '/publications/' | relative_url }}#{{ entry.key }}";
+            },
+          },
+        {%- endif -%}
+      {%- endfor -%}
+    {%- endif -%}
+  {%- endif -%}
   {%- for collection in site.collections -%}
     {%- if collection.label != 'posts' -%}
       {%- for item in collection.docs -%}

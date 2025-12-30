@@ -86,11 +86,11 @@ Teaching the masterclass in France forced clarity I didn't know I needed. You ca
 
 ## The Wins
 
-Some firsts matter more in retrospect. The first conference paper at QUANTUX felt significant at the time. Looking back, what mattered more was learning how to present technical work to audiences with different priorities than mine.
+Some firsts matter more in retrospect. The first paper presentation at QuantUXCon felt significant at the time. Looking back, what mattered more was learning how to present technical work to audiences with different priorities than mine.
 
-First-author publication in an international journal. First time seeing my name leading a citation. First time understanding that publication is the start of a conversation, not the end of work.
+First-author publication in a highly reputed international journal. First time seeing my name leading a citation. First time understanding that publication is the start of a conversation, not the end of work.
 
-The R&R from CHI2026 felt different from straight acceptances. Someone read the work carefully enough to want it improved, specifically enough to outline what improvement means. That takes more engagement than a desk reject or a form acceptance.
+The R&R from CHI2026 felt different from straight acceptances. Someone read the work carefully enough to want it improved, specifically enough to outline what improvement means. That takes more engagement than a desk reject.
 
 The preprint established presence in a conversation I'd been observing from the outside. First persona-relevant citation meant someone found the work useful enough to build on. Small victories that signal you're entering the field, not just studying it.
 
@@ -98,7 +98,7 @@ Attending my research group's first doctoral dissertation defense taught me what
 
 ## The Losses
 
-IUI rejected two papers. Both had positive reviews. Doesn't matter—they're still rejections.
+IUI rejected same paper in two different rounds. Both had positive reviews. Doesn't matter—they're still rejections.
 
 One paper hit four venues before finding somewhere that wanted it. Four rounds of reformatting, reframing, resubmitting. Four sets of reviewer comments that contradicted each other. "Too technical" at one venue, "needs more technical depth" at another. "Insufficient literature review" followed by "too much background, get to the contribution faster."
 
@@ -106,7 +106,7 @@ That paper's now in revise-and-resubmit. Which means it might still die.
 
 Other papers are scattered across the publication pipeline at various stages. Some in review. Some being revised. Some waiting for decisions. None of them guaranteed to survive.
 
-The quantitative analytics exam on two hours of sleep was intensive, laborious, the kind of test that demonstrates you can still function when everything works against you. Passed it. Don't recommend the approach. But it taught something about capacity under constraint.
+The quantitative analytics exam on two hours of sleep was intensive, laborious, the kind of test that demonstrates you can still function when everything works against you. Aced it. Don't recommend the approach. But it taught something about capacity under constraint.
 
 <div class="insight-box">
 <strong>The Pattern:</strong> Positive reviews don't guarantee acceptance. Strong work doesn't guarantee publication. Effort doesn't guarantee outcomes. Academic research runs on probability, not merit alone.

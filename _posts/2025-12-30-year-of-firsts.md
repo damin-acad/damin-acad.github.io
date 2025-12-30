@@ -16,7 +16,7 @@ authors:
 
 bibliography: 
 
-ttoc:
+toc:
   - name: The Label
   - name: The Pattern
   - name: The Wins
@@ -46,7 +46,7 @@ But once he named it, the pattern became obvious.
 
 ## The Label
 
-"Year of firsts" sounds aspirational when someone else puts that label on your work. Like an achievement unlocked, a narrative arc reaching its peak. Reality felt messier—less arc, more zigzag between France, Finland, UK, Japan, Sweden, Amsterdam. Countless hours in transit, living out of carry-ons, working on flights, adjusting to time zones that never quite aligned.
+"Year of firsts" sounds aspirational when someone else puts that label on your work. Like an achievement unlocked, a narrative arc reaching its peak. Reality felt messier—less arc, more zigzag between France, Finland, Japan, Sweden, Amsterdam, Qatar, UK. Countless hours in transit, living out of carry-ons, working on flights, adjusting to time zones that never quite aligned.
 
 The geography mattered as much as the milestones. You don't do a "year of firsts" from one location. You do it by showing up where the work actually happens.
 
@@ -60,7 +60,7 @@ Between France and Finland, routine became relative. Work happened in airports, 
 <strong>The Reality:</strong> "Year of firsts" also means first sustained period living between time zones. First understanding that academic progress requires physical presence across continents. First experience where jet lag becomes part of the workflow.
 </div>
 
-First US8 as a study moderator. First time running user sessions where real participants generate real data. First UK trip specifically for research infrastructure.
+First US8 as a study moderator—Qatar. First time running user sessions where real participants generate real data. First time the Middle East became part of the research circuit.
 
 First preprint. First persona-relevant citation. First journal publication. First revise-and-resubmit from CHI2026. First teaching a masterclass in AI and data science—delivered after flying back from yet another conference.
 
@@ -70,7 +70,7 @@ The label my professor gave me fits. It just fits in more dimensions than he pro
 
 ## The Pattern
 
-The wins clustered together in ways that made sense only afterward. US8 in the UK taught me that study moderation is pattern recognition—knowing when to probe, when to let silence work, when a participant's hesitation signals something worth exploring. Then back to France for work, back to Finland for research meetings.
+The wins clustered together in ways that made sense only afterward. US8 in Doha taught me that study moderation is pattern recognition—knowing when to probe, when to let silence work, when a participant's hesitation signals something worth exploring. Then back to France for work, back to Finland for research meetings.
 
 CHI in Japan meant twenty hours of travel for a week of immersion. The poster presentation mattered less than the spontaneous discussions with researchers who stopped because the topic intersected with their own work. The hallway conversations generated as much insight as scheduled sessions. Then the flight home, writing up observations somewhere over Siberia.
 
@@ -118,7 +118,7 @@ The rejection pattern is real and instructive. You learn what different venues a
 
 Looking back at the list of firsts, here's what stands out: attending conferences taught me more than publishing papers. Running user studies taught me more than reading about methodology. Teaching forced clearer thinking than any writing exercise.
 
-But all of that required being there. Japan for CHI. Amsterdam for CHIWORK. Sweden for ecosystems. UK for US8. France for work. Finland for research. Each location represented immersion in thinking I couldn't access remotely. Each trip forced engagement with perspectives that don't exist in your home institution's echo chamber—whichever home institution you happened to be operating from that week.
+But all of that required being there. Japan for CHI. Amsterdam for CHIWORK. Sweden for ecosystems. Doha for US8. France for work. Finland for research. Each location represented immersion in thinking I couldn't access remotely. Each trip forced engagement with perspectives that don't exist in your home institution's echo chamber—whichever home institution you happened to be operating from that week.
 
 The countless hours in transit became part of the work itself. Research doesn't happen only at desks. It happens in conversations after conference sessions, in hotel rooms rewriting papers based on hallway feedback, in airport lounges catching up on work that accumulated while you were physically elsewhere.
 

@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-why-human-ai-interaction-will-always-need-humans",
+        },{id: "post-the-year-of-firsts",
+        
+          title: "The Year of Firsts",
+        
+        description: "A researcher&#39;s journey through conferences, publications, rejections, and the reality of academic progress in 2025.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2025/year-of-firsts/";
+          
+        },
+      },{id: "post-why-human-ai-interaction-will-always-need-humans",
         
           title: "Why Human-AI Interaction Will Always Need Humans",
         

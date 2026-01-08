@@ -30,7 +30,18 @@ ninja.data = [{
           handler: () => {
             window.location.href = "/cv/";
           },
-        },{id: "post-the-year-of-firsts",
+        },{id: "post-the-time-series-blind-spot-why-generative-ai-failed-at-forecasting",
+        
+          title: "The Time Series Blind Spot - Why Generative AI Failed at Forecasting",
+        
+        description: "The industry built transformers for language and forgot that most enterprise data moves through time. Now we&#39;re realizing that temporal patterns require fundamentally different approaches than next-token prediction.",
+        section: "Posts",
+        handler: () => {
+          
+            window.location.href = "/blog/2026/timeseries-blind-spot/";
+          
+        },
+      },{id: "post-the-year-of-firsts",
         
           title: "The Year of Firsts",
         

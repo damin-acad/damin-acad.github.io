@@ -19,9 +19,8 @@ strong {
   color: var(--global-text-color);
 }
 body {
-  font-family:
-    -apple-system, BlinkMacSystemFont, "San Francisco",
-    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height: 1.6;
 }
 
 hr {
@@ -251,8 +250,8 @@ ul.task-list input[type="checkbox"] {
 .navbar {
   box-shadow: none;
   border-bottom: 1px solid var(--global-divider-color);
-  background-color: var(--global-bg-color);
-  opacity: 0.95;
+  background-color: var(--navbar-bg, var(--global-bg-color));
+  backdrop-filter: blur(12px);
 }
 
 .navbar .dropdown-menu {

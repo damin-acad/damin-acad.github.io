@@ -11,9 +11,8 @@ contact_note: >
 description: > # the ">" symbol means to ignore newlines until "footer_text:"
   A HCI professional striving to develop more fair user representation
 footer_text: >
-  Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> with <a href="https://github.com/alshedivat/al-folio">al-folio</a> theme.
-  Hosted by <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
-  Content by <a href="https://danial-amin.github.io/" target="_blank">Danial Amin</a>.
+  Academic subdomain of <a href="https://danial-amin.github.io/" target="_blank">danial-amin.github.io</a>.
+  Powered by <a href="https://jekyllrb.com/" target="_blank">Jekyll</a> & <a href="https://github.com/alshedivat/al-folio">al-folio</a>. Hosted on <a href="https://pages.github.com/" target="_blank">GitHub Pages</a>.
 keywords: human-computer interaction, generative ai, personas, user representation, fairness # add your own keywords or leave empty
 lang: en # the language of your site (for example: en, fr, cn, ru, etc.)
 icon: favicon.png # the emoji used as the favicon (alternatively, provide image name in /assets/img/)
@@ -456,7 +455,8 @@ third_party_libraries:
     version: "5.5.0"
   google_fonts:
     url:
-      fonts: "https://fonts.googleapis.com/css?family=Roboto:300,400,500,700|Roboto+Slab:100,300,400,500,700|Material+Icons&display=swap"
+      # Match main site (danial-amin.github.io) — Inter
+      fonts: "https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
   highlightjs:
     integrity:
       css:

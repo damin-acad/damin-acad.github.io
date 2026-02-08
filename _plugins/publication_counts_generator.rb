@@ -48,7 +48,10 @@ module Jekyll
             end
           end
 
-          current_type = Regexp.last_match(1).downcase
+          raw_type = Regexp.last_match(1)
+          current_type = raw_type.nil? ? nil : raw_type.to_s.downcase
+          next if current_type.nil? || current_type.empty?
+
           if %w[article].include?(current_type)
             journals += 1
           elsif %w[inproceedings].include?(current_type)

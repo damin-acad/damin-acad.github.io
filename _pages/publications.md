@@ -28,18 +28,27 @@ nav_order: 2
 </div>
 
 <script>
-// Reorder publications to show published first, then in-review, grouped by year
-// This runs after DOM is loaded and before filter script
+// Reorder publications within each year: (1) accepted/published first, then in-review;
+// (2) within that, first-author first; (3) within that, journal then conference then book chapter.
 (function() {
+  const TYPE_ORDER = { journal: 0, conference: 1, book_chapter: 2, other: 3 };
+
+  function sortKey(item) {
+    const entry = item.querySelector(".publication-entry");
+    if (!entry) return [1, 1, 3]; // in-review, not first author, other
+    const status = entry.dataset.status === "published" ? 0 : 1;
+    const firstAuthor = entry.dataset.firstAuthor === "true" ? 0 : 1;
+    const type = TYPE_ORDER[entry.dataset.publicationType] ?? 3;
+    return [status, firstAuthor, type];
+  }
+
   function reorderPublications() {
     const publicationsContainer = document.querySelector(".publications");
     if (!publicationsContainer) return;
 
-    // Get all year groups (h2 or h3 with class bibliography)
     const yearHeaders = Array.from(publicationsContainer.querySelectorAll("h2.bibliography, h3.bibliography"));
-    
+
     yearHeaders.forEach(yearHeader => {
-      // Find the OL list that follows this header
       let yearList = yearHeader.nextElementSibling;
       while (yearList && yearList.tagName !== "OL") {
         yearList = yearList.nextElementSibling;
@@ -47,40 +56,21 @@ nav_order: 2
       if (!yearList || yearList.tagName !== "OL") return;
 
       const items = Array.from(yearList.querySelectorAll("li"));
-      
-      // Separate published and in-review items
-      const publishedItems = [];
-      const inReviewItems = [];
-      
-      items.forEach(item => {
-        const entry = item.querySelector(".publication-entry");
-        if (entry) {
-          if (entry.dataset.status === "published") {
-            publishedItems.push(item);
-          } else {
-            inReviewItems.push(item);
-          }
-        } else {
-          // Fallback: check if item contains "Published" text
-          const itemText = item.textContent.toLowerCase();
-          if (itemText.includes("published")) {
-            publishedItems.push(item);
-          } else {
-            inReviewItems.push(item);
-          }
+      if (items.length === 0) return;
+
+      items.sort((a, b) => {
+        const ka = sortKey(a), kb = sortKey(b);
+        for (let i = 0; i < 3; i++) {
+          if (ka[i] !== kb[i]) return ka[i] - kb[i];
         }
+        return 0;
       });
-      
-      // Clear the list and add published first, then in-review
-      if (publishedItems.length > 0 || inReviewItems.length > 0) {
-        yearList.innerHTML = "";
-        publishedItems.forEach(item => yearList.appendChild(item));
-        inReviewItems.forEach(item => yearList.appendChild(item));
-      }
+
+      yearList.innerHTML = "";
+      items.forEach(item => yearList.appendChild(item));
     });
   }
 
-  // Run on DOMContentLoaded
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', reorderPublications);
   } else {

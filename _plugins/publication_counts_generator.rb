@@ -19,12 +19,16 @@ module Jekyll
 
     def generate(site)
       counts = parse_bib(site)
-      site.data['publication_counts'] = counts
-      # Debug: print counts to console when running jekyll build/serve
-      Jekyll.logger.info "PublicationCountsGenerator (debug): #{counts.inspect}"
+      if counts
+        site.data['publication_counts'] = counts
+        Jekyll.logger.info "PublicationCountsGenerator (debug): #{counts.inspect}"
+      else
+        # Bib not found: keep existing site.data (e.g. from _data/publication_counts.yml)
+        Jekyll.logger.warn 'PublicationCountsGenerator: bib not found, using _data/publication_counts.yml if present'
+      end
     rescue StandardError => e
       Jekyll.logger.warn 'PublicationCountsGenerator:', e.message
-      site.data['publication_counts'] = default_counts
+      # Don't overwrite with zeros; leave _data/publication_counts.yml if present
     end
 
     private
@@ -49,12 +53,18 @@ module Jekyll
 
     def parse_bib(site)
       scholar = site.config['scholar'] || {}
-      source_dir = scholar['source'] || '/_bibliography/'
       bib_name = scholar['bibliography'] || 'papers.bib'
-      bib_path = File.join(site.source, source_dir.to_s.gsub(%r{\A/}, ''), bib_name)
-      Jekyll.logger.info "PublicationCountsGenerator: bib_path=#{bib_path} exists=#{File.file?(bib_path)}"
+      source_dir = (scholar['source'] || '/_bibliography/').to_s.gsub(%r{\A/}, '').chomp('/')
+      candidates = [
+        File.join(site.source, source_dir, bib_name),
+        File.join(site.source, '_bibliography', bib_name),
+        File.expand_path(File.join('_bibliography', bib_name), site.source),
+        File.join(Dir.pwd, '_bibliography', bib_name)
+      ].uniq
+      bib_path = candidates.find { |p| File.file?(p) }
+      Jekyll.logger.info "PublicationCountsGenerator: tried=#{candidates.map { |p| "#{p}(#{File.file?(p)})" }.join(', ')}"
 
-      return default_counts unless File.file?(bib_path)
+      return nil unless bib_path
 
       # Two-level: published vs in_review, each with journal/conference/book_chapter
       published_journals = 0
@@ -69,7 +79,7 @@ module Jekyll
       in_note = false
       note_buffer = ''
 
-      File.foreach(bib_path) do |line|
+      File.foreach(bib_path, encoding: 'UTF-8') do |line|
         if line =~ /\A\s*@(\w+)\s*\{/
           if current_type
             note_str = (current_note || note_buffer).to_s.strip
@@ -163,7 +173,7 @@ module Jekyll
       }
     rescue StandardError => e
       Jekyll.logger.warn 'PublicationCountsGenerator:', e.message
-      default_counts
+      nil
     end
 
     def default_counts

@@ -1,0 +1,38 @@
+# Regenerate _data/publication_counts.yml from _bibliography/papers.bib
+# Runs daily (cron) and on bib changes so the publication page counts stay in sync.
+
+name: Update publication counts
+
+on:
+  schedule:
+    # Run every day at 06:00 UTC (adjust as needed: https://crontab.guru/)
+    - cron: '0 6 * * *'
+  push:
+    branches:
+      - main
+      - master
+    paths:
+      - '_bibliography/papers.bib'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-counts:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Regenerate publication counts
+        run: ruby _scripts/generate_publication_counts.rb
+
+      - name: Commit and push if changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: update publication counts from papers.bib'
+          file_pattern: _data/publication_counts.yml

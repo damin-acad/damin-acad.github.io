@@ -67,22 +67,23 @@
   {% assign is_published = false %}
   {% if entry.note %}
     {% assign note_lower = entry.note | downcase %}
-    {% if note_lower contains 'published' %}
-      {% assign is_published = true %}
-    {% endif %}
+    {% unless note_lower contains 'in review' %}
+      {% if note_lower contains 'published' or note_lower contains 'accepted' or note_lower contains 'in press' %}
+        {% assign is_published = true %}
+      {% endif %}
+    {% endunless %}
   {% endif %}
-  {% assign is_journal = false %}
+  {% assign pub_type = 'other' %}
   {% if entry.type == 'article' %}
-    {% assign is_journal = true %}
-  {% endif %}
-  {% assign is_conference = false %}
-  {% assign proceedings = 'inproceedings,incollection' | split: ',' %}
-  {% if proceedings contains entry.type %}
-    {% assign is_conference = true %}
+    {% assign pub_type = 'journal' %}
+  {% elsif entry.type == 'inproceedings' %}
+    {% assign pub_type = 'conference' %}
+  {% elsif entry.type == 'incollection' or entry.type == 'inbook' %}
+    {% assign pub_type = 'book_chapter' %}
   {% endif %}
   <div id="{{ entry.key }}" 
        class="{% if site.enable_publication_thumbnails %}col-sm-8{% else %}col-sm-10{% endif %} publication-entry"
-       data-publication-type="{% if is_journal %}journal{% elsif is_conference %}conference{% else %}other{% endif %}"
+       data-publication-type="{{ pub_type }}"
        data-first-author="{% if is_first_author %}true{% else %}false{% endif %}"
        data-status="{% if is_published %}published{% else %}in-review{% endif %}"
        data-year="{{ entry.year }}">

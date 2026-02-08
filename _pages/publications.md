@@ -9,6 +9,8 @@ nav_order: 2
 
 <!-- _pages/publications.md -->
 
+{% include publication_counts.liquid %}
+
 <!-- Bibsearch Feature -->
 
 {% include bib_search.liquid %}

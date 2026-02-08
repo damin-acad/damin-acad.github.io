@@ -1,0 +1,53 @@
+{% assign counts = site.data.publication_counts %}
+{% if counts %}
+<div class="publication-counts mb-4">
+  <div class="row g-2 g-md-3">
+    <div class="col-6 col-md">
+      <div class="publication-count-card border rounded px-3 py-2 text-center">
+        <span class="publication-count-number">{{ counts.journals | default: 0 }}</span>
+        <span class="publication-count-label d-block small">{% if counts.journals == 1 %}Journal{% else %}Journals{% endif %}</span>
+      </div>
+    </div>
+    <div class="col-6 col-md">
+      <div class="publication-count-card border rounded px-3 py-2 text-center">
+        <span class="publication-count-number">{{ counts.conferences | default: 0 }}</span>
+        <span class="publication-count-label d-block small">{% if counts.conferences == 1 %}Conference{% else %}Conferences{% endif %}</span>
+      </div>
+    </div>
+    <div class="col-6 col-md">
+      <div class="publication-count-card border rounded px-3 py-2 text-center">
+        <span class="publication-count-number">{{ counts.book_chapters | default: 0 }}</span>
+        <span class="publication-count-label d-block small">Book chapter{% if counts.book_chapters != 1 %}s{% endif %}</span>
+      </div>
+    </div>
+    <div class="col-6 col-md">
+      <div class="publication-count-card border rounded px-3 py-2 text-center publication-count-published">
+        <span class="publication-count-number">{{ counts.published_or_press | default: 0 }}</span>
+        <span class="publication-count-label d-block small">Published / in press</span>
+      </div>
+    </div>
+    <div class="col-6 col-md">
+      <div class="publication-count-card border rounded px-3 py-2 text-center publication-count-review">
+        <span class="publication-count-number">{{ counts.in_review | default: 0 }}</span>
+        <span class="publication-count-label d-block small">In review</span>
+      </div>
+    </div>
+  </div>
+</div>
+<style>
+.publication-counts .publication-count-card {
+  background-color: var(--global-card-bg-color, #f8f9fa);
+  border-color: var(--global-divider-color, rgba(0,0,0,0.08)) !important;
+}
+.publication-counts .publication-count-number {
+  font-weight: 700;
+  font-size: 1.25rem;
+  color: var(--global-theme-color, #2563eb);
+}
+.publication-counts .publication-count-label {
+  color: var(--global-text-color-light, #6c757d);
+}
+.publication-counts .publication-count-published .publication-count-number { color: var(--global-theme-color); }
+.publication-counts .publication-count-review .publication-count-number { color: var(--global-text-color-light); }
+</style>
+{% endif %}

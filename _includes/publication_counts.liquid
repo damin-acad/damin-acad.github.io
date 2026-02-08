@@ -1,12 +1,20 @@
 {% assign counts = site.data.publication_counts %}
-<!-- Debug: publication_counts available = {{ counts | size }} keys (view debug box below or run jekyll build for console output) -->
+{% comment %}Use bracket notation so keys work when loaded from YAML (string keys){% endcomment %}
+{% assign pt = counts.published_total | default: counts["published_total"] %}
+{% assign pj = counts.published_journals | default: counts["published_journals"] %}
+{% assign pc = counts.published_conferences | default: counts["published_conferences"] %}
+{% assign pb = counts.published_book_chapters | default: counts["published_book_chapters"] %}
+{% assign rt = counts.in_review_total | default: counts["in_review_total"] %}
+{% assign rj = counts.in_review_journals | default: counts["in_review_journals"] %}
+{% assign rc = counts.in_review_conferences | default: counts["in_review_conferences"] %}
+{% assign rb = counts.in_review_book_chapters | default: counts["in_review_book_chapters"] %}
 <div class="publication-counts-debug mb-2 p-2 small border rounded" style="background: #f0f0f0; font-family: monospace;">
   <strong>Publication counts debug:</strong>
   {% if counts %}
-  published_total={{ counts.published_total }}, published_journals={{ counts.published_journals }}, published_conferences={{ counts.published_conferences }}, published_book_chapters={{ counts.published_book_chapters }} |
-  in_review_total={{ counts.in_review_total }}, in_review_journals={{ counts.in_review_journals }}, in_review_conferences={{ counts.in_review_conferences }}, in_review_book_chapters={{ counts.in_review_book_chapters }}
+  published_total={{ pt }}, published_journals={{ pj }}, published_conferences={{ pc }}, published_book_chapters={{ pb }} |
+  in_review_total={{ rt }}, in_review_journals={{ rj }}, in_review_conferences={{ rc }}, in_review_book_chapters={{ rb }}
   {% else %}
-  (no data — plugin may not run on this environment, e.g. GitHub Pages)
+  (no data — add _data/publication_counts.yml or run: ruby _scripts/generate_publication_counts.rb)
   {% endif %}
 </div>
 {% if counts %}
@@ -14,26 +22,26 @@
   <!-- Level 1: Published / Accepted / In press -->
   <div class="publication-count-section mb-3">
     <div class="publication-count-section-title mb-2">
-      <span class="publication-count-number publication-count-published-num">{{ counts.published_total | default: 0 }}</span>
+      <span class="publication-count-number publication-count-published-num">{{ pt | default: 0 }}</span>
       <span class="publication-count-section-label">Published / accepted / in press</span>
     </div>
     <div class="row g-2 g-md-3">
       <div class="col-4 col-md">
         <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-published">
-          <span class="publication-count-number">{{ counts.published_journals | default: 0 }}</span>
-          <span class="publication-count-label d-block small">{% if counts.published_journals == 1 %}Journal{% else %}Journals{% endif %}</span>
+          <span class="publication-count-number">{{ pj | default: 0 }}</span>
+          <span class="publication-count-label d-block small">{% if pj == 1 %}Journal{% else %}Journals{% endif %}</span>
         </div>
       </div>
       <div class="col-4 col-md">
         <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-published">
-          <span class="publication-count-number">{{ counts.published_conferences | default: 0 }}</span>
-          <span class="publication-count-label d-block small">{% if counts.published_conferences == 1 %}Conference{% else %}Conferences{% endif %}</span>
+          <span class="publication-count-number">{{ pc | default: 0 }}</span>
+          <span class="publication-count-label d-block small">{% if pc == 1 %}Conference{% else %}Conferences{% endif %}</span>
         </div>
       </div>
       <div class="col-4 col-md">
         <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-published">
-          <span class="publication-count-number">{{ counts.published_book_chapters | default: 0 }}</span>
-          <span class="publication-count-label d-block small">Book chapter{% if counts.published_book_chapters != 1 %}s{% endif %}</span>
+          <span class="publication-count-number">{{ pb | default: 0 }}</span>
+          <span class="publication-count-label d-block small">Book chapter{% if pb != 1 %}s{% endif %}</span>
         </div>
       </div>
     </div>
@@ -42,26 +50,26 @@
   <!-- Level 2: In review -->
   <div class="publication-count-section">
     <div class="publication-count-section-title mb-2">
-      <span class="publication-count-number publication-count-review-num">{{ counts.in_review_total | default: 0 }}</span>
+      <span class="publication-count-number publication-count-review-num">{{ rt | default: 0 }}</span>
       <span class="publication-count-section-label">In review</span>
     </div>
     <div class="row g-2 g-md-3">
       <div class="col-4 col-md">
         <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-review">
-          <span class="publication-count-number">{{ counts.in_review_journals | default: 0 }}</span>
-          <span class="publication-count-label d-block small">{% if counts.in_review_journals == 1 %}Journal{% else %}Journals{% endif %}</span>
+          <span class="publication-count-number">{{ rj | default: 0 }}</span>
+          <span class="publication-count-label d-block small">{% if rj == 1 %}Journal{% else %}Journals{% endif %}</span>
         </div>
       </div>
       <div class="col-4 col-md">
         <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-review">
-          <span class="publication-count-number">{{ counts.in_review_conferences | default: 0 }}</span>
-          <span class="publication-count-label d-block small">{% if counts.in_review_conferences == 1 %}Conference{% else %}Conferences{% endif %}</span>
+          <span class="publication-count-number">{{ rc | default: 0 }}</span>
+          <span class="publication-count-label d-block small">{% if rc == 1 %}Conference{% else %}Conferences{% endif %}</span>
         </div>
       </div>
       <div class="col-4 col-md">
         <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-review">
-          <span class="publication-count-number">{{ counts.in_review_book_chapters | default: 0 }}</span>
-          <span class="publication-count-label d-block small">Book chapter{% if counts.in_review_book_chapters != 1 %}s{% endif %}</span>
+          <span class="publication-count-number">{{ rb | default: 0 }}</span>
+          <span class="publication-count-label d-block small">Book chapter{% if rb != 1 %}s{% endif %}</span>
         </div>
       </div>
     </div>

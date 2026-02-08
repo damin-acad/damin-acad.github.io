@@ -80,6 +80,7 @@ module Jekyll
       note_buffer = ''
 
       File.foreach(bib_path, encoding: 'UTF-8') do |line|
+        line = line.encode('UTF-8', invalid: :replace, undef: :replace)
         if line =~ /\A\s*@(\w+)\s*\{/
           if current_type
             note_str = (current_note || note_buffer).to_s.strip
@@ -156,6 +157,9 @@ module Jekyll
 
       published_total = published_journals + published_conferences + published_book_chapters
       in_review_total = in_review_journals + in_review_conferences + in_review_book_chapters
+
+      # Don't overwrite _data with zeros (e.g. if parsing failed silently); keep existing yml
+      return nil if published_total.zero? && in_review_total.zero?
 
       {
         'published_total' => published_total,

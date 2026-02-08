@@ -1,4 +1,14 @@
 {% assign counts = site.data.publication_counts %}
+<!-- Debug: publication_counts available = {{ counts | size }} keys (view debug box below or run jekyll build for console output) -->
+<div class="publication-counts-debug mb-2 p-2 small border rounded" style="background: #f0f0f0; font-family: monospace;">
+  <strong>Publication counts debug:</strong>
+  {% if counts %}
+  published_total={{ counts.published_total }}, published_journals={{ counts.published_journals }}, published_conferences={{ counts.published_conferences }}, published_book_chapters={{ counts.published_book_chapters }} |
+  in_review_total={{ counts.in_review_total }}, in_review_journals={{ counts.in_review_journals }}, in_review_conferences={{ counts.in_review_conferences }}, in_review_book_chapters={{ counts.in_review_book_chapters }}
+  {% else %}
+  (no data — plugin may not run on this environment, e.g. GitHub Pages)
+  {% endif %}
+</div>
 {% if counts %}
 <div class="publication-counts mb-4">
   <!-- Level 1: Published / Accepted / In press -->

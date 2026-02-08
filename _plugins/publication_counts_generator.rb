@@ -20,6 +20,8 @@ module Jekyll
     def generate(site)
       counts = parse_bib(site)
       site.data['publication_counts'] = counts
+      # Debug: print counts to console when running jekyll build/serve
+      Jekyll.logger.info "PublicationCountsGenerator (debug): #{counts.inspect}"
     rescue StandardError => e
       Jekyll.logger.warn 'PublicationCountsGenerator:', e.message
       site.data['publication_counts'] = default_counts
@@ -50,6 +52,7 @@ module Jekyll
       source_dir = scholar['source'] || '/_bibliography/'
       bib_name = scholar['bibliography'] || 'papers.bib'
       bib_path = File.join(site.source, source_dir.to_s.gsub(%r{\A/}, ''), bib_name)
+      Jekyll.logger.info "PublicationCountsGenerator: bib_path=#{bib_path} exists=#{File.file?(bib_path)}"
 
       return default_counts unless File.file?(bib_path)
 

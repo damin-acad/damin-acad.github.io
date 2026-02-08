@@ -57,11 +57,12 @@
   {% assign is_first_author = false %}
   {% if entry.author_array.size > 0 %}
     {% assign first_author = entry.author_array[0] %}
-    {% assign first_author_last = first_author.last | regex_replace: '[*∗†‡§¶‖&^]', '' %}
-    {% if site.scholar.last_name contains first_author_last %}
-      {% if site.scholar.first_name contains first_author.first %}
-        {% assign is_first_author = true %}
-      {% endif %}
+    {% assign first_author_last = first_author.last | regex_replace: '[*∗†‡§¶‖&^]', '' | strip %}
+    {% assign first_author_first = first_author.first | strip %}
+    {% if site.scholar.last_name contains first_author_last and site.scholar.first_name contains first_author_first %}
+      {% assign is_first_author = true %}
+    {% elsif site.last_name == first_author_last and site.first_name == first_author_first %}
+      {% assign is_first_author = true %}
     {% endif %}
   {% endif %}
   {% assign is_published = false %}
@@ -100,13 +101,19 @@
 
       {%- for author in entry.author_array limit: author_array_limit -%}
         {% assign author_is_self = false %}
-        {%- assign author_last_name = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' -%}
+        {%- assign author_last_name = author.last | regex_replace: '[*∗†‡§¶‖&^]', '' | strip -%}
+        {%- assign author_first_name = author.first | strip -%}
         {%- assign author_last_html = author.last | regex_replace: '([*∗†‡§¶‖&^]+)', '<sup>\1</sup>' -%}
         {% if site.scholar.last_name contains author_last_name %}
-          {% if site.scholar.first_name contains author.first %}
+          {% if site.scholar.first_name contains author_first_name %}
             {% assign author_is_self = true %}
           {% endif %}
-        {%- endif -%}
+        {% endif %}
+        {% if author_is_self == false and site.last_name and site.first_name %}
+          {% if site.last_name == author_last_name and site.first_name == author_first_name %}
+            {% assign author_is_self = true %}
+          {% endif %}
+        {% endif %}
         {% assign coauthor_url = null %}
         {%- assign clean_last_name = author_last_name | downcase | remove_accents -%}
         {% if site.data.coauthors[clean_last_name] %}
@@ -125,10 +132,10 @@
           {%- if forloop.last and author_array_limit == author_array_size %}and {% endif -%}
         {% endif %}
         {%- if author_is_self -%}
-          <em>
+          <strong>
             {{- author.first }}
             {{ author_last_html -}}
-          </em>
+          </strong>
         {%- else -%}
           {%- if coauthor_url -%}
             <a href="{{ coauthor_url }}">

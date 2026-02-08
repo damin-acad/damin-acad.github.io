@@ -1,7 +1,16 @@
 # frozen_string_literal: true
 # Jekyll Generator: parse papers.bib and set site.data.publication_counts
-# Two-level counts: Published (incl. Accepted/in press) and In review, each with
-# distribution by type (journal, conference, book chapter).
+#
+# Counting rules (as designed):
+# - STATUS (Published vs In review): from the "note" field in each entry.
+#   - "In review" (anywhere in note) → In review.
+#   - "Published", "Accepted", or "In press" (and not "In review") → Published / accepted / in press.
+# - TYPE (Journal / Conference / Book chapter): from the BibTeX entry type only.
+#   - @article       → Journal
+#   - @inproceedings → Conference
+#   - @incollection, @inbook → Book chapter
+#   (Other types like @string are ignored.)
+#
 
 module Jekyll
   class PublicationCountsGenerator < Generator
@@ -18,6 +27,7 @@ module Jekyll
 
     private
 
+    # Classify status from note: true = published/accepted/in press, false = in review or unknown.
     def published?(note_str)
       return false if note_str.nil? || note_str.empty?
       n = note_str.downcase
@@ -25,6 +35,7 @@ module Jekyll
       n =~ /published|accepted|in\s+press/
     end
 
+    # Classify type from BibTeX entry type only: article → journal, inproceedings → conference, incollection/inbook → book_chapter.
     def type_category(raw_type)
       return nil if raw_type.nil? || raw_type.empty?
       t = raw_type.to_s.downcase

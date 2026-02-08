@@ -78,3 +78,85 @@ nav_order: 2
   }
 })();
 </script>
+
+<script>
+// Toggle counts and list to first-authored only when checkbox is checked.
+(function() {
+  const FIRST_AUTHOR_HIDDEN = 'publication-first-author-filter-hidden';
+
+  function countFirstAuthored(entries) {
+    const counts = { pt: 0, pj: 0, pc: 0, pb: 0, rt: 0, rj: 0, rc: 0, rb: 0 };
+    entries.forEach(entry => {
+      const status = entry.dataset.status;
+      const type = (entry.dataset.publicationType || 'other').toLowerCase();
+      const isPublished = status === 'published';
+      if (isPublished) {
+        counts.pt++;
+        if (type === 'journal') counts.pj++;
+        else if (type === 'conference') counts.pc++;
+        else if (type === 'book_chapter') counts.pb++;
+      } else {
+        counts.rt++;
+        if (type === 'journal') counts.rj++;
+        else if (type === 'conference') counts.rc++;
+        else if (type === 'book_chapter') counts.rb++;
+      }
+    });
+    return counts;
+  }
+
+  function applyCounts(container, counts) {
+    ['pt','pj','pc','pb','rt','rj','rc','rb'].forEach(key => {
+      const el = container.querySelector('[data-count="' + key + '"]');
+      if (el) el.textContent = counts[key] != null ? counts[key] : 0;
+    });
+  }
+
+  function run() {
+    const container = document.getElementById('publication-counts-container');
+    const checkbox = document.getElementById('publication-count-first-author-only');
+    const publications = document.querySelector('.publications');
+    if (!container || !checkbox || !publications) return;
+
+    const allEntries = Array.from(publications.querySelectorAll('.publication-entry'));
+    const firstAuthorEntries = allEntries.filter(e => e.dataset.firstAuthor === 'true');
+    const firstAuthorCounts = countFirstAuthored(firstAuthorEntries);
+
+    const allCounts = {
+      pt: parseInt(container.dataset.pt, 10) || 0,
+      pj: parseInt(container.dataset.pj, 10) || 0,
+      pc: parseInt(container.dataset.pc, 10) || 0,
+      pb: parseInt(container.dataset.pb, 10) || 0,
+      rt: parseInt(container.dataset.rt, 10) || 0,
+      rj: parseInt(container.dataset.rj, 10) || 0,
+      rc: parseInt(container.dataset.rc, 10) || 0,
+      rb: parseInt(container.dataset.rb, 10) || 0
+    };
+
+    function update() {
+      const firstOnly = checkbox.checked;
+      applyCounts(container, firstOnly ? firstAuthorCounts : allCounts);
+      publications.classList.toggle('first-author-only', firstOnly);
+      publications.querySelectorAll('li').forEach(li => {
+        const entry = li.querySelector('.publication-entry');
+        if (entry) {
+          if (firstOnly && entry.dataset.firstAuthor !== 'true') {
+            li.classList.add(FIRST_AUTHOR_HIDDEN);
+          } else {
+            li.classList.remove(FIRST_AUTHOR_HIDDEN);
+          }
+        }
+      });
+    }
+
+    checkbox.addEventListener('change', update);
+    update();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', run);
+  } else {
+    run();
+  }
+})();
+</script>

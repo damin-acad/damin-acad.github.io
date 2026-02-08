@@ -8,39 +8,38 @@
 {% assign rj = counts.in_review_journals | default: counts["in_review_journals"] %}
 {% assign rc = counts.in_review_conferences | default: counts["in_review_conferences"] %}
 {% assign rb = counts.in_review_book_chapters | default: counts["in_review_book_chapters"] %}
-<div class="publication-counts-debug mb-2 p-2 small border rounded" style="background: #f0f0f0; font-family: monospace;">
-  <strong>Publication counts debug:</strong>
-  {% if counts %}
-  published_total={{ pt }}, published_journals={{ pj }}, published_conferences={{ pc }}, published_book_chapters={{ pb }} |
-  in_review_total={{ rt }}, in_review_journals={{ rj }}, in_review_conferences={{ rc }}, in_review_book_chapters={{ rb }}
-  {% else %}
-  (no data — add _data/publication_counts.yml or run: ruby _scripts/generate_publication_counts.rb)
-  {% endif %}
-</div>
 {% if counts %}
-<div class="publication-counts mb-4">
+<div class="publication-counts mb-4" id="publication-counts-container"
+     data-pt="{{ pt | default: 0 }}" data-pj="{{ pj | default: 0 }}" data-pc="{{ pc | default: 0 }}" data-pb="{{ pb | default: 0 }}"
+     data-rt="{{ rt | default: 0 }}" data-rj="{{ rj | default: 0 }}" data-rc="{{ rc | default: 0 }}" data-rb="{{ rb | default: 0 }}">
+  <div class="d-flex flex-wrap align-items-center gap-2 mb-3">
+    <label class="publication-count-toggle-label mb-0 d-flex align-items-center gap-2">
+      <input type="checkbox" id="publication-count-first-author-only" class="form-check-input" autocomplete="off">
+      <span class="small">First-authored by me only</span>
+    </label>
+  </div>
   <!-- Level 1: Published / Accepted / In press -->
   <div class="publication-count-section mb-3">
     <div class="publication-count-section-title mb-2">
-      <span class="publication-count-number publication-count-published-num">{{ pt | default: 0 }}</span>
+      <span class="publication-count-number publication-count-published-num" data-count="pt">{{ pt | default: 0 }}</span>
       <span class="publication-count-section-label">Published / accepted / in press</span>
     </div>
     <div class="row g-2 g-md-3">
       <div class="col-4 col-md">
         <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-published">
-          <span class="publication-count-number">{{ pj | default: 0 }}</span>
+          <span class="publication-count-number" data-count="pj">{{ pj | default: 0 }}</span>
           <span class="publication-count-label d-block small">{% if pj == 1 %}Journal{% else %}Journals{% endif %}</span>
         </div>
       </div>
       <div class="col-4 col-md">
         <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-published">
-          <span class="publication-count-number">{{ pc | default: 0 }}</span>
+          <span class="publication-count-number" data-count="pc">{{ pc | default: 0 }}</span>
           <span class="publication-count-label d-block small">{% if pc == 1 %}Conference{% else %}Conferences{% endif %}</span>
         </div>
       </div>
       <div class="col-4 col-md">
         <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-published">
-          <span class="publication-count-number">{{ pb | default: 0 }}</span>
+          <span class="publication-count-number" data-count="pb">{{ pb | default: 0 }}</span>
           <span class="publication-count-label d-block small">Book chapter{% if pb != 1 %}s{% endif %}</span>
         </div>
       </div>
@@ -50,25 +49,25 @@
   <!-- Level 2: In review -->
   <div class="publication-count-section">
     <div class="publication-count-section-title mb-2">
-      <span class="publication-count-number publication-count-review-num">{{ rt | default: 0 }}</span>
+      <span class="publication-count-number publication-count-review-num" data-count="rt">{{ rt | default: 0 }}</span>
       <span class="publication-count-section-label">In review</span>
     </div>
     <div class="row g-2 g-md-3">
       <div class="col-4 col-md">
         <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-review">
-          <span class="publication-count-number">{{ rj | default: 0 }}</span>
+          <span class="publication-count-number" data-count="rj">{{ rj | default: 0 }}</span>
           <span class="publication-count-label d-block small">{% if rj == 1 %}Journal{% else %}Journals{% endif %}</span>
         </div>
       </div>
       <div class="col-4 col-md">
         <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-review">
-          <span class="publication-count-number">{{ rc | default: 0 }}</span>
+          <span class="publication-count-number" data-count="rc">{{ rc | default: 0 }}</span>
           <span class="publication-count-label d-block small">{% if rc == 1 %}Conference{% else %}Conferences{% endif %}</span>
         </div>
       </div>
       <div class="col-4 col-md">
         <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-review">
-          <span class="publication-count-number">{{ rb | default: 0 }}</span>
+          <span class="publication-count-number" data-count="rb">{{ rb | default: 0 }}</span>
           <span class="publication-count-label d-block small">Book chapter{% if rb != 1 %}s{% endif %}</span>
         </div>
       </div>
@@ -99,6 +98,11 @@
 .publication-count-section-title .publication-count-review-num,
 .publication-counts .publication-count-review .publication-count-number {
   color: var(--global-text-color-light, #6c757d);
+}
+.publication-count-toggle-label { cursor: pointer; }
+/* When "First-authored only" is on, hide other entries */
+.publications.first-author-only li.publication-first-author-filter-hidden {
+  display: none !important;
 }
 </style>
 {% endif %}

@@ -1,35 +1,58 @@
 {% assign counts = site.data.publication_counts %}
 {% if counts %}
 <div class="publication-counts mb-4">
-  <div class="row g-2 g-md-3">
-    <div class="col-6 col-md">
-      <div class="publication-count-card border rounded px-3 py-2 text-center">
-        <span class="publication-count-number">{{ counts.journals | default: 0 }}</span>
-        <span class="publication-count-label d-block small">{% if counts.journals == 1 %}Journal{% else %}Journals{% endif %}</span>
+  <!-- Level 1: Published / Accepted / In press -->
+  <div class="publication-count-section mb-3">
+    <div class="publication-count-section-title mb-2">
+      <span class="publication-count-number publication-count-published-num">{{ counts.published_total | default: 0 }}</span>
+      <span class="publication-count-section-label">Published / accepted / in press</span>
+    </div>
+    <div class="row g-2 g-md-3">
+      <div class="col-4 col-md">
+        <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-published">
+          <span class="publication-count-number">{{ counts.published_journals | default: 0 }}</span>
+          <span class="publication-count-label d-block small">{% if counts.published_journals == 1 %}Journal{% else %}Journals{% endif %}</span>
+        </div>
+      </div>
+      <div class="col-4 col-md">
+        <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-published">
+          <span class="publication-count-number">{{ counts.published_conferences | default: 0 }}</span>
+          <span class="publication-count-label d-block small">{% if counts.published_conferences == 1 %}Conference{% else %}Conferences{% endif %}</span>
+        </div>
+      </div>
+      <div class="col-4 col-md">
+        <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-published">
+          <span class="publication-count-number">{{ counts.published_book_chapters | default: 0 }}</span>
+          <span class="publication-count-label d-block small">Book chapter{% if counts.published_book_chapters != 1 %}s{% endif %}</span>
+        </div>
       </div>
     </div>
-    <div class="col-6 col-md">
-      <div class="publication-count-card border rounded px-3 py-2 text-center">
-        <span class="publication-count-number">{{ counts.conferences | default: 0 }}</span>
-        <span class="publication-count-label d-block small">{% if counts.conferences == 1 %}Conference{% else %}Conferences{% endif %}</span>
-      </div>
+  </div>
+
+  <!-- Level 2: In review -->
+  <div class="publication-count-section">
+    <div class="publication-count-section-title mb-2">
+      <span class="publication-count-number publication-count-review-num">{{ counts.in_review_total | default: 0 }}</span>
+      <span class="publication-count-section-label">In review</span>
     </div>
-    <div class="col-6 col-md">
-      <div class="publication-count-card border rounded px-3 py-2 text-center">
-        <span class="publication-count-number">{{ counts.book_chapters | default: 0 }}</span>
-        <span class="publication-count-label d-block small">Book chapter{% if counts.book_chapters != 1 %}s{% endif %}</span>
+    <div class="row g-2 g-md-3">
+      <div class="col-4 col-md">
+        <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-review">
+          <span class="publication-count-number">{{ counts.in_review_journals | default: 0 }}</span>
+          <span class="publication-count-label d-block small">{% if counts.in_review_journals == 1 %}Journal{% else %}Journals{% endif %}</span>
+        </div>
       </div>
-    </div>
-    <div class="col-6 col-md">
-      <div class="publication-count-card border rounded px-3 py-2 text-center publication-count-published">
-        <span class="publication-count-number">{{ counts.published_or_press | default: 0 }}</span>
-        <span class="publication-count-label d-block small">Published / in press</span>
+      <div class="col-4 col-md">
+        <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-review">
+          <span class="publication-count-number">{{ counts.in_review_conferences | default: 0 }}</span>
+          <span class="publication-count-label d-block small">{% if counts.in_review_conferences == 1 %}Conference{% else %}Conferences{% endif %}</span>
+        </div>
       </div>
-    </div>
-    <div class="col-6 col-md">
-      <div class="publication-count-card border rounded px-3 py-2 text-center publication-count-review">
-        <span class="publication-count-number">{{ counts.in_review | default: 0 }}</span>
-        <span class="publication-count-label d-block small">In review</span>
+      <div class="col-4 col-md">
+        <div class="publication-count-card border rounded px-2 py-2 text-center publication-count-review">
+          <span class="publication-count-number">{{ counts.in_review_book_chapters | default: 0 }}</span>
+          <span class="publication-count-label d-block small">Book chapter{% if counts.in_review_book_chapters != 1 %}s{% endif %}</span>
+        </div>
       </div>
     </div>
   </div>
@@ -47,7 +70,17 @@
 .publication-counts .publication-count-label {
   color: var(--global-text-color-light, #6c757d);
 }
-.publication-counts .publication-count-published .publication-count-number { color: var(--global-theme-color); }
-.publication-counts .publication-count-review .publication-count-number { color: var(--global-text-color-light); }
+.publication-count-section-title {
+  font-size: 0.95rem;
+  color: var(--global-text-color-light, #6c757d);
+}
+.publication-count-section-title .publication-count-published-num,
+.publication-counts .publication-count-published .publication-count-number {
+  color: var(--global-theme-color, #2563eb);
+}
+.publication-count-section-title .publication-count-review-num,
+.publication-counts .publication-count-review .publication-count-number {
+  color: var(--global-text-color-light, #6c757d);
+}
 </style>
 {% endif %}

@@ -1,18 +1,16 @@
 # Regenerate _data/publication_counts.yml from _bibliography/papers.bib
-# Runs daily (cron) and on bib changes so the publication page counts stay in sync.
+# When you push (e.g. from GitHub Desktop), this runs and auto-commits + pushes
+# the updated counts so you don't have to run the script locally.
 
 name: Update publication counts
 
 on:
   schedule:
-    # Run every day at 06:00 UTC (adjust as needed: https://crontab.guru/)
     - cron: '0 6 * * *'
   push:
     branches:
       - main
       - master
-    paths:
-      - '_bibliography/papers.bib'
   workflow_dispatch:
 
 permissions:

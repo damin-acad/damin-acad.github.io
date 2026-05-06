@@ -92,6 +92,8 @@ jobs:
           valueFile: "_config.yml"
           propertyPath: "giscus.repo"
           value: ${{ github.repository }}
+      - name: Regenerate publication counts 🧮
+        run: ruby _scripts/generate_publication_counts.rb
       - name: Install and Build 🔧
         run: |
           sudo apt-get update && sudo apt-get install -y imagemagick

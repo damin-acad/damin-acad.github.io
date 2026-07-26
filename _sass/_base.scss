@@ -725,6 +725,21 @@ footer.sticky-bottom {
     text-align: right;
   }
 
+  .year-badge {
+    display: inline-block;
+    margin-left: 0.4rem;
+    padding: 0.05rem 0.45rem;
+    font-size: 0.75em;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    vertical-align: middle;
+    color: var(--global-text-color);
+    background-color: var(--global-bg-color);
+    border: 1px solid var(--global-divider-color);
+    border-radius: 0.25rem;
+    white-space: nowrap;
+  }
+
   ol.bibliography {
     list-style: none;
     padding: 0;

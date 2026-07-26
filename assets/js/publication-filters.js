@@ -2,8 +2,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const filterButtons = document.querySelectorAll(".filter-btn");
   const publicationEntries = document.querySelectorAll(".publication-entry");
   const bibliographyItems = document.querySelectorAll(".bibliography > li");
-  const yearHeaders = document.querySelectorAll("h2.bibliography, h3.bibliography");
-  const yearLists = document.querySelectorAll(".bibliography > ol");
 
   // Get the parent row element for each publication entry
   function getPublicationRow(element) {
@@ -15,8 +13,6 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function applyFilter(filterType) {
-    let visibleCount = 0;
-
     // Filter publication entries
     publicationEntries.forEach((entry) => {
       const row = getPublicationRow(entry);
@@ -41,7 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
       if (shouldShow) {
         row.classList.remove("hidden");
         entry.classList.remove("hidden");
-        visibleCount++;
       } else {
         row.classList.add("hidden");
         entry.classList.add("hidden");
@@ -57,45 +52,6 @@ document.addEventListener("DOMContentLoaded", function () {
           item.classList.add("hidden");
         } else {
           item.classList.remove("hidden");
-        }
-      }
-    });
-
-    // Hide year headers and lists if all items in that year are hidden
-    yearHeaders.forEach((header) => {
-      let iterator = header.nextElementSibling;
-      let hasVisibleItems = false;
-
-      while (iterator && iterator.tagName !== "H2" && iterator.tagName !== "H3") {
-        if (iterator.tagName === "OL") {
-          const visibleItems = iterator.querySelectorAll(":scope > li:not(.hidden)");
-          if (visibleItems.length > 0) {
-            hasVisibleItems = true;
-            break;
-          }
-        }
-        iterator = iterator.nextElementSibling;
-      }
-
-      if (hasVisibleItems) {
-        header.classList.remove("hidden");
-        // Show the OL that follows
-        iterator = header.nextElementSibling;
-        while (iterator && iterator.tagName !== "H2" && iterator.tagName !== "H3") {
-          if (iterator.tagName === "OL") {
-            iterator.classList.remove("hidden");
-          }
-          iterator = iterator.nextElementSibling;
-        }
-      } else {
-        header.classList.add("hidden");
-        // Hide the OL that follows
-        iterator = header.nextElementSibling;
-        while (iterator && iterator.tagName !== "H2" && iterator.tagName !== "H3") {
-          if (iterator.tagName === "OL") {
-            iterator.classList.add("hidden");
-          }
-          iterator = iterator.nextElementSibling;
         }
       }
     });
@@ -117,4 +73,3 @@ document.addEventListener("DOMContentLoaded", function () {
   // Initialize with "all" filter
   applyFilter("all");
 });
-

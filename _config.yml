@@ -293,8 +293,8 @@ scholar:
   details_link: Details
 
   query: "@*"
-  group_by: year
-  group_order: descending
+  group_by: none
+  # Sorted client-side by citation count (see publications.md); year shown as a badge per entry.
 
 # Display different badges withs stats for your publications
 # Customize badge behavior in _layouts/bib.liquid
@@ -318,6 +318,7 @@ filtered_bibtex_keywords:
     bibtex_show,
     blog,
     code,
+    citations,
     google_scholar_id,
     html,
     img,

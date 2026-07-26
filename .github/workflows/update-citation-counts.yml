@@ -1,0 +1,39 @@
+# Refresh citations={} in papers.bib via Semantic Scholar Graph API.
+# Optional repo secret: SEMANTIC_SCHOLAR_API_KEY (higher rate limits).
+
+name: Update citation counts
+
+on:
+  schedule:
+    - cron: '0 7 * * 1' # Mondays 07:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  update-citations:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Refresh citation counts
+        env:
+          SEMANTIC_SCHOLAR_API_KEY: ${{ secrets.SEMANTIC_SCHOLAR_API_KEY }}
+          S2_REQUEST_GAP: '1.5'
+        run: python3 _scripts/update_citation_counts.py
+
+      - name: Commit and push if changed
+        uses: stefanzweifel/git-auto-commit-action@v5
+        with:
+          commit_message: 'chore: refresh citation counts from Semantic Scholar'
+          file_pattern: _bibliography/papers.bib

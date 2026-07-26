@@ -828,6 +828,11 @@ footer.sticky-bottom {
 
       .badges {
         padding-bottom: 0.5rem;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        gap: 0.4rem;
+
         span {
           display: inline-block;
           color: $black-color;
@@ -838,6 +843,112 @@ footer.sticky-bottom {
           &:hover {
             text-decoration: underline;
           }
+        }
+
+        .citation-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 0.35rem;
+          margin: 0;
+          padding: 0.2rem 0.55rem 0.2rem 0.4rem;
+          border: 1px solid var(--global-divider-color);
+          border-radius: 0.35rem;
+          background: color-mix(in srgb, var(--global-theme-color) 8%, var(--global-bg-color));
+          color: var(--global-text-color);
+          text-decoration: none;
+          line-height: 1.2;
+          transition:
+            transform 0.25s ease,
+            border-color 0.25s ease,
+            background-color 0.25s ease,
+            box-shadow 0.25s ease;
+
+          &:hover,
+          &:focus-visible {
+            text-decoration: none;
+            color: var(--global-theme-color);
+            border-color: var(--global-theme-color);
+            background: color-mix(in srgb, var(--global-theme-color) 14%, var(--global-bg-color));
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px color-mix(in srgb, var(--global-theme-color) 18%, transparent);
+          }
+
+          .ai {
+            font-size: 0.95rem;
+            color: var(--global-theme-color);
+          }
+
+          &__copy {
+            display: inline-flex;
+            align-items: baseline;
+            gap: 0.28rem;
+            padding-right: 0;
+            height: auto;
+            color: inherit;
+
+            &:hover {
+              text-decoration: none;
+            }
+          }
+
+          &__label {
+            font-size: 0.7rem;
+            font-weight: 500;
+            letter-spacing: 0.02em;
+            text-transform: uppercase;
+            opacity: 0.72;
+            padding-right: 0;
+            height: auto;
+            color: inherit;
+
+            &:hover {
+              text-decoration: none;
+            }
+          }
+
+          &__count {
+            font-size: 0.95rem;
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+            color: var(--global-theme-color);
+            padding-right: 0;
+            height: auto;
+
+            &:hover {
+              text-decoration: none;
+            }
+          }
+
+          &--static {
+            cursor: default;
+
+            &:hover,
+            &:focus-visible {
+              transform: none;
+              box-shadow: none;
+              color: var(--global-text-color);
+              border-color: var(--global-divider-color);
+              background: color-mix(in srgb, var(--global-theme-color) 8%, var(--global-bg-color));
+            }
+          }
+
+          &.is-animated .citation-chip__count {
+            animation: citation-pop 0.45s ease;
+          }
+        }
+      }
+
+      @keyframes citation-pop {
+        0% {
+          transform: scale(0.85);
+          opacity: 0.4;
+        }
+        60% {
+          transform: scale(1.08);
+        }
+        100% {
+          transform: scale(1);
+          opacity: 1;
         }
       }
 

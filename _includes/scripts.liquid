@@ -194,6 +194,9 @@
 {% if site.enable_publication_badges.dimensions %}
   <script async src="https://badge.dimensions.ai/badge.js"></script>
 {% endif %}
+{% if site.enable_publication_badges.google_scholar %}
+  <script defer src="{{ '/assets/js/citation-chips.js' | relative_url | bust_file_cache }}" type="text/javascript"></script>
+{% endif %}
 
 {% if site.enable_math %}
   <!-- MathJax -->

@@ -323,8 +323,18 @@
       {% endif %}
 
       {% assign entry_has_google_scholar_badge = false %}
-      {% if entry.google_scholar_id %}
-        {% assign entry_has_google_scholar_badge = true %}
+      {% assign scholar_cite_count = entry.citations %}
+      {% if scholar_cite_count == nil or scholar_cite_count == blank %}
+        {% if entry.google_scholar_id %}
+          {% capture scholar_cite_count %}{% google_scholar_citations site.data.socials.scholar_userid entry.google_scholar_id %}{% endcapture %}
+        {% endif %}
+      {% endif %}
+      {% if site.enable_publication_badges.google_scholar %}
+        {% if entry.google_scholar_id %}
+          {% assign entry_has_google_scholar_badge = true %}
+        {% elsif scholar_cite_count != nil and scholar_cite_count != blank %}
+          {% assign entry_has_google_scholar_badge = true %}
+        {% endif %}
       {% endif %}
 
       {% assign entry_has_inspirehep_badge = false %}
@@ -368,21 +378,29 @@
               style="margin-bottom: 3px;"
             ></span>
           {% endif %}
-          {% if site.enable_publication_badges.google_scholar and entry_has_google_scholar_badge %}
-            {% assign scholar_cite_count = entry.citations %}
-            {% if scholar_cite_count == nil or scholar_cite_count == blank %}
-              {% capture scholar_cite_count %}{% google_scholar_citations site.data.socials.scholar_userid entry.google_scholar_id %}{% endcapture %}
-            {% endif %}
-            <a
-              href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user={{ site.data.socials.scholar_userid }}&citation_for_view={{ site.data.socials.scholar_userid }}:{{ entry.google_scholar_id }}"
-              aria-label="Google Scholar link"
-              role="button"
-            >
-              <img
-                src="https://img.shields.io/badge/scholar-{{ scholar_cite_count }}-4285F4?logo=googlescholar&labelColor=beige"
-                alt="{{ scholar_cite_count }} Google Scholar citations"
+          {% if entry_has_google_scholar_badge %}
+            {% if entry.google_scholar_id %}
+              <a
+                class="citation-chip"
+                href="https://scholar.google.com/citations?view_op=view_citation&hl=en&user={{ site.data.socials.scholar_userid }}&citation_for_view={{ site.data.socials.scholar_userid }}:{{ entry.google_scholar_id }}"
+                aria-label="{{ scholar_cite_count }} citations on Google Scholar"
+                title="View on Google Scholar"
               >
-            </a>
+                <i class="ai ai-google-scholar" aria-hidden="true"></i>
+                <span class="citation-chip__copy">
+                  <span class="citation-chip__label">Cited by</span>
+                  <span class="citation-chip__count" data-cite-count="{{ scholar_cite_count | default: 0 }}">{{ scholar_cite_count | default: 0 }}</span>
+                </span>
+              </a>
+            {% else %}
+              <span class="citation-chip citation-chip--static" aria-label="{{ scholar_cite_count }} citations">
+                <i class="ai ai-google-scholar" aria-hidden="true"></i>
+                <span class="citation-chip__copy">
+                  <span class="citation-chip__label">Cited by</span>
+                  <span class="citation-chip__count" data-cite-count="{{ scholar_cite_count | default: 0 }}">{{ scholar_cite_count | default: 0 }}</span>
+                </span>
+              </span>
+            {% endif %}
           {% endif %}
           {% if site.enable_publication_badges.inspirehep and entry_has_inspirehep_badge %}
             <a

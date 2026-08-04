@@ -20,6 +20,17 @@ const essayWords = essays.reduce(
     <p class="section-tab">Fig. 0 — the subject</p>
     <h1 class="page-title">How generative AI represents the people it claims to serve</h1>
 
+    <p class="page-lede">
+      — and what that gets wrong. Below is a persona of me, in the format the research
+      interrogates.
+    </p>
+
+    {/* the persona opens the site: the format his research interrogates, applied
+        to him, before anything else on the page */}
+    <div class="hero-persona">
+      <Persona essays={essays.length} essayWords={essayWords} />
+    </div>
+
     {/* prose rather than a field table — but four paragraphs' worth of facts in
         two, with the rest one click away */}
     <div class="prose lead-prose">
@@ -72,14 +83,6 @@ const essayWords = essays.reduce(
     <PubStats />
     <p class="typed" style="margin-bottom:0.75rem">Selected — starred in the full list</p>
     <PublicationList selectedOnly />
-  </section>
-
-  <section class="section" data-set>
-    <div class="section-head">
-      <h2 class="section-title">A persona of the persona researcher</h2>
-      <span class="section-count">sourced, not generated</span>
-    </div>
-    <Persona essays={essays.length} essayWords={essayWords} />
   </section>
 
 </Base>

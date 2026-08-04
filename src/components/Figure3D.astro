@@ -1,0 +1,262 @@
+---
+/**
+ * The figure, in three dimensions.
+ *
+ * scripts/build-figure.py derives a low-poly mesh from the photograph and reads
+ * luminance as a height field, so this is a bas-relief of him: 383 vertices, 646
+ * faces, four ink levels. It resembles him because it is computed from him, and
+ * it is geometry rather than a photograph.
+ *
+ * Drawn on canvas rather than in SVG — 646 filled triangles re-projected every
+ * frame is trivial for canvas and heavy for the DOM. The ink levels are read out
+ * of the stylesheet's custom properties so the figure still follows the paper
+ * stock, and re-read when the stock changes.
+ *
+ * It is a height map, not a scan. Turning it fully side-on would show that, so
+ * the sweep is deliberately shallow and the drag is clamped.
+ */
+import mesh from '../../public/figure.json';
+
+const { verts, faces } = mesh;
+---
+
+<figure class="fg" data-set>
+  <div class="fg-stage" id="fgStage">
+    <canvas id="fgCanvas" width="760" height="900" aria-hidden="true"></canvas>
+    <p class="fg-badge">
+      <span>Low-poly relief</span>
+      <span>{verts.length} verts · {faces.length} faces</span>
+    </p>
+    <p class="fg-hint" id="fgHint">Drag to turn</p>
+  </div>
+  <figcaption class="sr">
+    A low-poly three-dimensional relief derived from a photograph of the author.
+  </figcaption>
+  <script type="application/json" id="fgData" set:html={JSON.stringify(mesh)} />
+</figure>
+
+<style>
+  .fg {
+    margin: 0;
+    position: relative;
+  }
+
+  .fg-stage {
+    position: relative;
+    cursor: grab;
+    touch-action: pan-y;
+  }
+
+  .fg-stage.dragging {
+    cursor: grabbing;
+  }
+
+  .fg-stage canvas {
+    display: block;
+    width: 100%;
+    height: auto;
+    /* the mesh prints like everything else: ink on paper */
+    mix-blend-mode: var(--blend);
+  }
+
+  .fg-badge,
+  .fg-hint {
+    position: absolute;
+    margin: 0;
+    font-family: var(--type);
+    font-size: 0.55rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    pointer-events: none;
+  }
+
+  .fg-badge {
+    top: 0;
+    left: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.05rem;
+  }
+
+  .fg-hint {
+    bottom: 0;
+    right: 0;
+  }
+
+  .sr {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+  }
+</style>
+
+<script>
+  const stage = document.getElementById('fgStage');
+  const canvas = document.getElementById('fgCanvas') as HTMLCanvasElement | null;
+  const raw = document.getElementById('fgData');
+
+  if (stage && canvas && raw) {
+    const { verts, faces } = JSON.parse(raw.textContent || '{}') as {
+      verts: [number, number, number][];
+      faces: [number, number, number, number][];
+    };
+
+    const ctx = canvas.getContext('2d');
+    const hint = document.getElementById('fgHint');
+    const still = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const root = document.documentElement;
+
+    /** ink levels live in the stylesheet, so the figure follows the stock */
+    let inks: string[] = [];
+    function readInks() {
+      const cs = getComputedStyle(stage);
+      inks = [1, 2, 3, 4].map((i) => cs.getPropertyValue(`--fig-${i}`).trim() || '#2b2622');
+    }
+    readInks();
+    new MutationObserver(() => {
+      readInks();
+      draw();
+    }).observe(root, { attributes: true, attributeFilter: ['data-stock'] });
+
+    let yaw = 0.34;
+    let pitch = -0.12;
+    let spin = still.matches ? 0 : 0.0016;
+
+    const DEPTH = 3.2;
+    const projected = new Float64Array(verts.length * 3);
+    const order = faces.map((_, i) => i);
+
+    function project() {
+      const cy = Math.cos(yaw);
+      const sy = Math.sin(yaw);
+      const cp = Math.cos(pitch);
+      const sp = Math.sin(pitch);
+      const R = Math.min(canvas.width, canvas.height) * 0.44;
+      const ox = canvas.width / 2;
+      const oy = canvas.height / 2;
+
+      for (let i = 0; i < verts.length; i++) {
+        const [x0, y0, z0] = verts[i];
+        const x1 = x0 * cy - z0 * sy;
+        const z1 = x0 * sy + z0 * cy;
+        const y1 = y0 * cp - z1 * sp;
+        const z2 = y0 * sp + z1 * cp;
+        const k = DEPTH / (DEPTH + z2);
+        projected[i * 3] = ox + x1 * R * k;
+        projected[i * 3 + 1] = oy + y1 * R * k;
+        projected[i * 3 + 2] = z2;
+      }
+    }
+
+    function draw() {
+      if (!ctx) return;
+      project();
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // painter's algorithm on face depth
+      order.sort((a, b) => {
+        const fa = faces[a];
+        const fb = faces[b];
+        const za = projected[fa[0] * 3 + 2] + projected[fa[1] * 3 + 2] + projected[fa[2] * 3 + 2];
+        const zb = projected[fb[0] * 3 + 2] + projected[fb[1] * 3 + 2] + projected[fb[2] * 3 + 2];
+        return zb - za;
+      });
+
+      for (const fi of order) {
+        const [a, b, c, level] = faces[fi];
+        const ax = projected[a * 3];
+        const ay = projected[a * 3 + 1];
+        const bx = projected[b * 3];
+        const by = projected[b * 3 + 1];
+        const cx = projected[c * 3];
+        const cy2 = projected[c * 3 + 1];
+
+        // a face turned away from the viewer steps one ink lighter, which is how
+        // the relief reads without leaving the four-level palette
+        const area = (bx - ax) * (cy2 - ay) - (cx - ax) * (by - ay);
+        const idx = Math.max(0, Math.min(3, area < 0 ? level - 2 : level - 1));
+
+        ctx.beginPath();
+        ctx.moveTo(ax, ay);
+        ctx.lineTo(bx, by);
+        ctx.lineTo(cx, cy2);
+        ctx.closePath();
+        ctx.fillStyle = inks[idx];
+        ctx.fill();
+      }
+    }
+
+    let rafId = 0;
+    function loop() {
+      if (spin) yaw += spin;
+      draw();
+      rafId = requestAnimationFrame(loop);
+    }
+
+    /* ---- orbit, clamped: it is a relief, not a scan ---- */
+
+    let dragging = false;
+    let lastX = 0;
+    let lastY = 0;
+
+    stage.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      spin = 0;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      stage.classList.add('dragging');
+      stage.setPointerCapture(e.pointerId);
+      if (hint) hint.textContent = 'Let go to resume';
+    });
+
+    stage.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      yaw = Math.max(-0.85, Math.min(0.85, yaw + (e.clientX - lastX) * 0.006));
+      pitch = Math.max(-0.45, Math.min(0.45, pitch + (e.clientY - lastY) * 0.004));
+      lastX = e.clientX;
+      lastY = e.clientY;
+      if (!rafId) draw();
+    });
+
+    function endDrag() {
+      if (!dragging) return;
+      dragging = false;
+      stage.classList.remove('dragging');
+      if (!still.matches) spin = 0.0011;
+      if (hint) hint.textContent = 'Drag to turn';
+    }
+    stage.addEventListener('pointerup', endDrag);
+    stage.addEventListener('pointercancel', endDrag);
+
+    // sharpen for the display, and pause when off screen
+    function size() {
+      const dpr = Math.min(window.devicePixelRatio || 1, 2);
+      const w = stage.clientWidth || 760;
+      canvas.width = Math.round(w * dpr);
+      canvas.height = Math.round(w * (900 / 760) * dpr);
+      draw();
+    }
+    window.addEventListener('resize', size, { passive: true });
+
+    if ('IntersectionObserver' in window) {
+      new IntersectionObserver((entries) => {
+        for (const en of entries) {
+          if (en.isIntersecting) {
+            if (!rafId) loop();
+          } else if (rafId) {
+            cancelAnimationFrame(rafId);
+            rafId = 0;
+          }
+        }
+      }).observe(stage);
+    } else {
+      loop();
+    }
+
+    size();
+  }
+</script>

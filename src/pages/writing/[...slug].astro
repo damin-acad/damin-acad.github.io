@@ -9,46 +9,91 @@ export async function getStaticPaths() {
 }
 
 const { post } = Astro.props;
-const { Content } = await render(post);
+/**
+ * `headings` comes from the renderer, so the contents list is the essay's real
+ * structure rather than a hand-kept copy of it. These pieces carry up to 36
+ * headings each — 426 across the collection — which is what makes the sidebar
+ * worth the width it takes.
+ */
+const { Content, headings } = await render(post);
+
+const toc = headings.filter((h) => h.depth === 2 || h.depth === 3);
 const words = (post.body ?? '').split(/\s+/).filter(Boolean).length;
 const fmt = (d: Date) =>
   d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
 ---
 
 <Base title={post.data.title} description={post.data.excerpt}>
-  <article class="section" data-set>
-    <p class="typed">Essay</p>
-    <h1 class="page-title">{post.data.title}</h1>
+  <article class="essay">
+    <header class="essay-head">
+      <p class="section-tab">Essay</p>
+      <h1 class="page-title">{post.data.title}</h1>
+      {post.data.excerpt && <p class="page-lede">{post.data.excerpt}</p>}
+    </header>
 
-    <p class="byline">
-      {fmt(post.data.date)} · {words.toLocaleString('en-GB')} words
-      {
-        post.data.extractSlug && (
-          <>
-            {' · '}
-            <a href={portfolioExtract(post.data.extractSlug)} rel="noopener" target="_blank">
-              short version
-            </a>
-            {PORTFOLIO_IS_LOCAL && <span> (local)</span>}
-          </>
-        )
-      }
-    </p>
+    <div class="essay-grid">
+      <!-- the sidebar is why this page can be full width and still readable -->
+      <aside class="essay-rail">
+        <dl class="essay-facts">
+          <div>
+            <dt>Published</dt>
+            <dd>{fmt(post.data.date)}</dd>
+          </div>
+          <div>
+            <dt>Length</dt>
+            <dd>{words.toLocaleString('en-GB')} words</dd>
+          </div>
+          {
+            toc.length > 0 && (
+              <div>
+                <dt>Sections</dt>
+                <dd>{toc.length}</dd>
+              </div>
+            )
+          }
+        </dl>
 
-    <div class="prose prose-wide">
-      <Content />
+        {
+          toc.length > 0 && (
+            <nav class="essay-toc" aria-label="Contents">
+              <p class="essay-rail-h">Contents</p>
+              <ol>
+                {toc.map((h) => (
+                  <li class:list={[h.depth === 3 && 'is-sub']}>
+                    <a href={`#${h.slug}`}>{h.text}</a>
+                  </li>
+                ))}
+              </ol>
+            </nav>
+          )
+        }
+
+        {
+          post.data.extractSlug && (
+            <p class="essay-rail-note">
+              A short version of this piece is on the portfolio.{' '}
+              <a href={portfolioExtract(post.data.extractSlug)} rel="noopener" target="_blank">
+                Read the extract ↗
+              </a>
+              {PORTFOLIO_IS_LOCAL && <span> (local)</span>}
+            </p>
+          )
+        }
+
+        {
+          post.data.tags.length > 0 && (
+            <ul class="tags">
+              {post.data.tags.slice(0, 8).map((t) => <li class="tag">{t}</li>)}
+            </ul>
+          )
+        }
+
+        <p class="essay-rail-note"><a href="/writing">← all writing</a></p>
+      </aside>
+
+      <div class="prose prose-wide">
+        <Content />
+      </div>
     </div>
-
-    {
-      post.data.tags.length > 0 && (
-        <ul class="tags">
-          {post.data.tags.map((t) => <li class="tag">{t}</li>)}
-        </ul>
-      )
-    }
-
-    <p class="typed" style="margin-top:2rem">
-      <a href="/writing">← all writing</a>
-    </p>
   </article>
 </Base>

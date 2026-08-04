@@ -36,9 +36,7 @@ const coauthors = new Set(pubs.flatMap((p) => p.authors).filter((a) => a !== sit
         <a href={site.socials.orcid} rel="noopener" target="_blank">ORCID</a>
       </span>
     </div>
-    <div class="wide">
-      <p class="typed" id="pub-note" hidden></p>
-      <PublicationList showFilters />
-    </div>
+        <p class="typed" id="pub-note" hidden></p>
+    <PublicationList showFilters />
   </section>
 </Base>

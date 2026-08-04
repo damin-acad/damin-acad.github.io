@@ -23,11 +23,9 @@ const selected = pubs.filter((p) => p.selected);
       <h2 class="section-title">Publications</h2>
       <span class="section-count"><a href="/publications">all {pubs.length} · projector · bibtex</a></span>
     </div>
-    <div class="wide">
-      <PubStats />
-      <p class="typed" style="margin-bottom:0.75rem">Selected — starred in the full list</p>
-      <PublicationList selectedOnly />
-    </div>
+        <PubStats />
+    <p class="typed" style="margin-bottom:0.75rem">Selected — starred in the full list</p>
+    <PublicationList selectedOnly />
   </section>
 
 </Base>

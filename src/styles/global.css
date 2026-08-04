@@ -66,14 +66,8 @@
   --t-4: clamp(2.6rem, 6vw, 4.2rem);
 
   --gutter: clamp(1rem, 4vw, 2.25rem);
-  /* The shell is a reading column, not a canvas. It used to be 62rem while
-     prose was capped at 38rem, so text filled 61% of it and 384px sat empty on
-     the right — which read as broken rather than as a margin. The shell is the
-     measure now, and the few blocks that genuinely need width (the projector,
-     publication rows, the persona) break out with .wide. */
-  --shell: 46rem;
-  --wide: 74rem;
-  --measure: 46rem;
+  --shell: 62rem;
+  --measure: 42rem;
 
   --ease: cubic-bezier(0.25, 0.9, 0.3, 1);
 }
@@ -117,17 +111,6 @@ body {
   z-index: 1;
   width: min(100% - 2 * var(--gutter), var(--shell));
   margin-inline: auto;
-}
-
-/**
- * Break out of the reading column, symmetrically. When the requested width
- * exceeds the shell the margins go negative, which widens the element without
- * moving its centre. No transform, so nothing overlaps in flow.
- */
-.wide {
-  --w: min(100vw - 2 * var(--gutter), var(--wide));
-  width: var(--w);
-  margin-inline: calc((100% - var(--w)) / 2);
 }
 
 /* ---------- masthead ---------- */
@@ -1111,4 +1094,128 @@ details[open] > .cv-summary::after {
 .pub-authors {
   max-width: 62ch;
   line-height: 1.5;
+}
+
+/* ============================================================
+   Essay pages
+
+   These were a 42rem column inside a 62rem shell, which left the page looking
+   unfinished. The prose keeps its reading measure — long lines are worse than
+   empty margin — and a sticky rail carrying the contents, the length and the
+   link to the short version occupies the rest. The width is used rather than
+   stretched.
+   ============================================================ */
+
+.essay {
+  padding-block: clamp(1.5rem, 4vw, 2.5rem) 3rem;
+}
+
+.essay-head {
+  max-width: 46rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 2px solid var(--ink);
+}
+
+.essay-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+@media (min-width: 900px) {
+  .essay-grid {
+    /* rail first in the source so it reads before the body on narrow screens */
+    grid-template-columns: 14rem minmax(0, 1fr);
+    column-gap: clamp(2rem, 4vw, 3.5rem);
+    align-items: start;
+  }
+
+  .essay-rail {
+    position: sticky;
+    top: 5rem;
+    max-height: calc(100vh - 7rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
+  }
+}
+
+.essay-rail {
+  font-family: var(--type);
+  font-size: 0.68rem;
+}
+
+.essay-rail-h {
+  margin: 1rem 0 0.35rem;
+  font-size: 0.6rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--mark);
+}
+
+.essay-facts {
+  margin: 0;
+  border-top: 1.5px solid var(--rule);
+}
+
+.essay-facts div {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 0.28rem 0;
+  border-bottom: 1.5px solid var(--rule);
+}
+
+.essay-facts dt {
+  color: var(--ink-faint);
+  letter-spacing: 0.05em;
+}
+
+.essay-facts dd {
+  margin: 0;
+  color: var(--ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.essay-toc ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: toc;
+}
+
+.essay-toc li {
+  counter-increment: toc;
+  border-bottom: 1.5px dashed var(--rule);
+}
+
+.essay-toc li.is-sub {
+  padding-left: 0.8rem;
+}
+
+.essay-toc a {
+  display: block;
+  padding: 0.24rem 0;
+  color: var(--ink-soft);
+  text-decoration: none;
+  line-height: 1.4;
+}
+
+.essay-toc a::before {
+  content: counter(toc) '. ';
+  color: var(--ink-faint);
+}
+
+.essay-toc a:hover {
+  color: var(--mark);
+}
+
+.essay-rail-note {
+  margin: 0.9rem 0 0;
+  line-height: 1.6;
+  color: var(--ink-soft);
+}
+
+/* the headings the contents list points at need somewhere to land */
+.prose-wide :is(h2, h3) {
+  scroll-margin-top: 5.5rem;
 }

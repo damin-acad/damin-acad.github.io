@@ -6,12 +6,21 @@
  * bubbles arranged around it, each carrying one sourced attribute. The bubbles
  * arrive in sequence on reveal, like messages landing.
  *
- * ─── the figure asset ───────────────────────────────────────────────────────
- * FIGURE below points at the portrait as a PLACEHOLDER. The intent is a 3D
- * character render; I cannot generate a likeness, so drop the render into
- * public/ and change this one line. A PNG with real transparency is ideal — set
- * FIGURE_CUTOUT to true for it, which skips the blend-mode knockout used on the
- * photo (whose background is a flat 227,232,240 and disappears under multiply).
+ * ─── the figure ─────────────────────────────────────────────────────────────
+ * A low-poly mesh derived from the photograph by scripts/build-figure.py: the
+ * image is sampled onto a jittered lattice, triangulated, and each face filled
+ * with the ink level nearest its mean luminance. It resembles him because it is
+ * computed from him, and it is geometry rather than a photograph.
+ *
+ * 646 triangles of a possible 2312 are painted; the rest cover the flat
+ * (227,232,240) backdrop, land in the lightest bucket and are simply not drawn,
+ * so the paper shows through with no mask and no transparent asset to maintain.
+ *
+ * Figure3D turns that mesh: luminance is also read as a height field, so the
+ * figure is a rotating bas-relief rather than a flat cut-out. The ink levels are
+ * declared here as custom properties and read by the canvas, so it follows the
+ * paper stock. Regenerate after changing the source photo:
+ *   python3 scripts/build-figure.py
  * ────────────────────────────────────────────────────────────────────────────
  *
  * Every bubble is sourced from cv.yml, papers.bib or a published sentence.
@@ -21,9 +30,7 @@
 import cv from '../data/cv.json';
 import pubs from '../data/publications.json';
 import site from '../data/site.json';
-
-const FIGURE = '/prof_pic.jpg';
-const FIGURE_CUTOUT = false;
+import Figure3D from './Figure3D.astro';
 
 type Section = { title: string; type?: string; contents?: any };
 const map = Object.fromEntries(
@@ -75,7 +82,7 @@ const bubbles = [
 ];
 ---
 
-<div class="ph wide" data-set>
+<div class="ph" data-set>
   <!-- left: the prose -->
   <div class="ph-text">
     <p class="ph-tag">Persona 01 · n = 1 · sourced, not generated</p>
@@ -125,14 +132,7 @@ const bubbles = [
 
   <!-- right: the figure, with the labels arranged around it -->
   <figure class="ph-stage">
-    <img
-      class:list={['ph-figure', FIGURE_CUTOUT && 'is-cutout']}
-      src={FIGURE}
-      alt={`Figure representing ${site.name}`}
-      width="590"
-      height="585"
-      loading="eager"
-    />
+    <div class="ph-figure"><Figure3D /></div>
 
     <ul class="ph-bubbles">
       {
@@ -208,33 +208,30 @@ const bubbles = [
     aspect-ratio: 4 / 5;
   }
 
+  /* the four ink levels the mesh is filled with */
   .ph-figure {
+    --fig-1: #d8c8d1;
+    --fig-2: #b07f9b;
+    --fig-3: #7d456a;
+    --fig-4: #2b2622;
+
     position: absolute;
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
-    width: 62%;
-    height: auto;
-    /* the photo has a flat light backdrop, so levels + multiply erase it and the
-       paper shows through. A real cutout skips this. */
-    filter: grayscale(1) contrast(1.42) brightness(1.16);
-    mix-blend-mode: multiply;
+    width: 72%;
+    line-height: 0;
   }
 
+  /* on black card the same four levels run light-to-dark the other way */
   :global([data-stock='black']) .ph-figure {
-    filter: grayscale(1) contrast(1.42) brightness(1.16) invert(1);
-    mix-blend-mode: screen;
+    --fig-1: #3f3038;
+    --fig-2: #7d5069;
+    --fig-3: #b5789a;
+    --fig-4: #f4efe3;
   }
 
-  .ph-figure.is-cutout {
-    filter: none;
-    mix-blend-mode: normal;
-  }
-
-  :global([data-stock='black']) .ph-figure.is-cutout {
-    filter: none;
-    mix-blend-mode: normal;
-  }
+  /* Figure3D reads --fig-1..4 off this element via getComputedStyle */
 
   /* ---- bubbles ---- */
 

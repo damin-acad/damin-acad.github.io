@@ -1,0 +1,773 @@
+---
+/**
+ * Embedding projector for the co-word space, modelled on
+ * https://projector.tensorflow.org/ — the three-pane arrangement, the
+ * projection switcher, colour-by-metadata, a search box that reports its match
+ * count, and an inspector that lists nearest neighbours with their cosine
+ * distances and distance bars.
+ *
+ * Two honest projections rather than four advertised ones: MDS on the cosine
+ * distance matrix, and PCA with its explained variance stated. t-SNE and UMAP
+ * are not here because they cannot be computed deterministically at build time,
+ * and a switcher that lies about its method is worse than a smaller switcher.
+ *
+ * Geometry comes from scripts/build-research-map.mjs. Selecting a term filters
+ * the publication list below it to the papers that use the term.
+ */
+import map from '../data/research-map.json';
+import pubs from '../data/publications.json';
+
+const { width: W, height: H, nodes, edges, papers, dims, projections, layouts, method } = map;
+
+const titleOf = new Map(pubs.map((p) => [p.key, { title: p.title, year: p.year, abbr: p.abbr }]));
+
+const linked = nodes.map(() => ({ e: [] as number[], n: [] as number[] }));
+edges.forEach((e, i) => {
+  linked[e.a].e.push(i);
+  linked[e.b].e.push(i);
+  linked[e.a].n.push(e.b);
+  linked[e.b].n.push(e.a);
+});
+
+const clusterNames = ['personas & language models', 'space & science education', 'design & agents'];
+const maxPapers = Math.max(...nodes.map((n) => n.papers));
+
+const client = nodes.map((n, i) => ({
+  t: n.term,
+  p: n.papers,
+  c: n.cluster,
+  r: n.r,
+  nb: n.neighbours,
+  e: linked[i].e,
+  ln: linked[i].n,
+  keys: n.keys,
+  k: n.keys.map((k) => titleOf.get(k)).filter(Boolean),
+}));
+---
+
+<section class="proj" data-set>
+  <header class="proj-bar">
+    <p class="proj-title">Embedding projector</p>
+    <p class="proj-stat">
+      <span>{nodes.length} points</span>
+      <span>{dims} dimensions</span>
+      <span>{papers} titles</span>
+    </p>
+  </header>
+
+  <div class="proj-grid">
+    <!-- left: what is being projected, and how -->
+    <aside class="proj-panel">
+      <fieldset class="proj-set">
+        <legend>Projection</legend>
+        {
+          projections.map((p, i) => (
+            <label class="proj-radio">
+              <input type="radio" name="proj" value={p.id} checked={i === 0} />
+              <span class="proj-radio-l">{p.label}</span>
+              <span class="proj-radio-n">{p.note}</span>
+            </label>
+          ))
+        }
+      </fieldset>
+
+      <fieldset class="proj-set">
+        <legend>Colour by</legend>
+        <label class="proj-radio">
+          <input type="radio" name="colour" value="cluster" checked />
+          <span class="proj-radio-l">Cluster</span>
+        </label>
+        <label class="proj-radio">
+          <input type="radio" name="colour" value="freq" />
+          <span class="proj-radio-l">Frequency</span>
+          <span class="proj-radio-n">2–{maxPapers} papers</span>
+        </label>
+      </fieldset>
+
+      <fieldset class="proj-set">
+        <legend>Clusters</legend>
+        <ul class="proj-key">
+          {
+            clusterNames.map((c, i) => (
+              <li>
+                <span class={`proj-swatch s${i}`} aria-hidden="true" />
+                {c}
+              </li>
+            ))
+          }
+        </ul>
+      </fieldset>
+
+      <div class="proj-actions">
+        <button type="button" id="pj-isolate" disabled>Isolate</button>
+        <button type="button" id="pj-reset">Reset</button>
+      </div>
+
+      <p class="proj-method">{method}</p>
+    </aside>
+
+    <!-- centre: the point cloud -->
+    <div class="proj-plot" id="pj-plot">
+      <svg viewBox={`0 0 ${W} ${H}`} id="pj-svg" role="img"
+        aria-label={`Co-word embedding of ${nodes.length} terms across ${papers} publication titles.`}>
+        <g id="pj-edges">
+          {edges.map((e, i) => <line class="pj-edge" data-e={i} />)}
+        </g>
+        <g id="pj-points">
+          {
+            nodes.map((n, i) => (
+              <g class={`pj-pt c${n.cluster}`} data-i={i} tabindex="0" role="button"
+                 aria-label={`${n.term}, in ${n.papers} papers`}>
+                <circle r={n.r} />
+                <text x={n.r + 5} y="4">{n.term}</text>
+              </g>
+            ))
+          }
+        </g>
+      </svg>
+      <p class="proj-hint" id="pj-hint">Click a point to inspect it.</p>
+    </div>
+
+    <!-- right: inspector -->
+    <aside class="proj-panel proj-inspect">
+      <fieldset class="proj-set">
+        <legend>Search</legend>
+        <input type="search" id="pj-search" placeholder="term or regex" autocomplete="off" spellcheck="false" />
+        <p class="proj-matches" id="pj-matches">{nodes.length} of {nodes.length}</p>
+      </fieldset>
+
+      <div id="pj-none" class="proj-empty">
+        Nothing selected. Points near each other are used together in titles.
+      </div>
+
+      <div id="pj-detail" hidden>
+        <p class="proj-sel" id="pj-term"></p>
+        <p class="proj-sel-meta" id="pj-meta"></p>
+
+        <p class="proj-sub">Nearest neighbours <span>cosine distance</span></p>
+        <ul class="proj-nb" id="pj-nb"></ul>
+
+        <p class="proj-sub">Appears in</p>
+        <ul class="proj-papers" id="pj-papers"></ul>
+      </div>
+    </aside>
+  </div>
+
+  <script type="application/json" id="pj-data" set:html={JSON.stringify({ nodes: client, layouts, edges })} />
+</section>
+
+<style>
+  .proj {
+    border: 2px solid var(--ink);
+    box-shadow: 7px 7px 0 var(--mark);
+    background: var(--paper);
+    margin: 0;
+  }
+
+  .proj-bar {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.3rem 1rem;
+    padding: 0.4rem 0.7rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--type);
+    font-size: 0.64rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .proj-bar p {
+    margin: 0;
+  }
+
+  .proj-stat {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.2rem 0.9rem;
+    opacity: 0.75;
+  }
+
+  .proj-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 940px) {
+    .proj-grid {
+      grid-template-columns: 12rem minmax(0, 1fr) 15rem;
+    }
+  }
+
+  .proj-panel {
+    padding: 0.7rem 0.75rem;
+    border-bottom: 1.5px solid var(--rule);
+    font-family: var(--type);
+    font-size: 0.68rem;
+  }
+
+  @media (min-width: 940px) {
+    .proj-panel {
+      border-bottom: none;
+      border-right: 1.5px solid var(--rule);
+    }
+
+    .proj-inspect {
+      border-right: none;
+      border-left: 1.5px solid var(--rule);
+    }
+  }
+
+  .proj-set {
+    border: none;
+    margin: 0 0 0.9rem;
+    padding: 0;
+  }
+
+  .proj-set legend {
+    padding: 0;
+    font-size: 0.6rem;
+    letter-spacing: 0.11em;
+    text-transform: uppercase;
+    color: var(--mark);
+    margin-bottom: 0.35rem;
+  }
+
+  .proj-radio {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 0 0.4rem;
+    padding: 0.16rem 0;
+    cursor: pointer;
+    align-items: baseline;
+  }
+
+  .proj-radio input {
+    accent-color: var(--mark);
+    margin: 0;
+  }
+
+  .proj-radio-l {
+    color: var(--ink);
+  }
+
+  .proj-radio-n {
+    grid-column: 2;
+    font-size: 0.6rem;
+    color: var(--ink-faint);
+    line-height: 1.45;
+  }
+
+  .proj-key {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    color: var(--ink-soft);
+  }
+
+  .proj-swatch {
+    display: inline-block;
+    width: 0.55em;
+    height: 0.55em;
+    border-radius: 50%;
+    margin-right: 0.35em;
+  }
+
+  .s0 {
+    background: var(--ink);
+  }
+  .s1 {
+    background: var(--mark);
+  }
+  .s2 {
+    background: transparent;
+    box-shadow: inset 0 0 0 2px var(--ink);
+  }
+
+  .proj-actions {
+    display: flex;
+    gap: 0.3rem;
+    margin-bottom: 0.7rem;
+  }
+
+  .proj-actions button {
+    font-family: var(--type);
+    font-size: 0.62rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.24rem 0.45rem;
+    border: 1.5px solid var(--ink);
+    background: transparent;
+    color: var(--ink);
+    cursor: pointer;
+  }
+
+  .proj-actions button:hover:not(:disabled) {
+    background: var(--mark);
+    border-color: var(--mark);
+    color: var(--on-mark);
+  }
+
+  .proj-actions button:disabled {
+    opacity: 0.35;
+    cursor: default;
+  }
+
+  .proj-method {
+    margin: 0;
+    font-size: 0.58rem;
+    line-height: 1.6;
+    color: var(--ink-faint);
+  }
+
+  /* ---- plot ---- */
+
+  .proj-plot {
+    position: relative;
+    background: var(--paper-deep);
+    min-width: 0;
+  }
+
+  .proj-plot svg {
+    display: block;
+    width: 100%;
+    height: auto;
+    mix-blend-mode: var(--blend);
+  }
+
+  .pj-edge {
+    stroke: var(--rule);
+    stroke-width: 1.1;
+    opacity: 0.55;
+    transition: opacity 160ms linear, stroke 160ms linear;
+  }
+
+  .pj-edge.on {
+    stroke: var(--mark);
+    stroke-width: 2;
+    opacity: 1;
+  }
+
+  .pj-pt {
+    cursor: pointer;
+    /* transform, not cx/cy — geometry properties are not reliably animatable */
+    transition: transform 620ms cubic-bezier(0.25, 0.9, 0.3, 1), opacity 180ms linear;
+  }
+
+  .pj-pt circle {
+    fill: var(--ink);
+    transition: fill 180ms linear, r 180ms linear;
+  }
+
+  .pj-pt.c1 circle {
+    fill: var(--mark);
+  }
+
+  .pj-pt.c2 circle {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 2;
+  }
+
+  .pj-pt text {
+    font-family: var(--type);
+    font-size: 12.5px;
+    fill: var(--ink);
+    pointer-events: none;
+  }
+
+  .pj-pt:hover text,
+  .pj-pt:focus-visible text {
+    fill: var(--mark);
+    font-weight: 700;
+  }
+
+  /* frequency colouring: one ink, ramped */
+  .proj-plot[data-colour='freq'] .pj-pt circle {
+    fill: var(--ink);
+    fill-opacity: var(--f, 1);
+    stroke: none;
+  }
+
+  /* dimmed states */
+  .proj-plot[data-mode] .pj-pt {
+    opacity: 0.18;
+  }
+
+  .proj-plot[data-mode] .pj-pt.on {
+    opacity: 1;
+  }
+
+  .proj-plot[data-mode] .pj-pt.sel text {
+    font-weight: 700;
+    fill: var(--mark);
+  }
+
+  .proj-plot[data-mode] .pj-edge {
+    opacity: 0.08;
+  }
+
+  .proj-plot[data-mode='isolate'] .pj-pt:not(.on) {
+    display: none;
+  }
+
+  .proj-hint {
+    margin: 0;
+    padding: 0.3rem 0.6rem 0.4rem;
+    font-family: var(--type);
+    font-size: 0.6rem;
+    color: var(--ink-faint);
+    border-top: 1.5px solid var(--rule);
+  }
+
+  /* ---- inspector ---- */
+
+  .proj-inspect input[type='search'] {
+    width: 100%;
+    font-family: var(--type);
+    font-size: 0.8rem;
+    padding: 0.3rem 0.4rem;
+    border: 1.5px solid var(--ink);
+    background: var(--paper);
+    color: var(--ink);
+  }
+
+  .proj-matches {
+    margin: 0.3rem 0 0;
+    font-size: 0.6rem;
+    color: var(--ink-faint);
+  }
+
+  .proj-empty {
+    font-size: 0.66rem;
+    line-height: 1.7;
+    color: var(--ink-faint);
+  }
+
+  .proj-sel {
+    margin: 0;
+    font-family: var(--body);
+    font-weight: 700;
+    font-size: 1.05rem;
+    line-height: 1.25;
+    color: var(--ink);
+  }
+
+  .proj-sel-meta {
+    margin: 0.1rem 0 0.8rem;
+    font-size: 0.62rem;
+    color: var(--ink-faint);
+  }
+
+  .proj-sub {
+    margin: 0 0 0.3rem;
+    font-size: 0.6rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--mark);
+    display: flex;
+    justify-content: space-between;
+    gap: 0.5rem;
+  }
+
+  .proj-sub span {
+    color: var(--ink-faint);
+    letter-spacing: 0.04em;
+    text-transform: none;
+  }
+
+  .proj-nb {
+    list-style: none;
+    margin: 0 0 1rem;
+    padding: 0;
+  }
+
+  .proj-nb li {
+    padding: 0.2rem 0;
+    border-bottom: 1.5px solid var(--rule);
+  }
+
+  .proj-nb button {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 0 0.4rem;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    padding: 0;
+    font: inherit;
+    color: var(--ink-soft);
+    cursor: pointer;
+  }
+
+  .proj-nb button:hover {
+    color: var(--mark);
+  }
+
+  .proj-nb .d {
+    font-variant-numeric: tabular-nums;
+    color: var(--ink-faint);
+  }
+
+  /* distance bar: shorter bar = nearer */
+  .proj-nb .bar {
+    grid-column: 1 / -1;
+    height: 3px;
+    background: var(--rule);
+    margin-top: 0.15rem;
+  }
+
+  .proj-nb .bar i {
+    display: block;
+    height: 100%;
+    background: var(--mark);
+  }
+
+  .proj-papers {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    font-size: 0.66rem;
+    line-height: 1.5;
+  }
+
+  .proj-papers li {
+    padding: 0.25rem 0;
+    border-bottom: 1.5px solid var(--rule);
+    color: var(--ink-soft);
+  }
+
+  .proj-papers b {
+    color: var(--ink);
+    font-weight: 600;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .pj-pt {
+      transition: none;
+    }
+  }
+</style>
+
+<script>
+  type Nb = { term: string; d: number };
+  type PNode = {
+    t: string; p: number; c: number; r: number;
+    nb: Nb[]; e: number[]; ln: number[];
+    keys: string[];
+    k: { title: string; year: number; abbr: string }[];
+  };
+
+  const root = document.getElementById('pj-plot');
+  const raw = document.getElementById('pj-data');
+
+  if (root && raw) {
+    const { nodes, layouts, edges } = JSON.parse(raw.textContent || '{}') as {
+      nodes: PNode[];
+      layouts: Record<string, [number, number][]>;
+      edges: { a: number; b: number }[];
+    };
+
+    const pts = Array.from(root.querySelectorAll<SVGGElement>('.pj-pt'));
+    const lines = Array.from(root.querySelectorAll<SVGLineElement>('.pj-edge'));
+    const hint = document.getElementById('pj-hint')!;
+    const matches = document.getElementById('pj-matches')!;
+    const search = document.getElementById('pj-search') as HTMLInputElement;
+    const none = document.getElementById('pj-none')!;
+    const detail = document.getElementById('pj-detail')!;
+    const elTerm = document.getElementById('pj-term')!;
+    const elMeta = document.getElementById('pj-meta')!;
+    const elNb = document.getElementById('pj-nb')!;
+    const elPapers = document.getElementById('pj-papers')!;
+    const btnIso = document.getElementById('pj-isolate') as HTMLButtonElement;
+    const btnReset = document.getElementById('pj-reset') as HTMLButtonElement;
+
+    const byTerm = new Map(nodes.map((n, i) => [n.t, i]));
+    const maxP = Math.max(...nodes.map((n) => n.p));
+    let selected = -1;
+    let current = 'mds';
+
+    /* ---- layout ---- */
+
+    function applyLayout(id: string) {
+      const L = layouts[id];
+      if (!L) return;
+      current = id;
+      pts.forEach((g, i) => {
+        const [x, y] = L[i];
+        g.style.transform = `translate(${x}px, ${y}px)`;
+      });
+      lines.forEach((l, i) => {
+        const e = edges[i];
+        l.setAttribute('x1', String(L[e.a][0]));
+        l.setAttribute('y1', String(L[e.a][1]));
+        l.setAttribute('x2', String(L[e.b][0]));
+        l.setAttribute('y2', String(L[e.b][1]));
+      });
+    }
+
+    /* ---- colour ---- */
+
+    function applyColour(mode: string) {
+      root.dataset.colour = mode;
+      if (mode === 'freq') {
+        pts.forEach((g, i) => g.style.setProperty('--f', String(0.25 + (nodes[i].p / maxP) * 0.75)));
+      } else {
+        pts.forEach((g) => g.style.removeProperty('--f'));
+      }
+    }
+
+    /* ---- selection ---- */
+
+    function clearMarks() {
+      pts.forEach((g) => g.classList.remove('on', 'sel'));
+      lines.forEach((l) => l.classList.remove('on'));
+    }
+
+    function select(i: number, isolate = false) {
+      selected = i;
+      const n = nodes[i];
+      clearMarks();
+      root.dataset.mode = isolate ? 'isolate' : 'focus';
+      pts[i].classList.add('on', 'sel');
+      n.ln.forEach((j) => pts[j]?.classList.add('on'));
+      n.e.forEach((e) => lines[e]?.classList.add('on'));
+
+      elTerm.textContent = n.t;
+      elMeta.textContent = `${n.p} paper${n.p === 1 ? '' : 's'} · cluster ${n.c + 1} · ${n.ln.length} linked`;
+
+      elNb.innerHTML = '';
+      n.nb.forEach((nb) => {
+        const li = document.createElement('li');
+        const b = document.createElement('button');
+        b.type = 'button';
+        const name = document.createElement('span');
+        name.textContent = nb.term;
+        const d = document.createElement('span');
+        d.className = 'd';
+        d.textContent = nb.d.toFixed(3);
+        const bar = document.createElement('span');
+        bar.className = 'bar';
+        const fill = document.createElement('i');
+        // nearer term -> longer bar, so length reads as similarity
+        fill.style.width = `${Math.max(2, (1 - nb.d) * 100)}%`;
+        bar.append(fill);
+        b.append(name, d, bar);
+        b.addEventListener('click', () => {
+          const j = byTerm.get(nb.term);
+          if (j !== undefined) select(j, root.dataset.mode === 'isolate');
+        });
+        li.append(b);
+        elNb.append(li);
+      });
+
+      elPapers.innerHTML = '';
+      n.k.slice(0, 8).forEach((p) => {
+        const li = document.createElement('li');
+        const b = document.createElement('b');
+        b.textContent = p.abbr || String(p.year);
+        li.append(b, document.createTextNode(` ${p.title}`));
+        elPapers.append(li);
+      });
+
+      none.hidden = true;
+      detail.hidden = false;
+      btnIso.disabled = false;
+      hint.textContent = `Selected “${n.t}” — ${n.ln.length} linked terms.`;
+      filterPublications(n);
+    }
+
+    function reset() {
+      selected = -1;
+      clearMarks();
+      delete root.dataset.mode;
+      none.hidden = false;
+      detail.hidden = true;
+      btnIso.disabled = true;
+      search.value = '';
+      runSearch('');
+      hint.textContent = 'Click a point to inspect it.';
+      const note = document.getElementById('pub-note');
+      if (note) note.hidden = true;
+      document.querySelectorAll<HTMLElement>('#pub-root .pub').forEach((r) => (r.hidden = false));
+      document.querySelectorAll<HTMLElement>('#pub-root .year-group').forEach((g) => (g.hidden = false));
+    }
+
+    /** the publication list below is the point of selecting a term */
+    function filterPublications(n: PNode) {
+      // data-key, not the rendered title: string comparison breaks on any
+      // whitespace or entity difference between the bib and the DOM
+      const keys = new Set(n.keys);
+      const rows = document.querySelectorAll<HTMLElement>('#pub-root .pub');
+      if (!rows.length) return;
+      rows.forEach((r) => {
+        r.hidden = !keys.has(r.dataset.key ?? '');
+      });
+      document.querySelectorAll<HTMLElement>('#pub-root .year-group').forEach((g) => {
+        g.hidden = !Array.from(g.querySelectorAll<HTMLElement>('.pub')).some((r) => !r.hidden);
+      });
+      const note = document.getElementById('pub-note');
+      if (note) {
+        note.hidden = false;
+        note.textContent = `${keys.size} paper${keys.size === 1 ? '' : 's'} using “${n.t}”. Reset the projector to clear.`;
+      }
+    }
+
+    /* ---- search ---- */
+
+    function runSearch(q: string) {
+      const term = q.trim();
+      if (!term) {
+        pts.forEach((g) => (g.style.display = ''));
+        matches.textContent = `${nodes.length} of ${nodes.length}`;
+        return;
+      }
+      let re: RegExp | null = null;
+      try {
+        re = new RegExp(term, 'i');
+      } catch {
+        re = null;
+      }
+      let hit = 0;
+      pts.forEach((g, i) => {
+        const ok = re ? re.test(nodes[i].t) : nodes[i].t.includes(term.toLowerCase());
+        g.style.display = ok ? '' : 'none';
+        if (ok) hit++;
+      });
+      matches.textContent = `${hit} of ${nodes.length}`;
+    }
+
+    /* ---- wiring ---- */
+
+    pts.forEach((g, i) => {
+      g.addEventListener('click', () => select(i, root.dataset.mode === 'isolate'));
+      g.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          select(i, root.dataset.mode === 'isolate');
+        }
+      });
+    });
+
+    document.querySelectorAll<HTMLInputElement>('input[name="proj"]').forEach((r) =>
+      r.addEventListener('change', () => r.checked && applyLayout(r.value)),
+    );
+    document.querySelectorAll<HTMLInputElement>('input[name="colour"]').forEach((r) =>
+      r.addEventListener('change', () => r.checked && applyColour(r.value)),
+    );
+
+    search.addEventListener('input', () => runSearch(search.value));
+    btnIso.addEventListener('click', () => {
+      if (selected >= 0) select(selected, root.dataset.mode !== 'isolate');
+    });
+    btnReset.addEventListener('click', reset);
+
+    applyLayout('mds');
+    applyColour('cluster');
+    runSearch('');
+  }
+</script>

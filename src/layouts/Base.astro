@@ -14,6 +14,8 @@ const nav = [
   { href: '/', label: 'about' },
   { href: '/publications', label: 'publications' },
   { href: '/writing', label: 'writing' },
+  // the CV is a PDF here, exactly as on the portfolio — no rendered page
+  { href: site.cv, label: 'cv ↓', download: true },
 ];
 ---
 
@@ -63,6 +65,7 @@ const nav = [
               href={i.href}
               aria-current={!i.out && path === i.href ? 'page' : undefined}
               {...(i.out ? { rel: 'noopener', target: '_blank' } : {})}
+              {...(i.download ? { download: '' } : {})}
             >{i.label}</a>
           ))}
           <button class="stock-btn" type="button" id="stock">stock</button>
@@ -77,6 +80,7 @@ const nav = [
           <a href={site.socials.scholar} rel="noopener" target="_blank">Scholar</a>
           <a href={site.socials.orcid} rel="noopener" target="_blank">ORCID</a>
           <a href={site.socials.github} rel="noopener" target="_blank">GitHub</a>
+          <a href={site.cv} download>CV (PDF)</a>
           <a href={site.socials.linkedin} rel="noopener" target="_blank">LinkedIn</a>
           <a href={site.portfolio} rel="noopener" target="_blank">danialamin.com</a>
         </div>

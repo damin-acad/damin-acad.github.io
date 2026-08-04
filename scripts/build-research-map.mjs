@@ -148,6 +148,51 @@ function kmeans(vectors, k, iters = 80) {
   return assign;
 }
 
+const dotArr = (a, b) => {
+  let s = 0;
+  for (let i = 0; i < a.length; i++) s += a[i] * b[i];
+  return s;
+};
+
+/**
+ * Principal components of the term-document matrix.
+ *
+ * The Projector offers PCA / t-SNE / UMAP; these are the two projections that
+ * can be computed here deterministically and honestly labelled, so the switcher
+ * offers PCA and MDS rather than pretending to run t-SNE.
+ */
+function pca(vectors) {
+  const n = vectors.length;
+  const dim = vectors[0].length;
+
+  const mean = new Float64Array(dim);
+  for (const v of vectors) for (let d = 0; d < dim; d++) mean[d] += v[d] / n;
+  const X = vectors.map((v) => Float64Array.from(v, (x, d) => x - mean[d]));
+
+  const C = Array.from({ length: dim }, () => new Float64Array(dim));
+  for (const x of X) {
+    for (let i = 0; i < dim; i++) {
+      for (let j = i; j < dim; j++) {
+        const p = x[i] * x[j];
+        C[i][j] += p;
+        if (i !== j) C[j][i] += p;
+      }
+    }
+  }
+  const denom = Math.max(n - 1, 1);
+  for (let i = 0; i < dim; i++) for (let j = 0; j < dim; j++) C[i][j] /= denom;
+
+  const [e1, e2] = topEigen(
+    C.map((r) => Array.from(r)),
+    2,
+  );
+  const varTotal = Array.from({ length: dim }, (_, i) => C[i][i]).reduce((a, b) => a + b, 0) || 1;
+  return {
+    points: X.map((x) => [dotArr(x, e1.vector), dotArr(x, e2.vector)]),
+    explained: [e1.value / varTotal, e2.value / varTotal],
+  };
+}
+
 /** labels must not collide, because nothing here hides behind a magnifier */
 function relax(pts, sizes, rounds = 320) {
   const p = pts.map(([x, y]) => [x, y]);
@@ -239,11 +284,40 @@ const D = Array.from({ length: n }, (_, i) =>
   Array.from({ length: n }, (_, j) => Math.sqrt(Math.max(0, 2 - 2 * sim[i][j]))),
 );
 
-const raw = mds(D);
 const clusters = kmeans(vectors, 3);
 
+// canvas dimensions: declared before place(), which closes over them
 const W = 1000;
 const H = 640;
+
+const weights0 = terms.map((t) => df.get(t));
+const maxW0 = Math.max(...weights0);
+const footprint = terms.map((_, i) => 46 + (weights0[i] / maxW0) * 30);
+
+/** normalise a raw 2D layout into the canvas and pull labels apart */
+function place(raw2) {
+  const xs = raw2.map((p) => p[0]);
+  const ys = raw2.map((p) => p[1]);
+  const [mnX, mxX, mnY, mxY] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
+  const scaled = raw2.map(([x, y]) => [
+    70 + ((x - mnX) / (mxX - mnX || 1)) * (W - 190),
+    38 + ((y - mnY) / (mxY - mnY || 1)) * (H - 76),
+  ]);
+  return relax(scaled, footprint).map(([x, y]) => [
+    +Math.min(Math.max(x, 24), W - 24).toFixed(1),
+    +Math.min(Math.max(y, 20), H - 20).toFixed(1),
+  ]);
+}
+
+const mdsPts = mds(D);
+const pcaOut = pca(vectors);
+
+const layouts = {
+  mds: place(mdsPts),
+  pca: place(pcaOut.points),
+};
+const raw = mdsPts;
+
 const xs = raw.map((p) => p[0]);
 const ys = raw.map((p) => p[1]);
 const [minX, maxX, minY, maxY] = [Math.min(...xs), Math.max(...xs), Math.min(...ys), Math.max(...ys)];
@@ -252,25 +326,21 @@ const scaled = raw.map(([x, y]) => [
   38 + ((y - minY) / (maxY - minY || 1)) * (H - 76),
 ]);
 
-const weights = terms.map((t) => df.get(t));
-const maxW = Math.max(...weights);
-// footprint has to allow for the label sitting beside the dot
-const sizes = terms.map((_, i) => 46 + (weights[i] / maxW) * 30);
-const placed = relax(scaled, sizes);
+const weights = weights0;
+const maxW = maxW0;
 
 const nodes = terms.map((t, i) => ({
   term: t,
   papers: weights[i],
   cluster: clusters[i],
-  x: +Math.min(Math.max(placed[i][0], 24), W - 24).toFixed(1),
-  y: +Math.min(Math.max(placed[i][1], 20), H - 20).toFixed(1),
   r: +(3 + (weights[i] / maxW) * 8).toFixed(1),
+  // cosine distance, the number the Projector's inspector actually shows
   neighbours: terms
     .map((other, j) => ({ other, s: sim[i][j], j }))
     .filter((c) => c.j !== i && c.s > 0)
     .sort((a, b) => b.s - a.s)
-    .slice(0, 3)
-    .map((c) => c.other),
+    .slice(0, 8)
+    .map((c) => ({ term: c.other, d: +(1 - c.s).toFixed(3) })),
   // the actual papers using this term, so a concept is a way into the record
   keys: docs
     .map((d, j) => ({ d, c: tf[j].get(t) ?? 0 }))
@@ -297,10 +367,20 @@ await writeFile(
   'src/data/research-map.json',
   JSON.stringify(
     {
-      method: 'co-word analysis of publication titles; tf-idf, cosine distance, classical MDS, k-means(3)',
+      method: 'co-word analysis of publication titles; tf-idf term vectors, cosine distance',
       papers: N,
+      dims: N,
       width: W,
       height: H,
+      projections: [
+        { id: 'mds', label: 'MDS', note: 'classical multidimensional scaling on cosine distance' },
+        {
+          id: 'pca',
+          label: 'PCA',
+          note: `principal components 1-2 · ${(pcaOut.explained[0] * 100).toFixed(1)}% + ${(pcaOut.explained[1] * 100).toFixed(1)}% variance`,
+        },
+      ],
+      layouts,
       nodes,
       edges,
     },

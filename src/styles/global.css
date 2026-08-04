@@ -1014,3 +1014,19 @@ details[open] > .cv-summary::after {
   font-size: 1.06rem;
   line-height: 1.68;
 }
+
+/* Publications carry the page, so the titles get real size — they were set at
+   1.02rem, smaller than body copy, which buried the thing people come for. */
+.pub-title {
+  font-size: 1.14rem;
+  line-height: 1.28;
+  letter-spacing: -0.012em;
+}
+
+.pub {
+  padding: 0.95rem 0;
+}
+
+.pub-n {
+  font-size: 0.74rem;
+}

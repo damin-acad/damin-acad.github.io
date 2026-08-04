@@ -1,0 +1,65 @@
+---
+import pubs from '../data/publications.json';
+import site from '../data/site.json';
+
+const years = pubs.map((p) => p.year).filter(Boolean) as number[];
+const venues = new Set(pubs.map((p) => p.abbr || p.venue).filter(Boolean));
+const coauthors = new Set(pubs.flatMap((p) => p.authors).filter((a) => a !== site.name));
+const firstAuthor = pubs.filter((p) => p.authors[0] === site.name).length;
+const cites = pubs.reduce((n, p) => n + (p.citations || 0), 0);
+
+const stats = [
+  { n: pubs.length, l: 'publications' },
+  { n: firstAuthor, l: 'first-authored' },
+  { n: venues.size, l: 'venues' },
+  { n: coauthors.size, l: 'co-authors' },
+  { n: `${Math.min(...years)}–${Math.max(...years)}`, l: 'span' },
+  ...(cites > 0 ? [{ n: cites, l: 'citations' }] : []),
+];
+---
+
+<ul class="pubstats" data-set>
+  {stats.map((s) => (
+    <li>
+      <span class="pubstats-n">{s.n}</span>
+      <span class="pubstats-l">{s.l}</span>
+    </li>
+  ))}
+</ul>
+
+<style>
+  .pubstats {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(6.5rem, 1fr));
+    gap: 1px;
+    list-style: none;
+    margin: 0 0 1.5rem;
+    padding: 0;
+    background: var(--rule);
+    border: 1.5px solid var(--ink);
+  }
+
+  .pubstats li {
+    background: var(--paper);
+    padding: 0.6rem 0.7rem 0.55rem;
+  }
+
+  .pubstats-n {
+    display: block;
+    font-family: var(--display);
+    font-size: clamp(1.5rem, 3vw, 2.1rem);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    color: var(--ink);
+  }
+
+  .pubstats-l {
+    display: block;
+    margin-top: 0.2rem;
+    font-family: var(--type);
+    font-size: 0.6rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+  }
+</style>

@@ -2,6 +2,7 @@
 import Base from '../layouts/Base.astro';
 import Persona from '../components/Persona.astro';
 import PublicationList from '../components/PublicationList.astro';
+import PubStats from '../components/PubStats.astro';
 import site from '../data/site.json';
 import pubs from '../data/publications.json';
 import { getCollection } from 'astro:content';
@@ -63,6 +64,16 @@ const essayWords = essays.reduce(
     </details>
   </section>
 
+  <section class="section" data-set id="publications">
+    <div class="section-head">
+      <h2 class="section-title">Publications</h2>
+      <span class="section-count"><a href="/publications">all {pubs.length} · projector · bibtex</a></span>
+    </div>
+    <PubStats />
+    <p class="typed" style="margin-bottom:0.75rem">Selected — starred in the full list</p>
+    <PublicationList selectedOnly />
+  </section>
+
   <section class="section" data-set>
     <div class="section-head">
       <h2 class="section-title">A persona of the persona researcher</h2>
@@ -71,13 +82,4 @@ const essayWords = essays.reduce(
     <Persona essays={essays.length} essayWords={essayWords} />
   </section>
 
-  <section class="section" data-set>
-    <div class="section-head">
-      <h2 class="section-title">Selected work</h2>
-      <span class="section-count">
-        {selected.length} of {pubs.length} · <a href="/publications">all publications</a>
-      </span>
-    </div>
-    <PublicationList selectedOnly />
-  </section>
 </Base>

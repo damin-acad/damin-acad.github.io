@@ -1,20 +1,386 @@
 {
-  "method": "co-word analysis of publication titles; tf-idf, cosine distance, classical MDS, k-means(3)",
+  "method": "co-word analysis of publication titles; tf-idf term vectors, cosine distance",
   "papers": 31,
+  "dims": 31,
   "width": 1000,
   "height": 640,
+  "projections": [
+    {
+      "id": "mds",
+      "label": "MDS",
+      "note": "classical multidimensional scaling on cosine distance"
+    },
+    {
+      "id": "pca",
+      "label": "PCA",
+      "note": "principal components 1-2 · 12.8% + 9.1% variance"
+    }
+  ],
+  "layouts": {
+    "mds": [
+      [
+        64.3,
+        413.7
+      ],
+      [
+        99,
+        134
+      ],
+      [
+        911.2,
+        265.4
+      ],
+      [
+        176.4,
+        204.7
+      ],
+      [
+        166.5,
+        523.5
+      ],
+      [
+        303.6,
+        554
+      ],
+      [
+        146.5,
+        159.8
+      ],
+      [
+        259.2,
+        417.5
+      ],
+      [
+        112.4,
+        220
+      ],
+      [
+        171.8,
+        450.2
+      ],
+      [
+        144.4,
+        106.5
+      ],
+      [
+        779.4,
+        258
+      ],
+      [
+        85.8,
+        38
+      ],
+      [
+        169.5,
+        597.2
+      ],
+      [
+        203.6,
+        558.9
+      ],
+      [
+        222.9,
+        455
+      ],
+      [
+        190.4,
+        129.3
+      ],
+      [
+        685,
+        286.4
+      ],
+      [
+        816.6,
+        292
+      ],
+      [
+        861,
+        270
+      ],
+      [
+        112.3,
+        280.9
+      ],
+      [
+        218.9,
+        170.9
+      ],
+      [
+        199.8,
+        260.8
+      ],
+      [
+        116,
+        378.1
+      ],
+      [
+        151.4,
+        250.5
+      ],
+      [
+        240.4,
+        610.2
+      ],
+      [
+        272.2,
+        465.3
+      ],
+      [
+        227.3,
+        219.7
+      ],
+      [
+        188.3,
+        78.9
+      ],
+      [
+        313.8,
+        438.3
+      ],
+      [
+        155.8,
+        41.5
+      ],
+      [
+        213.6,
+        504.6
+      ],
+      [
+        564.8,
+        375.8
+      ],
+      [
+        253.9,
+        562.6
+      ],
+      [
+        262.2,
+        513.8
+      ],
+      [
+        256.1,
+        342.3
+      ],
+      [
+        254.2,
+        261.3
+      ],
+      [
+        226.6,
+        302.5
+      ],
+      [
+        735.3,
+        282.3
+      ],
+      [
+        492.1,
+        313.5
+      ]
+    ],
+    "pca": [
+      [
+        64.3,
+        413.7
+      ],
+      [
+        99,
+        134
+      ],
+      [
+        911.2,
+        265.4
+      ],
+      [
+        176.4,
+        204.7
+      ],
+      [
+        166.5,
+        523.5
+      ],
+      [
+        303.6,
+        554
+      ],
+      [
+        146.5,
+        159.8
+      ],
+      [
+        259.2,
+        417.5
+      ],
+      [
+        112.4,
+        220
+      ],
+      [
+        171.8,
+        450.2
+      ],
+      [
+        144.4,
+        106.5
+      ],
+      [
+        779.4,
+        258
+      ],
+      [
+        85.8,
+        38
+      ],
+      [
+        169.5,
+        597.2
+      ],
+      [
+        203.6,
+        558.9
+      ],
+      [
+        222.9,
+        455
+      ],
+      [
+        190.4,
+        129.3
+      ],
+      [
+        685,
+        286.4
+      ],
+      [
+        816.6,
+        292
+      ],
+      [
+        861,
+        270
+      ],
+      [
+        112.3,
+        280.9
+      ],
+      [
+        218.9,
+        170.9
+      ],
+      [
+        199.8,
+        260.8
+      ],
+      [
+        116,
+        378.1
+      ],
+      [
+        151.4,
+        250.5
+      ],
+      [
+        240.4,
+        610.2
+      ],
+      [
+        272.2,
+        465.3
+      ],
+      [
+        227.3,
+        219.7
+      ],
+      [
+        188.3,
+        78.9
+      ],
+      [
+        313.8,
+        438.3
+      ],
+      [
+        155.8,
+        41.5
+      ],
+      [
+        213.6,
+        504.6
+      ],
+      [
+        564.8,
+        375.8
+      ],
+      [
+        253.9,
+        562.6
+      ],
+      [
+        262.2,
+        513.8
+      ],
+      [
+        256.1,
+        342.3
+      ],
+      [
+        254.2,
+        261.3
+      ],
+      [
+        226.6,
+        302.5
+      ],
+      [
+        735.3,
+        282.3
+      ],
+      [
+        492.1,
+        313.5
+      ]
+    ]
+  },
   "nodes": [
     {
       "term": "personas",
       "papers": 17,
       "cluster": 0,
-      "x": 64.3,
-      "y": 413.7,
       "r": 11,
       "neighbours": [
-        "theory",
-        "design",
-        "llm-generated"
+        {
+          "term": "theory",
+          "d": 0.454
+        },
+        {
+          "term": "design",
+          "d": 0.459
+        },
+        {
+          "term": "llm-generated",
+          "d": 0.518
+        },
+        {
+          "term": "representing",
+          "d": 0.6
+        },
+        {
+          "term": "ai-generated",
+          "d": 0.612
+        },
+        {
+          "term": "interaction",
+          "d": 0.612
+        },
+        {
+          "term": "computational resources",
+          "d": 0.647
+        },
+        {
+          "term": "llms",
+          "d": 0.647
+        }
       ],
       "keys": [
         "amin2025personas_theory",
@@ -40,13 +406,40 @@
       "term": "design",
       "papers": 5,
       "cluster": 2,
-      "x": 99,
-      "y": 134,
       "r": 5.4,
       "neighbours": [
-        "personas",
-        "prompts",
-        "ai-generated"
+        {
+          "term": "personas",
+          "d": 0.459
+        },
+        {
+          "term": "prompts",
+          "d": 0.543
+        },
+        {
+          "term": "ai-generated",
+          "d": 0.543
+        },
+        {
+          "term": "review",
+          "d": 0.627
+        },
+        {
+          "term": "theory",
+          "d": 0.73
+        },
+        {
+          "term": "generative",
+          "d": 0.73
+        },
+        {
+          "term": "articles",
+          "d": 0.73
+        },
+        {
+          "term": "attributes",
+          "d": 0.73
+        }
       ],
       "keys": [
         "amin2025personas_theory",
@@ -60,13 +453,36 @@
       "term": "space",
       "papers": 3,
       "cluster": 1,
-      "x": 911.2,
-      "y": 265.4,
       "r": 4.4,
       "neighbours": [
-        "education popularization",
-        "popularization step",
-        "technology"
+        {
+          "term": "education popularization",
+          "d": 0.077
+        },
+        {
+          "term": "popularization step",
+          "d": 0.077
+        },
+        {
+          "term": "technology",
+          "d": 0.247
+        },
+        {
+          "term": "awareness",
+          "d": 0.266
+        },
+        {
+          "term": "role",
+          "d": 0.401
+        },
+        {
+          "term": "scientific",
+          "d": 0.539
+        },
+        {
+          "term": "pakistan",
+          "d": 0.728
+        }
       ],
       "keys": [
         "naqvi2021public_private",
@@ -78,13 +494,40 @@
       "term": "user",
       "papers": 5,
       "cluster": 2,
-      "x": 176.4,
-      "y": 204.7,
       "r": 5.4,
       "neighbours": [
-        "representation",
-        "representing",
-        "theory"
+        {
+          "term": "representation",
+          "d": 0.368
+        },
+        {
+          "term": "representing",
+          "d": 0.615
+        },
+        {
+          "term": "theory",
+          "d": 0.684
+        },
+        {
+          "term": "prompts",
+          "d": 0.684
+        },
+        {
+          "term": "interaction",
+          "d": 0.684
+        },
+        {
+          "term": "decision-making",
+          "d": 0.684
+        },
+        {
+          "term": "generative",
+          "d": 0.684
+        },
+        {
+          "term": "diversity",
+          "d": 0.684
+        }
       ],
       "keys": [
         "xini2026meta",
@@ -98,13 +541,40 @@
       "term": "large language",
       "papers": 3,
       "cluster": 0,
-      "x": 166.5,
-      "y": 523.5,
       "r": 4.4,
       "neighbours": [
-        "model",
-        "interaction",
-        "evaluation"
+        {
+          "term": "model",
+          "d": 0.333
+        },
+        {
+          "term": "interaction",
+          "d": 0.592
+        },
+        {
+          "term": "evaluation",
+          "d": 0.592
+        },
+        {
+          "term": "educational",
+          "d": 0.592
+        },
+        {
+          "term": "hci",
+          "d": 0.592
+        },
+        {
+          "term": "llm-generated",
+          "d": 0.667
+        },
+        {
+          "term": "llms",
+          "d": 0.667
+        },
+        {
+          "term": "analysis",
+          "d": 0.667
+        }
       ],
       "keys": [
         "amin2026llm_judges",
@@ -116,13 +586,32 @@
       "term": "computational resources",
       "papers": 3,
       "cluster": 0,
-      "x": 303.6,
-      "y": 554,
       "r": 4.4,
       "neighbours": [
-        "personabase",
-        "evaluation",
-        "benchmarking"
+        {
+          "term": "personabase",
+          "d": 0.184
+        },
+        {
+          "term": "evaluation",
+          "d": 0.592
+        },
+        {
+          "term": "benchmarking",
+          "d": 0.592
+        },
+        {
+          "term": "scientific",
+          "d": 0.592
+        },
+        {
+          "term": "formative",
+          "d": 0.592
+        },
+        {
+          "term": "personas",
+          "d": 0.647
+        }
       ],
       "keys": [
         "salminen2025computational_resources",
@@ -134,13 +623,40 @@
       "term": "agents",
       "papers": 4,
       "cluster": 2,
-      "x": 146.5,
-      "y": 159.8,
       "r": 4.9,
       "neighbours": [
-        "attributes",
-        "conversational",
-        "decision-making"
+        {
+          "term": "attributes",
+          "d": 0.293
+        },
+        {
+          "term": "conversational",
+          "d": 0.423
+        },
+        {
+          "term": "decision-making",
+          "d": 0.646
+        },
+        {
+          "term": "articles",
+          "d": 0.646
+        },
+        {
+          "term": "playground",
+          "d": 0.646
+        },
+        {
+          "term": "review",
+          "d": 0.711
+        },
+        {
+          "term": "model",
+          "d": 0.711
+        },
+        {
+          "term": "ecosystem",
+          "d": 0.711
+        }
       ],
       "keys": [
         "amin2026bayesian_orchestration",
@@ -153,13 +669,24 @@
       "term": "data",
       "papers": 2,
       "cluster": 0,
-      "x": 259.2,
-      "y": 417.5,
       "r": 3.9,
       "neighbours": [
-        "playground",
-        "llms",
-        "ecosystem"
+        {
+          "term": "playground",
+          "d": 0.64
+        },
+        {
+          "term": "llms",
+          "d": 0.706
+        },
+        {
+          "term": "ecosystem",
+          "d": 0.706
+        },
+        {
+          "term": "personas",
+          "d": 0.721
+        }
       ],
       "keys": [
         "jansen2026survey_validatability",
@@ -170,13 +697,36 @@
       "term": "representing",
       "papers": 2,
       "cluster": 0,
-      "x": 112.4,
-      "y": 220,
       "r": 3.9,
       "neighbours": [
-        "theory",
-        "interaction",
-        "decision-making"
+        {
+          "term": "theory",
+          "d": 0.391
+        },
+        {
+          "term": "interaction",
+          "d": 0.391
+        },
+        {
+          "term": "decision-making",
+          "d": 0.391
+        },
+        {
+          "term": "conversational",
+          "d": 0.503
+        },
+        {
+          "term": "personas",
+          "d": 0.6
+        },
+        {
+          "term": "user",
+          "d": 0.615
+        },
+        {
+          "term": "ai-generated",
+          "d": 0.64
+        }
       ],
       "keys": [
         "salminen2025aipersonas",
@@ -187,13 +737,40 @@
       "term": "llm-generated",
       "papers": 3,
       "cluster": 0,
-      "x": 171.8,
-      "y": 450.2,
       "r": 4.4,
       "neighbours": [
-        "personas",
-        "theory",
-        "interaction"
+        {
+          "term": "personas",
+          "d": 0.518
+        },
+        {
+          "term": "theory",
+          "d": 0.592
+        },
+        {
+          "term": "interaction",
+          "d": 0.592
+        },
+        {
+          "term": "diversity",
+          "d": 0.592
+        },
+        {
+          "term": "large language",
+          "d": 0.667
+        },
+        {
+          "term": "model",
+          "d": 0.667
+        },
+        {
+          "term": "llms",
+          "d": 0.667
+        },
+        {
+          "term": "design",
+          "d": 0.78
+        }
       ],
       "keys": [
         "amin2025personas_theory",
@@ -205,13 +782,40 @@
       "term": "review",
       "papers": 3,
       "cluster": 2,
-      "x": 144.4,
-      "y": 106.5,
       "r": 4.4,
       "neighbours": [
-        "prompts",
-        "ai-generated",
-        "generative"
+        {
+          "term": "prompts",
+          "d": 0.592
+        },
+        {
+          "term": "ai-generated",
+          "d": 0.592
+        },
+        {
+          "term": "generative",
+          "d": 0.592
+        },
+        {
+          "term": "articles",
+          "d": 0.592
+        },
+        {
+          "term": "attributes",
+          "d": 0.592
+        },
+        {
+          "term": "design",
+          "d": 0.627
+        },
+        {
+          "term": "conversational",
+          "d": 0.667
+        },
+        {
+          "term": "personas",
+          "d": 0.684
+        }
       ],
       "keys": [
         "amin2025prompts_personas_eval",
@@ -223,13 +827,36 @@
       "term": "technology",
       "papers": 3,
       "cluster": 1,
-      "x": 779.4,
-      "y": 258,
       "r": 4.4,
       "neighbours": [
-        "education popularization",
-        "popularization step",
-        "space"
+        {
+          "term": "education popularization",
+          "d": 0.184
+        },
+        {
+          "term": "popularization step",
+          "d": 0.184
+        },
+        {
+          "term": "space",
+          "d": 0.247
+        },
+        {
+          "term": "scientific",
+          "d": 0.592
+        },
+        {
+          "term": "awareness",
+          "d": 0.592
+        },
+        {
+          "term": "role",
+          "d": 0.667
+        },
+        {
+          "term": "user",
+          "d": 0.742
+        }
       ],
       "keys": [
         "xini2026meta",
@@ -241,13 +868,40 @@
       "term": "conversational",
       "papers": 3,
       "cluster": 2,
-      "x": 85.8,
-      "y": 38,
       "r": 4.4,
       "neighbours": [
-        "attributes",
-        "agents",
-        "representing"
+        {
+          "term": "attributes",
+          "d": 0.184
+        },
+        {
+          "term": "agents",
+          "d": 0.423
+        },
+        {
+          "term": "representing",
+          "d": 0.503
+        },
+        {
+          "term": "theory",
+          "d": 0.592
+        },
+        {
+          "term": "interaction",
+          "d": 0.592
+        },
+        {
+          "term": "decision-making",
+          "d": 0.592
+        },
+        {
+          "term": "articles",
+          "d": 0.592
+        },
+        {
+          "term": "review",
+          "d": 0.667
+        }
       ],
       "keys": [
         "salminen2025aipersonas",
@@ -259,13 +913,40 @@
       "term": "model",
       "papers": 3,
       "cluster": 0,
-      "x": 169.5,
-      "y": 597.2,
       "r": 4.4,
       "neighbours": [
-        "large language",
-        "interaction",
-        "evaluation"
+        {
+          "term": "large language",
+          "d": 0.333
+        },
+        {
+          "term": "interaction",
+          "d": 0.592
+        },
+        {
+          "term": "evaluation",
+          "d": 0.592
+        },
+        {
+          "term": "educational",
+          "d": 0.592
+        },
+        {
+          "term": "playground",
+          "d": 0.592
+        },
+        {
+          "term": "llm-generated",
+          "d": 0.667
+        },
+        {
+          "term": "llms",
+          "d": 0.667
+        },
+        {
+          "term": "ecosystem",
+          "d": 0.667
+        }
       ],
       "keys": [
         "amin2026llm_judges",
@@ -277,13 +958,40 @@
       "term": "llms",
       "papers": 3,
       "cluster": 0,
-      "x": 203.6,
-      "y": 558.9,
       "r": 4.4,
       "neighbours": [
-        "interaction",
-        "benchmarking",
-        "playground"
+        {
+          "term": "interaction",
+          "d": 0.592
+        },
+        {
+          "term": "benchmarking",
+          "d": 0.592
+        },
+        {
+          "term": "playground",
+          "d": 0.592
+        },
+        {
+          "term": "personas",
+          "d": 0.647
+        },
+        {
+          "term": "large language",
+          "d": 0.667
+        },
+        {
+          "term": "llm-generated",
+          "d": 0.667
+        },
+        {
+          "term": "model",
+          "d": 0.667
+        },
+        {
+          "term": "ecosystem",
+          "d": 0.667
+        }
       ],
       "keys": [
         "amin2025data_personas",
@@ -295,13 +1003,32 @@
       "term": "ecosystem",
       "papers": 3,
       "cluster": 0,
-      "x": 222.9,
-      "y": 455,
       "r": 4.4,
       "neighbours": [
-        "playground",
-        "model",
-        "llms"
+        {
+          "term": "playground",
+          "d": 0.184
+        },
+        {
+          "term": "model",
+          "d": 0.667
+        },
+        {
+          "term": "llms",
+          "d": 0.667
+        },
+        {
+          "term": "data",
+          "d": 0.706
+        },
+        {
+          "term": "agents",
+          "d": 0.711
+        },
+        {
+          "term": "personas",
+          "d": 0.765
+        }
       ],
       "keys": [
         "amin2026ecosystem",
@@ -313,13 +1040,40 @@
       "term": "analysis",
       "papers": 3,
       "cluster": 2,
-      "x": 190.4,
-      "y": 129.3,
       "r": 4.4,
       "neighbours": [
-        "prompts",
-        "articles",
-        "attributes"
+        {
+          "term": "prompts",
+          "d": 0.592
+        },
+        {
+          "term": "articles",
+          "d": 0.592
+        },
+        {
+          "term": "attributes",
+          "d": 0.592
+        },
+        {
+          "term": "representation",
+          "d": 0.592
+        },
+        {
+          "term": "hci",
+          "d": 0.592
+        },
+        {
+          "term": "large language",
+          "d": 0.667
+        },
+        {
+          "term": "conversational",
+          "d": 0.667
+        },
+        {
+          "term": "agents",
+          "d": 0.711
+        }
       ],
       "keys": [
         "amin2025anthropomorphicmetadata",
@@ -331,13 +1085,32 @@
       "term": "role",
       "papers": 3,
       "cluster": 1,
-      "x": 685,
-      "y": 286.4,
       "r": 4.4,
       "neighbours": [
-        "awareness",
-        "pakistan",
-        "space"
+        {
+          "term": "awareness",
+          "d": 0.184
+        },
+        {
+          "term": "pakistan",
+          "d": 0.184
+        },
+        {
+          "term": "space",
+          "d": 0.401
+        },
+        {
+          "term": "education popularization",
+          "d": 0.592
+        },
+        {
+          "term": "popularization step",
+          "d": 0.592
+        },
+        {
+          "term": "technology",
+          "d": 0.667
+        }
       ],
       "keys": [
         "naqvi2021public_private",
@@ -349,13 +1122,32 @@
       "term": "education popularization",
       "papers": 2,
       "cluster": 1,
-      "x": 816.6,
-      "y": 292,
       "r": 3.9,
       "neighbours": [
-        "popularization step",
-        "space",
-        "technology"
+        {
+          "term": "popularization step",
+          "d": 0
+        },
+        {
+          "term": "space",
+          "d": 0.077
+        },
+        {
+          "term": "technology",
+          "d": 0.184
+        },
+        {
+          "term": "scientific",
+          "d": 0.5
+        },
+        {
+          "term": "awareness",
+          "d": 0.5
+        },
+        {
+          "term": "role",
+          "d": 0.592
+        }
       ],
       "keys": [
         "naqvi2017experts_awareness",
@@ -366,13 +1158,32 @@
       "term": "popularization step",
       "papers": 2,
       "cluster": 1,
-      "x": 861,
-      "y": 270,
       "r": 3.9,
       "neighbours": [
-        "education popularization",
-        "space",
-        "technology"
+        {
+          "term": "education popularization",
+          "d": 0
+        },
+        {
+          "term": "space",
+          "d": 0.077
+        },
+        {
+          "term": "technology",
+          "d": 0.184
+        },
+        {
+          "term": "scientific",
+          "d": 0.5
+        },
+        {
+          "term": "awareness",
+          "d": 0.5
+        },
+        {
+          "term": "role",
+          "d": 0.592
+        }
       ],
       "keys": [
         "naqvi2017experts_awareness",
@@ -383,13 +1194,40 @@
       "term": "theory",
       "papers": 2,
       "cluster": 0,
-      "x": 112.3,
-      "y": 280.9,
       "r": 3.9,
       "neighbours": [
-        "representing",
-        "personas",
-        "interaction"
+        {
+          "term": "representing",
+          "d": 0.391
+        },
+        {
+          "term": "personas",
+          "d": 0.454
+        },
+        {
+          "term": "interaction",
+          "d": 0.5
+        },
+        {
+          "term": "decision-making",
+          "d": 0.5
+        },
+        {
+          "term": "llm-generated",
+          "d": 0.592
+        },
+        {
+          "term": "conversational",
+          "d": 0.592
+        },
+        {
+          "term": "user",
+          "d": 0.684
+        },
+        {
+          "term": "design",
+          "d": 0.73
+        }
       ],
       "keys": [
         "amin2025personas_theory",
@@ -400,13 +1238,36 @@
       "term": "prompts",
       "papers": 2,
       "cluster": 2,
-      "x": 218.9,
-      "y": 170.9,
       "r": 3.9,
       "neighbours": [
-        "ai-generated",
-        "representation",
-        "design"
+        {
+          "term": "ai-generated",
+          "d": 0.5
+        },
+        {
+          "term": "representation",
+          "d": 0.5
+        },
+        {
+          "term": "design",
+          "d": 0.543
+        },
+        {
+          "term": "review",
+          "d": 0.592
+        },
+        {
+          "term": "analysis",
+          "d": 0.592
+        },
+        {
+          "term": "user",
+          "d": 0.684
+        },
+        {
+          "term": "personas",
+          "d": 0.756
+        }
       ],
       "keys": [
         "amin2025prompts_personas_eval",
@@ -417,13 +1278,28 @@
       "term": "ai-generated",
       "papers": 2,
       "cluster": 0,
-      "x": 199.8,
-      "y": 260.8,
       "r": 3.9,
       "neighbours": [
-        "prompts",
-        "design",
-        "review"
+        {
+          "term": "prompts",
+          "d": 0.5
+        },
+        {
+          "term": "design",
+          "d": 0.543
+        },
+        {
+          "term": "review",
+          "d": 0.592
+        },
+        {
+          "term": "personas",
+          "d": 0.612
+        },
+        {
+          "term": "representing",
+          "d": 0.64
+        }
       ],
       "keys": [
         "amin2025prompts_personas_eval",
@@ -434,13 +1310,40 @@
       "term": "interaction",
       "papers": 2,
       "cluster": 0,
-      "x": 116,
-      "y": 378.1,
       "r": 3.9,
       "neighbours": [
-        "representing",
-        "theory",
-        "decision-making"
+        {
+          "term": "representing",
+          "d": 0.391
+        },
+        {
+          "term": "theory",
+          "d": 0.5
+        },
+        {
+          "term": "decision-making",
+          "d": 0.5
+        },
+        {
+          "term": "large language",
+          "d": 0.592
+        },
+        {
+          "term": "llm-generated",
+          "d": 0.592
+        },
+        {
+          "term": "conversational",
+          "d": 0.592
+        },
+        {
+          "term": "model",
+          "d": 0.592
+        },
+        {
+          "term": "llms",
+          "d": 0.592
+        }
       ],
       "keys": [
         "salminen2025aipersonas",
@@ -451,13 +1354,36 @@
       "term": "decision-making",
       "papers": 2,
       "cluster": 0,
-      "x": 151.4,
-      "y": 250.5,
       "r": 3.9,
       "neighbours": [
-        "representing",
-        "theory",
-        "interaction"
+        {
+          "term": "representing",
+          "d": 0.391
+        },
+        {
+          "term": "theory",
+          "d": 0.5
+        },
+        {
+          "term": "interaction",
+          "d": 0.5
+        },
+        {
+          "term": "conversational",
+          "d": 0.592
+        },
+        {
+          "term": "agents",
+          "d": 0.646
+        },
+        {
+          "term": "user",
+          "d": 0.684
+        },
+        {
+          "term": "personas",
+          "d": 0.756
+        }
       ],
       "keys": [
         "salminen2025aipersonas",
@@ -468,13 +1394,36 @@
       "term": "evaluation",
       "papers": 2,
       "cluster": 0,
-      "x": 240.4,
-      "y": 610.2,
       "r": 3.9,
       "neighbours": [
-        "educational",
-        "personabase",
-        "formative"
+        {
+          "term": "educational",
+          "d": 0.5
+        },
+        {
+          "term": "personabase",
+          "d": 0.5
+        },
+        {
+          "term": "formative",
+          "d": 0.5
+        },
+        {
+          "term": "large language",
+          "d": 0.592
+        },
+        {
+          "term": "computational resources",
+          "d": 0.592
+        },
+        {
+          "term": "model",
+          "d": 0.592
+        },
+        {
+          "term": "personas",
+          "d": 0.856
+        }
       ],
       "keys": [
         "amin2026llm_judges",
@@ -485,13 +1434,20 @@
       "term": "educational",
       "papers": 2,
       "cluster": 0,
-      "x": 272.2,
-      "y": 465.3,
       "r": 3.9,
       "neighbours": [
-        "evaluation",
-        "large language",
-        "model"
+        {
+          "term": "evaluation",
+          "d": 0.5
+        },
+        {
+          "term": "large language",
+          "d": 0.592
+        },
+        {
+          "term": "model",
+          "d": 0.592
+        }
       ],
       "keys": [
         "amin2026llm_judges",
@@ -502,13 +1458,32 @@
       "term": "generative",
       "papers": 2,
       "cluster": 2,
-      "x": 227.3,
-      "y": 219.7,
       "r": 3.9,
       "neighbours": [
-        "articles",
-        "hci",
-        "review"
+        {
+          "term": "articles",
+          "d": 0.5
+        },
+        {
+          "term": "hci",
+          "d": 0.5
+        },
+        {
+          "term": "review",
+          "d": 0.592
+        },
+        {
+          "term": "user",
+          "d": 0.684
+        },
+        {
+          "term": "personas",
+          "d": 0.712
+        },
+        {
+          "term": "design",
+          "d": 0.73
+        }
       ],
       "keys": [
         "amin2025generative_review",
@@ -519,13 +1494,40 @@
       "term": "articles",
       "papers": 2,
       "cluster": 2,
-      "x": 188.3,
-      "y": 78.9,
       "r": 3.9,
       "neighbours": [
-        "generative",
-        "attributes",
-        "review"
+        {
+          "term": "generative",
+          "d": 0.5
+        },
+        {
+          "term": "attributes",
+          "d": 0.5
+        },
+        {
+          "term": "review",
+          "d": 0.592
+        },
+        {
+          "term": "conversational",
+          "d": 0.592
+        },
+        {
+          "term": "analysis",
+          "d": 0.592
+        },
+        {
+          "term": "agents",
+          "d": 0.646
+        },
+        {
+          "term": "design",
+          "d": 0.73
+        },
+        {
+          "term": "personas",
+          "d": 0.856
+        }
       ],
       "keys": [
         "amin2025generative_review",
@@ -536,13 +1538,24 @@
       "term": "benchmarking",
       "papers": 2,
       "cluster": 0,
-      "x": 313.8,
-      "y": 438.3,
       "r": 3.9,
       "neighbours": [
-        "scientific",
-        "computational resources",
-        "llms"
+        {
+          "term": "scientific",
+          "d": 0.5
+        },
+        {
+          "term": "computational resources",
+          "d": 0.592
+        },
+        {
+          "term": "llms",
+          "d": 0.592
+        },
+        {
+          "term": "personas",
+          "d": 0.712
+        }
       ],
       "keys": [
         "amin2025data_personas",
@@ -553,13 +1566,32 @@
       "term": "attributes",
       "papers": 2,
       "cluster": 2,
-      "x": 155.8,
-      "y": 41.5,
       "r": 3.9,
       "neighbours": [
-        "conversational",
-        "agents",
-        "articles"
+        {
+          "term": "conversational",
+          "d": 0.184
+        },
+        {
+          "term": "agents",
+          "d": 0.293
+        },
+        {
+          "term": "articles",
+          "d": 0.5
+        },
+        {
+          "term": "review",
+          "d": 0.592
+        },
+        {
+          "term": "analysis",
+          "d": 0.592
+        },
+        {
+          "term": "design",
+          "d": 0.73
+        }
       ],
       "keys": [
         "amin2025anthropomorphicmetadata",
@@ -570,13 +1602,32 @@
       "term": "playground",
       "papers": 2,
       "cluster": 0,
-      "x": 213.6,
-      "y": 504.6,
       "r": 3.9,
       "neighbours": [
-        "ecosystem",
-        "model",
-        "llms"
+        {
+          "term": "ecosystem",
+          "d": 0.184
+        },
+        {
+          "term": "model",
+          "d": 0.592
+        },
+        {
+          "term": "llms",
+          "d": 0.592
+        },
+        {
+          "term": "data",
+          "d": 0.64
+        },
+        {
+          "term": "agents",
+          "d": 0.646
+        },
+        {
+          "term": "personas",
+          "d": 0.712
+        }
       ],
       "keys": [
         "amin2026_moltbook",
@@ -587,13 +1638,36 @@
       "term": "scientific",
       "papers": 2,
       "cluster": 1,
-      "x": 564.8,
-      "y": 375.8,
       "r": 3.9,
       "neighbours": [
-        "education popularization",
-        "popularization step",
-        "benchmarking"
+        {
+          "term": "education popularization",
+          "d": 0.5
+        },
+        {
+          "term": "popularization step",
+          "d": 0.5
+        },
+        {
+          "term": "benchmarking",
+          "d": 0.5
+        },
+        {
+          "term": "space",
+          "d": 0.539
+        },
+        {
+          "term": "computational resources",
+          "d": 0.592
+        },
+        {
+          "term": "technology",
+          "d": 0.592
+        },
+        {
+          "term": "personas",
+          "d": 0.856
+        }
       ],
       "keys": [
         "salminen2025computational_resources",
@@ -604,13 +1678,24 @@
       "term": "personabase",
       "papers": 2,
       "cluster": 0,
-      "x": 253.9,
-      "y": 562.6,
       "r": 3.9,
       "neighbours": [
-        "computational resources",
-        "evaluation",
-        "formative"
+        {
+          "term": "computational resources",
+          "d": 0.184
+        },
+        {
+          "term": "evaluation",
+          "d": 0.5
+        },
+        {
+          "term": "formative",
+          "d": 0.5
+        },
+        {
+          "term": "personas",
+          "d": 0.712
+        }
       ],
       "keys": [
         "salminen2026personabase",
@@ -621,13 +1706,24 @@
       "term": "formative",
       "papers": 2,
       "cluster": 0,
-      "x": 262.2,
-      "y": 513.8,
       "r": 3.9,
       "neighbours": [
-        "evaluation",
-        "personabase",
-        "computational resources"
+        {
+          "term": "evaluation",
+          "d": 0.5
+        },
+        {
+          "term": "personabase",
+          "d": 0.5
+        },
+        {
+          "term": "computational resources",
+          "d": 0.592
+        },
+        {
+          "term": "personas",
+          "d": 0.712
+        }
       ],
       "keys": [
         "salminen2026personabase",
@@ -638,13 +1734,24 @@
       "term": "diversity",
       "papers": 2,
       "cluster": 0,
-      "x": 256.1,
-      "y": 342.3,
       "r": 3.9,
       "neighbours": [
-        "representation",
-        "llm-generated",
-        "user"
+        {
+          "term": "representation",
+          "d": 0.5
+        },
+        {
+          "term": "llm-generated",
+          "d": 0.592
+        },
+        {
+          "term": "user",
+          "d": 0.684
+        },
+        {
+          "term": "personas",
+          "d": 0.856
+        }
       ],
       "keys": [
         "amin2025diversity_personas",
@@ -655,13 +1762,24 @@
       "term": "representation",
       "papers": 2,
       "cluster": 2,
-      "x": 254.2,
-      "y": 261.3,
       "r": 3.9,
       "neighbours": [
-        "user",
-        "prompts",
-        "diversity"
+        {
+          "term": "user",
+          "d": 0.368
+        },
+        {
+          "term": "prompts",
+          "d": 0.5
+        },
+        {
+          "term": "diversity",
+          "d": 0.5
+        },
+        {
+          "term": "analysis",
+          "d": 0.592
+        }
       ],
       "keys": [
         "amin2025diversity_personas",
@@ -672,13 +1790,32 @@
       "term": "hci",
       "papers": 2,
       "cluster": 2,
-      "x": 226.6,
-      "y": 302.5,
       "r": 3.9,
       "neighbours": [
-        "generative",
-        "large language",
-        "analysis"
+        {
+          "term": "generative",
+          "d": 0.5
+        },
+        {
+          "term": "large language",
+          "d": 0.592
+        },
+        {
+          "term": "analysis",
+          "d": 0.592
+        },
+        {
+          "term": "user",
+          "d": 0.684
+        },
+        {
+          "term": "design",
+          "d": 0.73
+        },
+        {
+          "term": "personas",
+          "d": 0.856
+        }
       ],
       "keys": [
         "amin2025genai_harmful",
@@ -689,13 +1826,32 @@
       "term": "awareness",
       "papers": 2,
       "cluster": 1,
-      "x": 735.3,
-      "y": 282.3,
       "r": 3.9,
       "neighbours": [
-        "role",
-        "space",
-        "education popularization"
+        {
+          "term": "role",
+          "d": 0.184
+        },
+        {
+          "term": "space",
+          "d": 0.266
+        },
+        {
+          "term": "education popularization",
+          "d": 0.5
+        },
+        {
+          "term": "popularization step",
+          "d": 0.5
+        },
+        {
+          "term": "pakistan",
+          "d": 0.5
+        },
+        {
+          "term": "technology",
+          "d": 0.592
+        }
       ],
       "keys": [
         "naqvi2021public_private",
@@ -706,13 +1862,20 @@
       "term": "pakistan",
       "papers": 2,
       "cluster": 1,
-      "x": 492.1,
-      "y": 313.5,
       "r": 3.9,
       "neighbours": [
-        "role",
-        "awareness",
-        "space"
+        {
+          "term": "role",
+          "d": 0.184
+        },
+        {
+          "term": "awareness",
+          "d": 0.5
+        },
+        {
+          "term": "space",
+          "d": 0.728
+        }
       ],
       "keys": [
         "naqvi2021public_private",

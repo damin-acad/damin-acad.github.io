@@ -3,7 +3,6 @@ import pubs from '../data/publications.json';
 import site from '../data/site.json';
 
 interface Props {
-  /** only the ones flagged selected={true} in papers.bib */
   selectedOnly?: boolean;
   showFilters?: boolean;
 }
@@ -19,75 +18,152 @@ const TYPE_LABEL: Record<string, string> = {
 };
 
 /**
- * Surnames only, first three, then a count. Thirty-one full author lists in
- * "First Last, First Last, ..." form was the biggest single block of text on the
- * page; the complete list stays available in the BibTeX and the title attribute.
+ * Surnames only, first three, then a count — thirty-one full author lists was
+ * the largest block of text on the page. The complete list is the title
+ * attribute and the BibTeX.
  */
 function authorLine(authors: string[]) {
   const surname = (a: string) => a.split(' ').slice(-1)[0];
-  const shown = authors.slice(0, 3).map((a) => (a === site.name ? `<b>${surname(a)}</b>` : surname(a)));
+  const shown = authors
+    .slice(0, 3)
+    .map((a) => (a === site.name ? `<b>${surname(a)}</b>` : surname(a)));
   const rest = authors.length - shown.length;
   return shown.join(', ') + (rest > 0 ? ` +${rest}` : '');
 }
 
+const typeCounts = Object.keys(TYPE_LABEL).map((t) => ({
+  t,
+  label: TYPE_LABEL[t],
+  n: items.filter((p) => p.type === t).length,
+}));
+
 let n = 0;
 ---
 
-{showFilters && (
-  <div class="filters" role="group" aria-label="Filter publications">
-    <button type="button" data-f="all" aria-pressed="true">all {items.length}</button>
-    {Object.entries(TYPE_LABEL).map(([t, label]) => {
-      const c = items.filter((p) => p.type === t).length;
-      return c > 0 ? <button type="button" data-f={t} aria-pressed="false">{label.toLowerCase()} {c}</button> : null;
-    })}
-    <button type="button" data-f="selected" aria-pressed="false">selected {pubs.filter((p) => p.selected).length}</button>
-  </div>
-)}
+{
+  showFilters && (
+    <div class="pubfilter">
+      <div class="pubfilter-row">
+        <input
+          type="search"
+          id="pf-q"
+          placeholder="search title, author, venue…"
+          autocomplete="off"
+          spellcheck="false"
+        />
+        <select id="pf-year" aria-label="Filter by year">
+          <option value="all">all years</option>
+          {years.map((y) => <option value={y}>{y}</option>)}
+        </select>
+      </div>
+
+      <div class="filters" role="group" aria-label="Filter publications">
+        <button type="button" data-f="all" aria-pressed="true">all {items.length}</button>
+        {
+          typeCounts
+            .filter((c) => c.n > 0)
+            .map((c) => (
+              <button type="button" data-f={c.t} aria-pressed="false">
+                {c.label.toLowerCase()} {c.n}
+              </button>
+            ))
+        }
+        <button type="button" data-f="selected" aria-pressed="false">
+          selected {pubs.filter((p) => p.selected).length}
+        </button>
+        <button type="button" data-f="doi" aria-pressed="false">
+          with doi {pubs.filter((p) => p.doi).length}
+        </button>
+      </div>
+
+      <p class="pubfilter-count" id="pf-count" aria-live="polite" />
+    </div>
+  )
+}
 
 <div id="pub-root">
-  {years.map((year) => (
-    <div class="year-group" data-year={year}>
-      <p class="year-label">
-        {year}<span>{items.filter((p) => p.year === year).length} items</span>
-      </p>
-      <ul class="pubs">
-        {items.filter((p) => p.year === year).map((p) => {
-          n += 1;
-          return (
-            <li
-              class:list={['pub', p.selected && 'is-selected']}
-              data-key={p.key}
-              data-type={p.type}
-              data-selected={p.selected ? 'true' : 'false'}
-            >
-              <span class="pub-n">{String(n).padStart(2, '0')}</span>
-              <h3 class="pub-title">
-                {p.doi ? (
-                  <a href={`https://doi.org/${p.doi}`} rel="noopener" target="_blank">{p.title}</a>
-                ) : (
-                  p.title
-                )}
-              </h3>
-              <p class="pub-authors" title={p.authors.join(', ')} set:html={authorLine(p.authors)} />
-              <p class="pub-meta">
-                <span class="pub-venue">{p.abbr || p.venue}</span>
-                {/* only say the status when it is not the default */}
-                {p.status && !/^published$/i.test(p.status) && <span class="pub-status">{p.status}</span>}
-                {p.citations > 0 && <span>{p.citations} cit.</span>}
-              </p>
-              <ul class="pub-links">
-                {Object.entries(p.links).map(([k, v]) => (
-                  <li><a href={v} rel="noopener" target="_blank">{k}</a></li>
-                ))}
-                <li><button type="button" data-bib={p.key}>bibtex</button></li>
-              </ul>
-              <div class="bib" id={`bib-${p.key}`} hidden><pre>{p.raw}</pre></div>
-            </li>
-          );
-        })}
-      </ul>
-    </div>
-  ))}
+  {
+    years.map((year) => (
+      <div class="year-group" data-year={year}>
+        <p class="year-label">
+          {year}<span>{items.filter((p) => p.year === year).length} items</span>
+        </p>
+        <ul class="pubs">
+          {items
+            .filter((p) => p.year === year)
+            .map((p) => {
+              n += 1;
+              const search = [p.title, p.authors.join(' '), p.venue, p.abbr, p.status]
+                .join(' ')
+                .toLowerCase();
+              return (
+                <li
+                  class:list={['pub', p.selected && 'is-selected']}
+                  data-key={p.key}
+                  data-type={p.type}
+                  data-year={p.year}
+                  data-selected={p.selected ? 'true' : 'false'}
+                  data-doi={p.doi ? 'true' : 'false'}
+                  data-search={search}
+                >
+                  <span class="pub-n">{String(n).padStart(2, '0')}</span>
+                  <h3 class="pub-title">
+                    {p.doi ? (
+                      <a href={`https://doi.org/${p.doi}`} rel="noopener" target="_blank">
+                        {p.title}
+                      </a>
+                    ) : p.links[0] ? (
+                      <a href={p.links[0].href} rel="noopener" target="_blank">
+                        {p.title}
+                      </a>
+                    ) : (
+                      p.title
+                    )}
+                  </h3>
+                  <p class="pub-authors" title={p.authors.join(', ')} set:html={authorLine(p.authors)} />
+                  <p class="pub-meta">
+                    <span class="pub-venue">{p.abbr || p.venue}</span>
+                    {p.status && !/^published$/i.test(p.status) && (
+                      <span class="pub-status">{p.status}</span>
+                    )}
+                    {p.citations > 0 && <span>{p.citations} cit.</span>}
+                  </p>
+
+                  {/* every link al-folio surfaced, in its order */}
+                  <ul class="pub-links">
+                    {p.doi && (
+                      <li>
+                        <a href={`https://doi.org/${p.doi}`} rel="noopener" target="_blank">doi</a>
+                      </li>
+                    )}
+                    {p.links.map((l) => (
+                      <li>
+                        <a href={l.href} rel="noopener" target="_blank">{l.label}</a>
+                      </li>
+                    ))}
+                    {p.scholarId && (
+                      <li>
+                        <a
+                          href={`https://scholar.google.com/citations?view_op=view_citation&citation_for_view=anC0OlUAAAAJ:${p.scholarId}`}
+                          rel="noopener"
+                          target="_blank"
+                        >
+                          scholar
+                        </a>
+                      </li>
+                    )}
+                    <li><button type="button" data-bib={p.key}>bibtex</button></li>
+                  </ul>
+
+                  <div class="bib" id={`bib-${p.key}`} hidden><pre>{p.raw}</pre></div>
+                </li>
+              );
+            })}
+        </ul>
+      </div>
+    ))
+  }
+  <p class="pubfilter-empty" id="pf-empty" hidden>Nothing matches those filters.</p>
 </div>
 
 <script>
@@ -99,26 +175,66 @@ let n = 0;
     });
   });
 
-  // type / selected filter
-  const buttons = document.querySelectorAll<HTMLButtonElement>('.filters button');
-  const rows = document.querySelectorAll<HTMLElement>('#pub-root .pub');
-  const groups = document.querySelectorAll<HTMLElement>('#pub-root .year-group');
+  const rows = Array.from(document.querySelectorAll<HTMLElement>('#pub-root .pub'));
+  const groups = Array.from(document.querySelectorAll<HTMLElement>('#pub-root .year-group'));
+  const buttons = Array.from(document.querySelectorAll<HTMLButtonElement>('.filters button'));
+  const q = document.getElementById('pf-q') as HTMLInputElement | null;
+  const yearSel = document.getElementById('pf-year') as HTMLSelectElement | null;
+  const count = document.getElementById('pf-count');
+  const empty = document.getElementById('pf-empty');
 
-  buttons.forEach((btn) => {
-    btn.addEventListener('click', () => {
-      const f = btn.dataset.f;
-      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
-      const note = document.getElementById('pub-note');
-      if (note) note.hidden = true;
+  if (rows.length && buttons.length) {
+    // the three controls compose rather than override each other
+    let kind = 'all';
+
+    function apply() {
+      const needle = (q?.value ?? '').trim().toLowerCase();
+      const year = yearSel?.value ?? 'all';
+      let shown = 0;
+
       rows.forEach((r) => {
-        const show =
-          f === 'all' || (f === 'selected' ? r.dataset.selected === 'true' : r.dataset.type === f);
+        const okKind =
+          kind === 'all' ||
+          (kind === 'selected'
+            ? r.dataset.selected === 'true'
+            : kind === 'doi'
+              ? r.dataset.doi === 'true'
+              : r.dataset.type === kind);
+        const okYear = year === 'all' || r.dataset.year === year;
+        const okText = !needle || (r.dataset.search ?? '').includes(needle);
+        const show = okKind && okYear && okText;
         r.hidden = !show;
+        if (show) shown += 1;
       });
-      // hide a year heading whose entries are all filtered out
+
       groups.forEach((g) => {
         g.hidden = !Array.from(g.querySelectorAll<HTMLElement>('.pub')).some((r) => !r.hidden);
       });
+
+      if (count) {
+        const bits = [`${shown} of ${rows.length}`];
+        if (kind !== 'all') bits.push(kind);
+        if (year !== 'all') bits.push(year);
+        if (needle) bits.push(`“${needle}”`);
+        count.textContent = bits.join(' · ');
+      }
+      if (empty) empty.hidden = shown > 0;
+
+      // a term selected in the projector no longer applies once filters move
+      const note = document.getElementById('pub-note');
+      if (note) note.hidden = true;
+    }
+
+    buttons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        kind = btn.dataset.f ?? 'all';
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+        apply();
+      });
     });
-  });
+
+    q?.addEventListener('input', apply);
+    yearSel?.addEventListener('change', apply);
+    apply();
+  }
 </script>

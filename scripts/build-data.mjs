@@ -110,11 +110,42 @@ function parseBib(src) {
     }
 
     const venue = fields.booktitle ?? fields.journal ?? fields.publisher ?? fields.school ?? '';
-    const links = {};
-    for (const k of ['url_code', 'url_poster', 'url_video', 'url_slides', 'url_data', 'html', 'url']) {
-      const v = (fields[k] ?? '').trim();
-      if (v) links[k.replace(/^url_/, '')] = cleanTex(v);
+
+    /**
+     * Every link al-folio surfaced, in the order it showed them. The first pass
+     * only looked at url_* and html, which quietly dropped arxiv, slides and the
+     * Scholar id — 20 links across the bibliography.
+     */
+    const LINKS = [
+      ['html', 'HTML'],
+      ['url', 'link'],
+      ['arxiv', 'arXiv'],
+      ['pdf', 'PDF'],
+      ['url_pdf', 'PDF'],
+      ['url_code', 'code'],
+      ['code', 'code'],
+      ['url_slides', 'slides'],
+      ['slides', 'slides'],
+      ['url_poster', 'poster'],
+      ['poster', 'poster'],
+      ['url_video', 'video'],
+      ['video', 'video'],
+      ['url_data', 'data'],
+      ['website', 'website'],
+    ];
+    const links = [];
+    for (const [key, label] of LINKS) {
+      let v = (fields[key] ?? '').trim();
+      if (!v) continue;
+      v = cleanTex(v);
+      // arxiv is often an id rather than a URL
+      if (key === 'arxiv' && !/^https?:/.test(v)) v = `https://arxiv.org/abs/${v}`;
+      if (!/^https?:/.test(v)) continue;
+      if (links.some((l) => l.href === v)) continue;
+      links.push({ label, href: v });
     }
+
+    const scholarId = (fields.google_scholar_id ?? '').trim();
 
     out.push({
       key: m[2],
@@ -128,6 +159,7 @@ function parseBib(src) {
       doi: cleanTex(fields.doi ?? ''),
       citations: Number((fields.citations ?? '').replace(/\D/g, '')) || 0,
       selected: /true/i.test(fields.selected ?? ''),
+      scholarId,
       links,
       // kept so the site can offer a real .bib download per entry
       raw: `@${type}{${m[2]},\n${Object.entries(fields)

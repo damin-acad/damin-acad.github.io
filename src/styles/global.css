@@ -1031,7 +1031,61 @@ details[open] > .cv-summary::after {
   font-size: 0.74rem;
 }
 
-/* the persona opens the homepage, so it gets air above the prose */
-.hero-persona {
-  margin: 1.25rem 0 1.75rem;
+/* ---------- publication filters ---------- */
+
+.pubfilter {
+  margin-bottom: 1.1rem;
+}
+
+.pubfilter-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+}
+
+.pubfilter-row input[type='search'] {
+  flex: 1 1 14rem;
+  font-family: var(--type);
+  font-size: 0.84rem;
+  padding: 0.35rem 0.45rem;
+  border: 1.5px solid var(--ink);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+}
+
+.pubfilter-row select {
+  font-family: var(--type);
+  font-size: 0.72rem;
+  padding: 0.35rem 0.4rem;
+  border: 1.5px solid var(--ink);
+  border-radius: 0;
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+}
+
+.pubfilter-count {
+  margin: 0.45rem 0 0;
+  font-family: var(--type);
+  font-size: 0.62rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+}
+
+.pubfilter-empty {
+  margin: 1rem 0 0;
+  font-family: var(--type);
+  font-size: 0.72rem;
+  color: var(--ink-soft);
+  padding: 0.7rem 0.8rem;
+  border: 1.5px dashed var(--rule);
+}
+
+/* more links per row now, so they wrap tighter */
+.pub-links a,
+.pub-links button {
+  font-size: 0.62rem;
+  padding: 0.08rem 0.32rem;
 }

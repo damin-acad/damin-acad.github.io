@@ -12,6 +12,7 @@ const coauthors = new Set(pubs.flatMap((p) => p.authors).filter((a) => a !== sit
 
 <Base title="publications" description={`${pubs.length} publications on generative AI, personas and user representation.`}>
   <section class="section" data-set>
+    <p class="section-tab">Fig. 1 — record</p>
     <h1 class="page-title">Publications</h1>
     <p class="page-lede">
       {pubs.length} entries, {years[0]}–{years[years.length - 1]}, generated from

@@ -14,6 +14,7 @@ const fmt = (d: Date) =>
 
 <Base title="writing" description="Long-form essays on generative AI, personas and evaluation.">
   <section class="section" data-set>
+    <p class="section-tab">Fig. 2 — long form</p>
     <h1 class="page-title">Writing</h1>
     <p class="page-lede">
       {posts.length} essays, {words.toLocaleString('en-GB')} words. These are the full versions —
@@ -29,11 +30,12 @@ const fmt = (d: Date) =>
           <li class="pub">
             <span class="pub-n">{String(i + 1).padStart(2, '0')}</span>
             <h3 class="pub-title"><a href={`/writing/${p.id}`}>{p.data.title}</a></h3>
-            {p.data.excerpt && <p class="pub-authors">{p.data.excerpt}</p>}
+            {/* the excerpt is 40+ words x 27 rows; the title and length are
+                enough for an index, and the piece itself is one click away */}
             <p class="pub-meta">
               <span>{fmt(p.data.date)}</span>
               <span>{wc(p).toLocaleString('en-GB')} words</span>
-              {p.data.tags.slice(0, 3).map((t) => <span>{t}</span>)}
+              {p.data.tags.slice(0, 2).map((t) => <span>{t}</span>)}
             </p>
           </li>
         ))

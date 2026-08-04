@@ -18,11 +18,16 @@ const TYPE_LABEL: Record<string, string> = {
   incollection: 'Book chapter',
 };
 
-/** bold the site owner in the author list — standard on an academic page */
-function authorHtml(authors: string[]) {
-  return authors
-    .map((a) => (a === site.name ? `<b>${a}</b>` : a))
-    .join(', ');
+/**
+ * Surnames only, first three, then a count. Thirty-one full author lists in
+ * "First Last, First Last, ..." form was the biggest single block of text on the
+ * page; the complete list stays available in the BibTeX and the title attribute.
+ */
+function authorLine(authors: string[]) {
+  const surname = (a: string) => a.split(' ').slice(-1)[0];
+  const shown = authors.slice(0, 3).map((a) => (a === site.name ? `<b>${surname(a)}</b>` : surname(a)));
+  const rest = authors.length - shown.length;
+  return shown.join(', ') + (rest > 0 ? ` +${rest}` : '');
 }
 
 let n = 0;
@@ -42,7 +47,9 @@ let n = 0;
 <div id="pub-root">
   {years.map((year) => (
     <div class="year-group" data-year={year}>
-      <p class="year-label">{year}</p>
+      <p class="year-label">
+        {year}<span>{items.filter((p) => p.year === year).length} items</span>
+      </p>
       <ul class="pubs">
         {items.filter((p) => p.year === year).map((p) => {
           n += 1;
@@ -54,19 +61,21 @@ let n = 0;
               data-selected={p.selected ? 'true' : 'false'}
             >
               <span class="pub-n">{String(n).padStart(2, '0')}</span>
-              <h3 class="pub-title">{p.title}</h3>
-              <p class="pub-authors" set:html={authorHtml(p.authors)} />
+              <h3 class="pub-title">
+                {p.doi ? (
+                  <a href={`https://doi.org/${p.doi}`} rel="noopener" target="_blank">{p.title}</a>
+                ) : (
+                  p.title
+                )}
+              </h3>
+              <p class="pub-authors" title={p.authors.join(', ')} set:html={authorLine(p.authors)} />
               <p class="pub-meta">
-                <span class="pub-venue">{p.venue}</span>
-                {p.abbr && <span>{p.abbr}</span>}
-                <span>{TYPE_LABEL[p.type] ?? p.type}</span>
-                {p.status && <span class="pub-status">{p.status}</span>}
-                {p.citations > 0 && <span>{p.citations} citations</span>}
+                <span class="pub-venue">{p.abbr || p.venue}</span>
+                {/* only say the status when it is not the default */}
+                {p.status && !/^published$/i.test(p.status) && <span class="pub-status">{p.status}</span>}
+                {p.citations > 0 && <span>{p.citations} cit.</span>}
               </p>
               <ul class="pub-links">
-                {p.doi && (
-                  <li><a href={`https://doi.org/${p.doi}`} rel="noopener" target="_blank">doi</a></li>
-                )}
                 {Object.entries(p.links).map(([k, v]) => (
                   <li><a href={v} rel="noopener" target="_blank">{k}</a></li>
                 ))}

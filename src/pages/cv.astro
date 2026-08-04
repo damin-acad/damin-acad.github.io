@@ -1,73 +1,120 @@
 ---
 import Base from '../layouts/Base.astro';
-import cv from '../data/cv.json';
+import cvData from '../data/cv.json';
 
-type Item = Record<string, any>;
-type Section = { title: string; type?: string; contents?: Item[] | string };
+/**
+ * al-folio's cv.yml tags each section with a `type` that determines the shape of
+ * its contents. The first renderer here ignored that and reached for `title`
+ * generically, which made "General Information" print twelve field labels with
+ * none of their values. Dispatching on the type is the fix.
+ *
+ *   map          [{ name, value }]
+ *   text         a string
+ *   nested_list  [{ title, items[] }]
+ *   time_table   [{ title, institution, year, description[] }]
+ */
+type Section = {
+  title: string;
+  type?: 'map' | 'text' | 'nested_list' | 'time_table' | 'list';
+  contents?: any;
+};
 
-const sections = (cv as Section[]).filter((s) => s?.title);
+const sections = (cvData as Section[]).filter((s) => s?.title && s.contents);
 
-/** al-folio's cv.yml mixes shapes per section; normalise to something printable */
-function rows(s: Section) {
-  const c = s.contents;
-  if (!c) return [];
-  if (typeof c === 'string') return [{ _text: c }];
-  return c as Item[];
+/** how many rows a section holds, for the count beside its summary */
+function size(s: Section) {
+  if (typeof s.contents === 'string') return '';
+  if (Array.isArray(s.contents)) return String(s.contents.length);
+  return '';
 }
 ---
 
 <Base title="cv" description="Curriculum vitae — education, experience, publications and service.">
   <section class="section" data-set>
+    <p class="section-tab">Fig. 3 — record</p>
     <h1 class="page-title">Curriculum vitae</h1>
     <p class="page-lede">
-      Generated from the same <code>cv.yml</code> the previous site used, so it stays in one place.
+      Generated from the same <code>cv.yml</code> the previous site used. Sections open on
+      demand — the whole thing at once is 1,500 words.
     </p>
   </section>
 
-  {sections.map((s) => (
-    <section class="section cv-section" data-set>
-      <div class="section-head">
-        <h2 class="section-title">{s.title}</h2>
-      </div>
+  {
+    sections.map((s, si) => (
+      <section class="section cv-section" data-set>
+        <details open={si < 2}>
+          <summary class="cv-summary">
+            <span class="section-title">{s.title}</span>
+            <span class="cv-toggle">{size(s)}</span>
+          </summary>
 
-      {rows(s).map((it) => (
-        <div class="cv-entry">
-          {it._text && <p class="cv-where">{it._text}</p>}
-
-          {(it.title || it.name || it.institution || it.position) && (
-            <div class="cv-entry-top">
-              <h3>{it.title ?? it.name ?? it.position ?? it.institution}</h3>
-              {(it.year || it.time || it.date) && (
-                <span class="cv-when">{it.year ?? it.time ?? it.date}</span>
-              )}
+          {s.type === 'text' && (
+            <div class="prose" style="padding-top:0.6rem">
+              <p>{s.contents}</p>
             </div>
           )}
 
-          {(it.institution || it.department || it.company || it.location) && (
-            <p class="cv-where">
-              {[it.institution, it.department, it.company, it.location].filter(Boolean).join(' · ')}
-            </p>
+          {s.type === 'map' && (
+            <dl class="facts" style="margin-top:0.6rem">
+              {(s.contents as { name: string; value: any }[]).map((r) => (
+                <div>
+                  <dt>{r.name}</dt>
+                  {/* several values in cv.yml are hand-written anchors, which
+                      printed as literal <a href=…> text when escaped. This is
+                      first-party content from the repo, not user input. */}
+                  <dd set:html={String(r.value)} />
+                </div>
+              ))}
+            </dl>
           )}
 
-          {it.description && (
-            Array.isArray(it.description)
-              ? <ul>{it.description.map((d: any) => (
-                  <li>{typeof d === 'string' ? d : d.title ?? JSON.stringify(d)}</li>
-                ))}</ul>
-              : <p class="cv-where">{it.description}</p>
-          )}
+          {s.type === 'nested_list' &&
+            (s.contents as { title: string; items: string[] }[]).map((g) => (
+              <div class="cv-entry">
+                <div class="cv-entry-top">
+                  <h3>{g.title}</h3>
+                </div>
+                {Array.isArray(g.items) && (
+                  <ul>
+                    {g.items.map((i) => (
+                      <li>{i}</li>
+                    ))}
+                  </ul>
+                )}
+              </div>
+            ))}
 
-          {Array.isArray(it.items) && (
-            <ul>{it.items.map((d: any) => <li>{typeof d === 'string' ? d : JSON.stringify(d)}</li>)}</ul>
-          )}
+          {(s.type === 'time_table' || !s.type) &&
+            (s.contents as any[]).map((r) => (
+              <div class="cv-entry">
+                <div class="cv-entry-top">
+                  <h3>{r.title ?? r.name}</h3>
+                  {r.year && <span class="cv-when">{r.year}</span>}
+                </div>
+                {r.institution && <p class="cv-where">{r.institution}</p>}
+                {/* description entries also carry hand-written anchors — DOIs
+                    and preprint links — so they need the same treatment */}
+                {Array.isArray(r.description) ? (
+                  <ul>
+                    {r.description.map((d: any) =>
+                      typeof d === 'string' ? <li set:html={d} /> : <li>{d.title ?? ''}</li>,
+                    )}
+                  </ul>
+                ) : (
+                  r.description && <p class="cv-where" set:html={String(r.description)} />
+                )}
+              </div>
+            ))}
 
-          {Array.isArray(it.contents) && (
-            <ul>{it.contents.map((d: any) => (
-              <li>{typeof d === 'string' ? d : d.name ?? d.title ?? JSON.stringify(d)}</li>
-            ))}</ul>
+          {s.type === 'list' && (
+            <ul class="cv-entry">
+              {(s.contents as string[]).map((i) => (
+                <li>{i}</li>
+              ))}
+            </ul>
           )}
-        </div>
-      ))}
-    </section>
-  ))}
+        </details>
+      </section>
+    ))
+  }
 </Base>

@@ -1,0 +1,306 @@
+---
+/**
+ * A persona of the persona researcher.
+ *
+ * Laid out the way data-driven personas are — portrait, attributes, goals,
+ * frustrations, a representative quote — because the person it describes spends
+ * his research asking whether that format represents anyone at all. The card is
+ * the argument, and the note at the bottom says the quiet part.
+ *
+ * Every field is sourced: attributes come from cv.yml and papers.bib, the quote
+ * is a real sentence from a real essay and links to it. Nothing about this
+ * person is inferred, which is precisely what a generated persona cannot say.
+ */
+import cv from '../data/cv.json';
+import pubs from '../data/publications.json';
+import site from '../data/site.json';
+
+interface Props {
+  essays: number;
+  essayWords: number;
+}
+const { essays, essayWords } = Astro.props;
+
+type Section = { title: string; type?: string; contents?: any };
+const map = Object.fromEntries(
+  (cv as Section[])
+    .filter((s) => s.type === 'map')
+    .flatMap((s) => (s.contents as { name: string; value: any }[]).map((r) => [r.name, r.value])),
+);
+
+const interests = ((cv as Section[]).find((s) => s.title === 'Research Interests')?.contents ??
+  []) as { title: string; items: string[] }[];
+
+const coauthors = new Set(pubs.flatMap((p) => p.authors).filter((a) => a !== site.name));
+const years = pubs.map((p) => p.year).filter(Boolean) as number[];
+
+/**
+ * A real sentence from a real essay, not a composed persona voice — and quoted
+ * verbatim, including the "however". A card whose whole point is that its
+ * attributes are sourced cannot paraphrase the one thing in quotation marks.
+ */
+const quote = {
+  text:
+    'This proposition, however, rests on a fundamental category error that conflates representational plausibility with representational validity.',
+  slug: '2025-07-02-representation',
+  where: 'The Representation Crisis',
+};
+---
+
+<figure class="persona" data-set>
+  <div class="persona-head">
+    <p class="persona-tag">Persona 01 · n = 1</p>
+    <p class="persona-meta">Data-driven · self-reported · unweighted</p>
+  </div>
+
+  <div class="persona-body">
+    <div class="persona-portrait">
+      <img src="/prof_pic.jpg" alt={`Portrait of ${site.name}`} width="480" height="476" />
+      <span class="persona-duo" aria-hidden="true"></span>
+    </div>
+
+    <div class="persona-fields">
+      <h2 class="persona-name">{map['Full Name'] ?? site.name}</h2>
+      <p class="persona-role">
+        {site.role}, <a href={site.groupUrl} rel="noopener" target="_blank">{site.group}</a> ·
+        {' '}{site.affiliation}
+      </p>
+
+      <dl class="persona-attrs">
+        <div>
+          <dt>Location</dt>
+          <dd>{map['Location'] ?? site.location}</dd>
+        </div>
+        <div>
+          <dt>Languages</dt>
+          <dd>{map['Languages']}</dd>
+        </div>
+        <div>
+          <dt>Supervisor</dt>
+          <dd><a href={site.supervisorUrl} rel="noopener" target="_blank">{site.supervisor}</a></dd>
+        </div>
+        <div>
+          <dt>Evidence</dt>
+          <dd>
+            {pubs.length} publications ({Math.min(...years)}–{Math.max(...years)}),
+            {' '}{coauthors.size} co-authors, {essays} essays
+            ({essayWords.toLocaleString('en-GB')} words)
+          </dd>
+        </div>
+      </dl>
+
+      <div class="persona-split">
+        <div>
+          <p class="persona-key">Works on</p>
+          <ul>
+            {interests.map((g) => <li>{g.title}</li>)}
+          </ul>
+        </div>
+        <div>
+          <p class="persona-key">Also</p>
+          <ul>
+            <li>Senior Data Science Lead, ENI Plenitude</li>
+            <li>Previously Samsung Design Innovation Center</li>
+            <li>Space education, Pakistan (2014–2022)</li>
+          </ul>
+        </div>
+      </div>
+
+      <blockquote class="persona-quote">
+        <p>“{quote.text}”</p>
+        <footer>
+          — <a href={`/writing/${quote.slug}`}>{quote.where}</a>, in his own words
+        </footer>
+      </blockquote>
+    </div>
+  </div>
+
+  <figcaption class="persona-note">
+    <strong>Note on this persona.</strong> Every attribute above is taken from a CV, a bibliography
+    or a published sentence — nothing is inferred. A generated persona cannot make that claim, and
+    the gap between the two is what the research below is about: a persona can be entirely
+    plausible and still represent no one.
+  </figcaption>
+</figure>
+
+<style>
+  .persona {
+    margin: 0 0 0.5rem;
+    border: 2px solid var(--ink);
+    box-shadow: 7px 7px 0 var(--mark);
+    background: var(--paper);
+  }
+
+  .persona-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 0.3rem 1rem;
+    padding: 0.4rem 0.7rem;
+    background: var(--ink);
+    color: var(--paper);
+    font-family: var(--type);
+    font-size: 0.62rem;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+  }
+
+  .persona-head p {
+    margin: 0;
+  }
+
+  .persona-meta {
+    color: var(--paper);
+    opacity: 0.7;
+  }
+
+  .persona-body {
+    display: grid;
+    gap: 1rem 1.25rem;
+    padding: 1rem 1.1rem 1.1rem;
+  }
+
+  @media (min-width: 720px) {
+    .persona-body {
+      grid-template-columns: 12rem 1fr;
+    }
+  }
+
+  /* duotone: greyscale under a burgundy pass, which is how a two-ink press
+     would reproduce a photograph */
+  .persona-portrait {
+    position: relative;
+    align-self: start;
+    border: 1.5px solid var(--ink);
+    overflow: hidden;
+    isolation: isolate;
+    line-height: 0;
+  }
+
+  .persona-portrait img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: grayscale(1) contrast(1.18) brightness(1.04);
+  }
+
+  .persona-duo {
+    position: absolute;
+    inset: 0;
+    background: var(--mark);
+    mix-blend-mode: var(--blend);
+    opacity: 0.72;
+    pointer-events: none;
+  }
+
+  .persona-name {
+    font-family: var(--display);
+    font-size: clamp(1.6rem, 3.4vw, 2.3rem);
+    letter-spacing: -0.035em;
+    line-height: 0.98;
+    margin: 0 0 0.2rem;
+    font-weight: 400;
+  }
+
+  .persona-role {
+    margin: 0 0 0.9rem;
+    font-size: 0.95rem;
+    color: var(--ink-soft);
+  }
+
+  .persona-attrs {
+    margin: 0 0 0.9rem;
+    border-top: 1.5px solid var(--rule);
+  }
+
+  .persona-attrs div {
+    display: grid;
+    grid-template-columns: 6.5rem 1fr;
+    gap: 0.3rem 0.8rem;
+    padding: 0.35rem 0;
+    border-bottom: 1.5px solid var(--rule);
+    font-size: 0.92rem;
+  }
+
+  .persona-attrs dt {
+    font-family: var(--type);
+    font-size: 0.64rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-top: 0.28em;
+  }
+
+  .persona-attrs dd {
+    margin: 0;
+  }
+
+  .persona-split {
+    display: grid;
+    gap: 0.8rem 1.25rem;
+    margin-bottom: 0.9rem;
+  }
+
+  @media (min-width: 560px) {
+    .persona-split {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .persona-key {
+    font-family: var(--type);
+    font-size: 0.62rem
+;
+    letter-spacing: 0.09em;
+    text-transform: uppercase;
+    color: var(--mark);
+    margin: 0 0 0.25rem;
+  }
+
+  .persona-split ul {
+    margin: 0;
+    padding-left: 1rem;
+    font-size: 0.92rem;
+    line-height: 1.5;
+    color: var(--ink-soft);
+  }
+
+  .persona-split li {
+    margin-bottom: 0.15rem;
+  }
+
+  .persona-quote {
+    margin: 0;
+    padding: 0.7rem 0.8rem;
+    background: var(--paper-deep);
+    border-left: 3px solid var(--mark);
+  }
+
+  .persona-quote p {
+    margin: 0 0 0.35rem;
+    font-size: 1.02rem;
+    font-weight: 600;
+    line-height: 1.42;
+    text-wrap: pretty;
+  }
+
+  .persona-quote footer {
+    font-family: var(--type);
+    font-size: 0.66rem;
+    color: var(--ink-faint);
+  }
+
+  .persona-note {
+    padding: 0.7rem 1.1rem 0.9rem;
+    border-top: 1.5px dashed var(--rule);
+    font-family: var(--type);
+    font-size: 0.68rem;
+    line-height: 1.7;
+    color: var(--ink-soft);
+  }
+
+  .persona-note strong {
+    color: var(--mark);
+  }
+</style>

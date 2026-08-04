@@ -1,12 +1,12 @@
 ---
 import Base from '../layouts/Base.astro';
+import Persona from '../components/Persona.astro';
 import PublicationList from '../components/PublicationList.astro';
 import site from '../data/site.json';
 import pubs from '../data/publications.json';
 import { getCollection } from 'astro:content';
 
 const selected = pubs.filter((p) => p.selected);
-const years = pubs.map((p) => p.year).filter(Boolean) as number[];
 const essays = await getCollection('writing');
 const essayWords = essays.reduce(
   (n, p) => n + (p.body ?? '').split(/\s+/).filter(Boolean).length,
@@ -16,76 +16,59 @@ const essayWords = essays.reduce(
 
 <Base>
   <section class="section" data-set>
-    <p class="section-tab">Fig. 0 — who</p>
+    <p class="section-tab">Fig. 0 — the subject</p>
     <h1 class="page-title">How generative AI represents the people it claims to serve</h1>
-    <p class="page-lede">
-      — and what that gets wrong. Doctoral research at the {site.affiliation}, alongside building
-      the systems it critiques.
-    </p>
 
-    <!-- facts as a table rather than four paragraphs of prose -->
-    <dl class="facts">
-      <div>
-        <dt>Position</dt>
-        <dd>
-          {site.role}, <a href={site.groupUrl} rel="noopener" target="_blank">{site.group}</a>,
-          {' '}{site.affiliation}
-        </dd>
-      </div>
-      <div>
-        <dt>Supervisor</dt>
-        <dd><a href={site.supervisorUrl} rel="noopener" target="_blank">{site.supervisor}</a></dd>
-      </div>
-      <div>
-        <dt>Also</dt>
-        <dd>
-          Senior Data Science Lead,
-          <a href="https://www.eniplenitude.fr/" rel="noopener" target="_blank">ENI Plenitude</a>
-          {' '}· previously AI Research Scientist, Samsung Design Innovation Center
-        </dd>
-      </div>
-      <div>
-        <dt>Focus</dt>
-        <dd>{site.interests.slice(0, 4).join(' · ')}</dd>
-      </div>
-      <div>
-        <dt>Output</dt>
-        <dd>
-          <a href="/publications">{pubs.length} publications</a>, {Math.min(...years)}–{Math.max(...years)}
-          {' '}· <a href="/writing">{essays.length} essays</a>,
-          {' '}{essayWords.toLocaleString('en-GB')} words
-        </dd>
-      </div>
-      <div>
-        <dt>Based in</dt>
-        <dd>{site.location}</dd>
-      </div>
-    </dl>
+    {/* prose rather than a field table — but four paragraphs' worth of facts in
+        two, with the rest one click away */}
+    <div class="prose lead-prose">
+      <p>
+        I am a {site.role.toLowerCase()} at the
+        <a href={site.groupUrl} rel="noopener" target="_blank">{site.affiliation}</a>, supervised by
+        <a href={site.supervisorUrl} rel="noopener" target="_blank">{site.supervisor}</a>, and my
+        work is about whether generative AI can represent users fairly — how these systems build
+        personas, where they flatten the people they are meant to describe, and what that costs
+        communities already thin on the ground in the training data.
+      </p>
+      <p>
+        Alongside the doctorate I am Senior Data Science Lead at
+        <a href="https://www.eniplenitude.fr/" rel="noopener" target="_blank">ENI Plenitude</a>;
+        before that I built GenAI tools for designers at Samsung Design Innovation Center in
+        France. That order matters to the research — I keep shipping the kind of system I spend my
+        papers criticising, which is a useful place to argue from.
+      </p>
+    </div>
 
     <details class="more">
       <summary>Longer version</summary>
       <div class="prose">
         <p>
-          My research centres on making GenAI systems fairer in how they represent users. I study
-          how these systems generate user personas and work to reduce bias, particularly for
-          marginalised communities — the goal being systems that do not quietly launder
-          stereotypes into design decisions.
-        </p>
-        <p>
-          Before Plenitude I built GenAI tools at Samsung Design Innovation Center in France to
-          help designers create more representative products, and AI systems in engineering
-          domains across Pakistan, the USA, MENA and Ireland.
+          Before Samsung I built AI systems in engineering domains across Pakistan, the USA, MENA
+          and Ireland, and came to research through practice rather than the other way round.
         </p>
         <p>
           I have run space education and popularisation in Pakistan for years through Space
           Technology Education and Popularization — World Space Week (2014–2022), Space Summer
           School (2017–2022) and Space Camps — and volunteer with the
           <a href="https://ncgsa.org.pk/" rel="noopener" target="_blank">National Center of GIS
-          &amp; Space Applications</a>. Four languages, some poetry, mostly overthinking or
-          cooking.
+          &amp; Space Applications</a>. Four languages, some poetry and dark prose, and otherwise
+          mostly overthinking or cooking.
+        </p>
+        <p>
+          Essays live <a href="/writing">here in full</a>;
+          <a href={site.portfolio} rel="noopener" target="_blank">danialamin.com</a> carries the
+          short versions and the systems I run.
         </p>
       </div>
     </details>
+  </section>
+
+  <section class="section" data-set>
+    <div class="section-head">
+      <h2 class="section-title">A persona of the persona researcher</h2>
+      <span class="section-count">sourced, not generated</span>
+    </div>
+    <Persona essays={essays.length} essayWords={essayWords} />
   </section>
 
   <section class="section" data-set>

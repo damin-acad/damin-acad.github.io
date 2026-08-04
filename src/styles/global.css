@@ -1004,3 +1004,13 @@ details[open] > .cv-summary::after {
     gap: 0.1rem;
   }
 }
+
+/* the opening prose runs a touch wider and larger than body copy */
+.lead-prose {
+  max-width: 40rem;
+}
+
+.lead-prose p {
+  font-size: 1.06rem;
+  line-height: 1.68;
+}

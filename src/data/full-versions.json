@@ -1,0 +1,191 @@
+[
+  {
+    "slug": "2025-01-28-deepseek",
+    "title": "DeepSeek R1's Game-Changing Approach to Parameter Activation - What Industry Needs to Know",
+    "date": "2025-01-28",
+    "words": 1148,
+    "full": "https://academic.danialamin.com/writing/2025-01-28-deepseek"
+  },
+  {
+    "slug": "2025-02-20-titans",
+    "title": "Titans - The Next \"Attention is All You Need\" Moment for LLM Architecture",
+    "date": "2025-02-20",
+    "words": 1103,
+    "full": "https://academic.danialamin.com/writing/2025-02-20-titans"
+  },
+  {
+    "slug": "2025-03-05-expectations",
+    "title": "Managing Executive Expectations for Generative AI - Bridging the Reality Gap",
+    "date": "2025-03-05",
+    "words": 1062,
+    "full": "https://academic.danialamin.com/writing/2025-03-05-expectations"
+  },
+  {
+    "slug": "2025-03-26-rag-works",
+    "title": "RAG, Finetuning, and Prompt Engineering - Extending the Capabilities of LLMs",
+    "date": "2025-03-26",
+    "words": 995,
+    "full": "https://academic.danialamin.com/writing/2025-03-26-rag-works"
+  },
+  {
+    "slug": "2025-04-15-specialist-vs-generalist",
+    "title": "From Generalist to Specialist - The Case for Persona-Driven AI Architecture",
+    "date": "2025-04-16",
+    "words": 2225,
+    "full": "https://academic.danialamin.com/writing/2025-04-15-specialist-vs-generalist"
+  },
+  {
+    "slug": "2025-06-27-ai-ethics",
+    "title": "The Hidden Costs of AI Development - What I've Learned Working Across Global Tech Ecosystems",
+    "date": "2025-06-27",
+    "words": 1657,
+    "full": "https://academic.danialamin.com/writing/2025-06-27-ai-ethics"
+  },
+  {
+    "slug": "2025-06-29-yes-man",
+    "title": "The \"Yes Sir\" Problem - Why LLMs Can't Disagree and What This Means for AI Development",
+    "date": "2025-06-29",
+    "words": 1859,
+    "full": "https://academic.danialamin.com/writing/2025-06-29-yes-man"
+  },
+  {
+    "slug": "2025-06-30-personality_ai",
+    "title": "The Case for Personality in LLM Agents - Why Character-Driven AI is Essential for Effective Human-Computer Interaction",
+    "date": "2025-06-30",
+    "words": 4528,
+    "full": "https://academic.danialamin.com/writing/2025-06-30-personality_ai"
+  },
+  {
+    "slug": "2025-07-02-representation",
+    "title": "The Representation Crisis - How LLM-Based Synthetic Users Obscure Rather Than Illuminate User Understanding",
+    "date": "2025-07-02",
+    "words": 4389,
+    "full": "https://academic.danialamin.com/writing/2025-07-02-representation"
+  },
+  {
+    "slug": "2025-07-07-llm-usage",
+    "title": "Teaching LLMs Like Teaching Kids to Ride - Why Analytical Tasks Need Focused Instruction",
+    "date": "2025-07-07",
+    "words": 1001,
+    "full": "https://academic.danialamin.com/writing/2025-07-07-llm-usage"
+  },
+  {
+    "slug": "2025-07-09-llm_bias",
+    "title": "Can LLMs Be Unbiased? - The Dictionary Dilemma and the Weight of the World's Opinions",
+    "date": "2025-07-09",
+    "words": 1991,
+    "full": "https://academic.danialamin.com/writing/2025-07-09-llm_bias"
+  },
+  {
+    "slug": "2025-07-10-red_teaming",
+    "title": "Red Teaming AI for Social Good - Testing for Hidden Biases in the Age of Generative AI",
+    "date": "2025-07-10",
+    "words": 2098,
+    "full": "https://academic.danialamin.com/writing/2025-07-10-red_teaming"
+  },
+  {
+    "slug": "2025-07-13-llms_as_evaluators",
+    "title": "LLMs as Evaluators - Who Watches the Watchers?",
+    "date": "2025-07-13",
+    "words": 1618,
+    "full": "https://academic.danialamin.com/writing/2025-07-13-llms_as_evaluators"
+  },
+  {
+    "slug": "2025-07-21-practioners-handbook",
+    "title": "The Prompt Practitioner's Handbook - Heuristics for Better Industry Research",
+    "date": "2025-07-21",
+    "words": 1259,
+    "full": "https://academic.danialamin.com/writing/2025-07-21-practioners-handbook"
+  },
+  {
+    "slug": "2025-07-22-digital-twin",
+    "title": "The Living Memory - When Your Digital Twin Knows You Better Than You Know Yourself",
+    "date": "2025-07-22",
+    "words": 2454,
+    "full": "https://academic.danialamin.com/writing/2025-07-22-digital-twin"
+  },
+  {
+    "slug": "2025-07-23-wrong-evaluation",
+    "title": "Beyond Test Scores - Why We Need to Measure AI's Moral Compass, Not Its Memory",
+    "date": "2025-07-23",
+    "words": 2098,
+    "full": "https://academic.danialamin.com/writing/2025-07-23-wrong-evaluation"
+  },
+  {
+    "slug": "2025-07-25-ai-safety-pt1",
+    "title": "The AI Safety Mirage - Why Industry Rankings Are Failing Us (Part 1)",
+    "date": "2025-07-25",
+    "words": 1647,
+    "full": "https://academic.danialamin.com/writing/2025-07-25-ai-safety-pt1"
+  },
+  {
+    "slug": "2025-07-26-ai-safety-pt2",
+    "title": "Beyond the Safety Theater - What Real AI Safety Looks Like (Part 2)",
+    "date": "2025-07-26",
+    "words": 2544,
+    "full": "https://academic.danialamin.com/writing/2025-07-26-ai-safety-pt2"
+  },
+  {
+    "slug": "2025-09-22-llm-fossilized",
+    "title": "The Data Fossil Fuel Crisis - Why LLMs Are Hitting Peak Information",
+    "date": "2025-09-22",
+    "words": 870,
+    "full": "https://academic.danialamin.com/writing/2025-09-22-llm-fossilized"
+  },
+  {
+    "slug": "2025-09-25-personality-in-llm",
+    "title": "The Personality Mirror - How LLMs' Hidden Character Shapes Everything You Know",
+    "date": "2025-09-25",
+    "words": 1892,
+    "full": "https://academic.danialamin.com/writing/2025-09-25-personality-in-llm"
+  },
+  {
+    "slug": "2025-10-12-poison-llm",
+    "title": "The Small Sample Problem - How Minimal Data Poisoning Threatens LLM Security",
+    "date": "2025-10-12",
+    "words": 2214,
+    "full": "https://academic.danialamin.com/writing/2025-10-12-poison-llm"
+  },
+  {
+    "slug": "2025-10-27-patterns-antipatterns",
+    "title": "Building Agentic AI - Patterns That Work, Traps That Don't",
+    "date": "2025-10-27",
+    "words": 1405,
+    "full": "https://academic.danialamin.com/writing/2025-10-27-patterns-antipatterns"
+  },
+  {
+    "slug": "2025-11-19-not-to-supervise",
+    "title": "How Not to Supervise - Seven Principles That Actually Matter",
+    "date": "2025-11-19",
+    "words": 1218,
+    "full": "https://academic.danialamin.com/writing/2025-11-19-not-to-supervise"
+  },
+  {
+    "slug": "2025-11-21-llm-personalities",
+    "title": "The Personality Problem - Why Your LLM's Character Matters More Than Its IQ",
+    "date": "2025-11-21",
+    "words": 1195,
+    "full": "https://academic.danialamin.com/writing/2025-11-21-llm-personalities"
+  },
+  {
+    "slug": "2025-12-01-why-hci",
+    "title": "Why Human-AI Interaction Will Always Need Humans",
+    "date": "2025-12-01",
+    "words": 597,
+    "full": "https://academic.danialamin.com/writing/2025-12-01-why-hci"
+  },
+  {
+    "slug": "2025-12-30-year-of-firsts",
+    "title": "The Year of Firsts",
+    "date": "2025-12-30",
+    "words": 1496,
+    "full": "https://academic.danialamin.com/writing/2025-12-30-year-of-firsts"
+  },
+  {
+    "slug": "2026-01-09-timeseries-blind-spot",
+    "title": "The Time Series Blind Spot - Why Generative AI Failed at Forecasting",
+    "date": "2026-01-09",
+    "words": 2059,
+    "full": "https://academic.danialamin.com/writing/2026-01-09-timeseries-blind-spot"
+  }
+]

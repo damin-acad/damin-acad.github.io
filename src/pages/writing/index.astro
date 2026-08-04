@@ -1,0 +1,43 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection } from 'astro:content';
+import site from '../../data/site.json';
+
+const posts = (await getCollection('writing')).sort(
+  (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
+);
+const wc = (p: (typeof posts)[number]) => (p.body ?? '').split(/\s+/).filter(Boolean).length;
+const words = posts.reduce((n, p) => n + wc(p), 0);
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { year: 'numeric', month: 'short', day: '2-digit' });
+---
+
+<Base title="writing" description="Long-form essays on generative AI, personas and evaluation.">
+  <section class="section" data-set>
+    <h1 class="page-title">Writing</h1>
+    <p class="page-lede">
+      {posts.length} essays, {words.toLocaleString('en-GB')} words. These are the full versions —
+      <a href={site.portfolio} rel="noopener" target="_blank">danialamin.com</a> carries short
+      extracts of the same pieces.
+    </p>
+  </section>
+
+  <section class="section" data-set>
+    <ul class="pubs">
+      {
+        posts.map((p, i) => (
+          <li class="pub">
+            <span class="pub-n">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="pub-title"><a href={`/writing/${p.id}`}>{p.data.title}</a></h3>
+            {p.data.excerpt && <p class="pub-authors">{p.data.excerpt}</p>}
+            <p class="pub-meta">
+              <span>{fmt(p.data.date)}</span>
+              <span>{wc(p).toLocaleString('en-GB')} words</span>
+              {p.data.tags.slice(0, 3).map((t) => <span>{t}</span>)}
+            </p>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>

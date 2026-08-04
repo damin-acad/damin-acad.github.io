@@ -701,3 +701,159 @@ h3 {
     grid-template-columns: 2rem 1fr;
   }
 }
+
+/* ============================================================
+   Long-form essays
+
+   These are the full pieces — 48,622 words across 27 essays with 426 section
+   headings — so this is where reading comfort matters most.
+   ============================================================ */
+
+.prose-wide {
+  max-width: 42rem;
+}
+
+.byline {
+  font-family: var(--type);
+  font-size: var(--t--1);
+  color: var(--ink-faint);
+  margin: 0.4rem 0 1.75rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1.5px solid var(--ink);
+}
+
+.prose-wide h2 {
+  font-size: var(--t-2);
+  margin: 2.25rem 0 0.6rem;
+  padding-top: 0.5rem;
+  border-top: 1.5px solid var(--rule);
+}
+
+.prose-wide h3 {
+  font-size: var(--t-1);
+  font-weight: 700;
+  margin: 1.6rem 0 0.4rem;
+}
+
+.prose-wide h4 {
+  font-family: var(--type);
+  font-size: 0.78rem;
+  letter-spacing: 0.06em;
+  color: var(--mark);
+  margin: 1.4rem 0 0.35rem;
+}
+
+.prose-wide strong {
+  font-weight: 700;
+}
+
+.prose-wide blockquote {
+  margin: 1.4rem 0;
+  padding: 0 0 0 1rem;
+  border-left: 3px solid var(--mark);
+  color: var(--ink-soft);
+}
+
+.prose-wide code {
+  font-family: var(--type);
+  font-size: 0.88em;
+  background: var(--paper-deep);
+  padding: 0.06em 0.28em;
+}
+
+.prose-wide pre {
+  background: var(--paper-deep);
+  border: 1.5px solid var(--rule);
+  padding: 0.8rem 0.9rem;
+  overflow-x: auto;
+  font-size: 0.82rem;
+  font-family: var(--type);
+}
+
+.prose-wide pre code {
+  background: none;
+  padding: 0;
+}
+
+.prose-wide table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+  margin: 1.2rem 0;
+  display: block;
+  overflow-x: auto;
+}
+
+.prose-wide th,
+.prose-wide td {
+  border-bottom: 1.5px solid var(--rule);
+  padding: 0.4rem 0.5rem;
+  text-align: left;
+  vertical-align: top;
+}
+
+.prose-wide th {
+  font-family: var(--type);
+  font-size: 0.7rem;
+  letter-spacing: 0.05em;
+  color: var(--ink-faint);
+}
+
+.prose-wide img {
+  max-width: 100%;
+  height: auto;
+  border: 1.5px solid var(--rule);
+}
+
+.prose-wide iframe {
+  max-width: 100%;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  height: auto;
+  border: 1.5px solid var(--ink);
+}
+
+.prose-wide hr {
+  border: none;
+  border-top: 1.5px solid var(--rule);
+  margin: 2rem 0;
+}
+
+/**
+ * The essays carry dozens of bespoke callout classes from the Jekyll site —
+ * key-insight, insight-box, prompt-example, philosophical-question, pattern-box,
+ * crisis-box and so on. Rather than style each one and miss the next, every
+ * div inside the prose becomes a callout. `l-*` is excluded because those are
+ * al-folio layout wrappers, not callouts.
+ */
+.prose-wide div[class]:not([class^='l-']) {
+  margin: 1.35rem 0;
+  padding: 0.8rem 0.9rem;
+  border: 1.5px solid var(--rule);
+  border-left: 3px solid var(--mark);
+  background: var(--paper-deep);
+  font-size: 0.96rem;
+}
+
+.prose-wide div[class]:not([class^='l-']) > *:first-child {
+  margin-top: 0;
+}
+
+.prose-wide div[class]:not([class^='l-']) > *:last-child {
+  margin-bottom: 0;
+}
+
+/* strong at the head of a callout acts as its label */
+.prose-wide div[class]:not([class^='l-']) strong:first-child {
+  font-family: var(--type);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--mark);
+  display: block;
+  margin-bottom: 0.3rem;
+}
+
+/* al-folio layout wrappers carry no styling of their own here */
+.prose-wide div[class^='l-'] {
+  margin: 1.2rem 0;
+}

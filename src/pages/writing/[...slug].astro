@@ -1,0 +1,50 @@
+---
+import Base from '../../layouts/Base.astro';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('writing');
+  return posts.map((post) => ({ params: { slug: post.id }, props: { post } }));
+}
+
+const { post } = Astro.props;
+const { Content } = await render(post);
+const words = (post.body ?? '').split(/\s+/).filter(Boolean).length;
+const fmt = (d: Date) =>
+  d.toLocaleDateString('en-GB', { year: 'numeric', month: 'long', day: 'numeric' });
+---
+
+<Base title={post.data.title} description={post.data.excerpt}>
+  <article class="section" data-set>
+    <p class="typed">Essay</p>
+    <h1 class="page-title">{post.data.title}</h1>
+
+    <p class="byline">
+      {fmt(post.data.date)} · {words.toLocaleString('en-GB')} words
+      {
+        post.data.extract && (
+          <>
+            {' · '}
+            <a href={post.data.extract} rel="noopener" target="_blank">short version</a>
+          </>
+        )
+      }
+    </p>
+
+    <div class="prose prose-wide">
+      <Content />
+    </div>
+
+    {
+      post.data.tags.length > 0 && (
+        <ul class="tags">
+          {post.data.tags.map((t) => <li class="tag">{t}</li>)}
+        </ul>
+      )
+    }
+
+    <p class="typed" style="margin-top:2rem">
+      <a href="/writing">← all writing</a>
+    </p>
+  </article>
+</Base>

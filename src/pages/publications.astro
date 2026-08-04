@@ -1,0 +1,41 @@
+---
+import Base from '../layouts/Base.astro';
+import PublicationList from '../components/PublicationList.astro';
+import ResearchMap from '../components/ResearchMap.astro';
+import pubs from '../data/publications.json';
+import site from '../data/site.json';
+
+const years = [...new Set(pubs.map((p) => p.year))].filter(Boolean).sort();
+const withDoi = pubs.filter((p) => p.doi).length;
+const coauthors = new Set(pubs.flatMap((p) => p.authors).filter((a) => a !== site.name));
+---
+
+<Base title="publications" description={`${pubs.length} publications on generative AI, personas and user representation.`}>
+  <section class="section" data-set>
+    <h1 class="page-title">Publications</h1>
+    <p class="page-lede">
+      {pubs.length} entries, {years[0]}–{years[years.length - 1]}, generated from
+      <code>papers.bib</code> — {withDoi} with a DOI, {coauthors.size} co-authors. Every entry
+      carries its BibTeX.
+    </p>
+  </section>
+
+  <section class="section" data-set>
+    <div class="section-head">
+      <h2 class="section-title">What the record is about</h2>
+    </div>
+    <ResearchMap />
+  </section>
+
+  <section class="section" data-set>
+    <div class="section-head">
+      <h2 class="section-title">All publications</h2>
+      <span class="section-count">
+        <a href={site.socials.scholar} rel="noopener" target="_blank">Scholar</a> ·
+        <a href={site.socials.orcid} rel="noopener" target="_blank">ORCID</a>
+      </span>
+    </div>
+    <p class="typed" id="pub-note" hidden></p>
+    <PublicationList showFilters />
+  </section>
+</Base>

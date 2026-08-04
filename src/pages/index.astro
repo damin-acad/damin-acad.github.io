@@ -1,0 +1,77 @@
+---
+import Base from '../layouts/Base.astro';
+import PublicationList from '../components/PublicationList.astro';
+import site from '../data/site.json';
+import pubs from '../data/publications.json';
+
+const selected = pubs.filter((p) => p.selected).length;
+const firstYear = Math.min(...pubs.map((p) => p.year ?? 9999));
+---
+
+<Base>
+  <section class="section" data-set>
+    <h1 class="page-title">{site.role} in generative AI and user representation</h1>
+    <p class="page-lede">
+      I study how generative AI represents the people it claims to serve — and what that gets
+      wrong.
+    </p>
+
+    <div class="prose">
+      <p>
+        I am a doctoral candidate at the
+        <a href={site.groupUrl} rel="noopener" target="_blank">{site.affiliation}</a>, Finland,
+        supervised by <a href={site.supervisorUrl} rel="noopener" target="_blank">{site.supervisor}</a>,
+        working on generative AI and user representation.
+      </p>
+      <p>
+        My research centres on making GenAI systems fairer and more inclusive in how they represent
+        users. I study how GenAI creates user personas and work to reduce bias, especially for
+        marginalised communities, using large language models and NLP to build better
+        representations of different groups of people. The goal is ensuring these systems do not
+        perpetuate stereotypes — and understanding where GenAI can be used responsibly in design
+        and decision-making.
+      </p>
+      <p>
+        Alongside the doctorate I work as <strong>Senior Data Science Lead</strong> at
+        <a href="https://www.eniplenitude.fr/" rel="noopener" target="_blank">ENI Plenitude</a>.
+        Previously I was an AI Research Scientist at
+        <a href="https://design.samsung.com/global/contents/sdic/" rel="noopener" target="_blank">Samsung
+        Design Innovation Center</a> in France, building GenAI tools to help designers create more
+        representative products, and I have built AI systems in engineering domains across
+        Pakistan, the USA, MENA and Ireland.
+      </p>
+      <p>
+        I have been involved in space education and popularisation for many years through Space
+        Technology Education and Popularization, a non-profit I organised with colleagues in
+        Pakistan — World Space Week (2014–2022), Space Summer School (2017–2022) and Space Camps
+        across the country — and I volunteer with the
+        <a href="https://ncgsa.org.pk/" rel="noopener" target="_blank">National Center of GIS &amp;
+        Space Applications</a>. I speak English, Urdu, Punjabi and some French, write poetry and
+        dark prose, and am mostly overthinking or cooking otherwise.
+      </p>
+      <p>
+        Essays and the newsletter live on
+        <a href={site.writing} rel="noopener" target="_blank">danialamin.com/writing</a>.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" data-set>
+    <div class="section-head">
+      <h2 class="section-title">Research interests</h2>
+    </div>
+    <ul class="tags">
+      {site.interests.map((i) => <li class="tag">{i}</li>)}
+    </ul>
+  </section>
+
+  <section class="section" data-set>
+    <div class="section-head">
+      <h2 class="section-title">Selected publications</h2>
+      <span class="section-count">
+        {selected} of {pubs.length} · <a href="/publications">see all</a>
+      </span>
+    </div>
+    <PublicationList selectedOnly />
+  </section>
+</Base>

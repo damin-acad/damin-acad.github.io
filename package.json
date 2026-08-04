@@ -1,6 +1,23 @@
 {
-  "devDependencies": {
-    "@shopify/prettier-plugin-liquid": "1.4.0",
-    "prettier": "3.1.1"
+  "name": "danial-amin-academic",
+  "type": "module",
+  "version": "1.0.0",
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "data": "node scripts/build-data.mjs",
+    "map": "node scripts/build-research-map.mjs",
+    "prebuild": "npm run data && npm run map",
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "start": "node ./dist/server/entry.mjs",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@astrojs/node": "^11.0.3",
+    "astro": "^7.1.6",
+    "js-yaml": "^5.2.3"
   }
 }

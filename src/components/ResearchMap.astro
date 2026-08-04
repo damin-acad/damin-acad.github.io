@@ -1,0 +1,123 @@
+---
+/**
+ * Fig. 1 — a co-word map of the publication titles.
+ *
+ * Built by scripts/build-research-map.mjs. Because this site has no magnifier
+ * and one working ink, the map has to be readable as printed: 40 terms, every
+ * one labelled, no fly-in. Hovering a term marks its strongest links; clicking
+ * it filters the publication list below to the papers that use it.
+ */
+import map from '../data/research-map.json';
+import pubs from '../data/publications.json';
+
+const { width: W, height: H, nodes, edges, papers, method } = map;
+const titleOf = new Map(pubs.map((p) => [p.key, p.title]));
+
+const linked = nodes.map(() => ({ e: [] as number[], n: [] as number[] }));
+edges.forEach((e, i) => {
+  linked[e.a].e.push(i);
+  linked[e.b].e.push(i);
+  linked[e.a].n.push(e.b);
+  linked[e.b].n.push(e.a);
+});
+
+const clusterNames = ['personas & language models', 'space & science education', 'design & agents'];
+---
+
+<figure class="fig" data-set>
+  <div class="fig-frame" id="fig-frame">
+    <svg class="fig-svg" viewBox={`0 0 ${W} ${H}`} role="img"
+      aria-label={`Co-word map of ${nodes.length} terms across ${papers} publication titles.`}>
+      <g>
+        {edges.map((e, i) => (
+          <line class="fig-edge" data-e={i}
+            x1={nodes[e.a].x} y1={nodes[e.a].y} x2={nodes[e.b].x} y2={nodes[e.b].y} />
+        ))}
+      </g>
+      {nodes.map((n, i) => (
+        <g class="fig-node" data-n={i} tabindex="0" role="button"
+           aria-label={`${n.term}, in ${n.papers} papers`}>
+          <circle class:list={['fig-dot', `g${n.cluster}`]} cx={n.x} cy={n.y} r={n.r} />
+          <text class="fig-label" x={n.x + n.r + 5} y={n.y + 4}>{n.term}</text>
+        </g>
+      ))}
+    </svg>
+  </div>
+
+  <figcaption class="fig-cap">
+    <strong>Fig. 1</strong> — {nodes.length} terms across {papers} publication titles, positioned by
+    co-occurrence. <span id="fig-live">Click a term to filter the list below.</span>
+    <br />
+    <span style="opacity:.75">Method: {method}.</span>
+  </figcaption>
+
+  <ul class="fig-key">
+    {clusterNames.map((c, i) => <li>{i === 0 ? '●' : i === 1 ? '◆' : '○'} {c}</li>)}
+  </ul>
+
+  <script type="application/json" id="fig-data" set:html={JSON.stringify(
+    nodes.map((n, i) => ({ t: n.term, p: n.papers, k: n.keys, e: linked[i].e, ln: linked[i].n, nb: n.neighbours }))
+  )} />
+</figure>
+
+<script>
+  const frame = document.getElementById('fig-frame');
+  const raw = document.getElementById('fig-data');
+  const live = document.getElementById('fig-live');
+
+  if (frame && raw && live) {
+    const data = JSON.parse(raw.textContent || '[]') as {
+      t: string; p: number; k: string[]; e: number[]; ln: number[]; nb: string[];
+    }[];
+    const groups = Array.from(frame.querySelectorAll<SVGGElement>('.fig-node'));
+    const lines = Array.from(frame.querySelectorAll<SVGLineElement>('.fig-edge'));
+    const base = live.textContent ?? '';
+    let active = -1;
+
+    function mark(i: number) {
+      groups.forEach((g) => g.classList.remove('is-on'));
+      lines.forEach((l) => l.classList.remove('is-on'));
+      if (i < 0) {
+        frame.removeAttribute('data-focus');
+        live.textContent = base;
+        return;
+      }
+      frame.setAttribute('data-focus', '');
+      groups[i]?.classList.add('is-on');
+      // neighbours come straight from the graph, not from comparing coordinates
+      for (const e of data[i].e) lines[e]?.classList.add('is-on');
+      for (const j of data[i].ln) groups[j]?.classList.add('is-on');
+      live.textContent = `“${data[i].t}” — ${data[i].p} paper${data[i].p === 1 ? '' : 's'} · near ${data[i].nb.join(', ')}`;
+    }
+
+    /** filter the publication list to the papers using this term */
+    function filterTo(i: number) {
+      const keys = new Set(data[i].k);
+      document.querySelectorAll<HTMLElement>('#pub-root .pub').forEach((r) => {
+        r.hidden = !keys.has(r.dataset.key ?? '');
+      });
+      document.querySelectorAll<HTMLElement>('#pub-root .year-group').forEach((g) => {
+        g.hidden = !Array.from(g.querySelectorAll<HTMLElement>('.pub')).some((r) => !r.hidden);
+      });
+      document.querySelectorAll<HTMLButtonElement>('.filters button').forEach((b) =>
+        b.setAttribute('aria-pressed', 'false'),
+      );
+      const note = document.getElementById('pub-note');
+      if (note) {
+        note.hidden = false;
+        note.textContent = `Showing ${keys.size} paper${keys.size === 1 ? '' : 's'} using “${data[i].t}”. Clear with a filter above.`;
+      }
+    }
+
+    groups.forEach((g, i) => {
+      g.addEventListener('pointerenter', () => mark(i));
+      g.addEventListener('focus', () => mark(i));
+      g.addEventListener('click', () => { active = i; mark(i); filterTo(i); });
+      g.addEventListener('keydown', (e) => {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); active = i; mark(i); filterTo(i); }
+      });
+    });
+
+    frame.addEventListener('pointerleave', () => mark(active));
+  }
+</script>

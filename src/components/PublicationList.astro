@@ -1,0 +1,115 @@
+---
+import pubs from '../data/publications.json';
+import site from '../data/site.json';
+
+interface Props {
+  /** only the ones flagged selected={true} in papers.bib */
+  selectedOnly?: boolean;
+  showFilters?: boolean;
+}
+const { selectedOnly = false, showFilters = false } = Astro.props;
+
+const items = selectedOnly ? pubs.filter((p) => p.selected) : pubs;
+const years = [...new Set(items.map((p) => p.year))].sort((a, b) => (b ?? 0) - (a ?? 0));
+
+const TYPE_LABEL: Record<string, string> = {
+  inproceedings: 'Conference',
+  article: 'Journal',
+  incollection: 'Book chapter',
+};
+
+/** bold the site owner in the author list — standard on an academic page */
+function authorHtml(authors: string[]) {
+  return authors
+    .map((a) => (a === site.name ? `<b>${a}</b>` : a))
+    .join(', ');
+}
+
+let n = 0;
+---
+
+{showFilters && (
+  <div class="filters" role="group" aria-label="Filter publications">
+    <button type="button" data-f="all" aria-pressed="true">all {items.length}</button>
+    {Object.entries(TYPE_LABEL).map(([t, label]) => {
+      const c = items.filter((p) => p.type === t).length;
+      return c > 0 ? <button type="button" data-f={t} aria-pressed="false">{label.toLowerCase()} {c}</button> : null;
+    })}
+    <button type="button" data-f="selected" aria-pressed="false">selected {pubs.filter((p) => p.selected).length}</button>
+  </div>
+)}
+
+<div id="pub-root">
+  {years.map((year) => (
+    <div class="year-group" data-year={year}>
+      <p class="year-label">{year}</p>
+      <ul class="pubs">
+        {items.filter((p) => p.year === year).map((p) => {
+          n += 1;
+          return (
+            <li
+              class:list={['pub', p.selected && 'is-selected']}
+              data-key={p.key}
+              data-type={p.type}
+              data-selected={p.selected ? 'true' : 'false'}
+            >
+              <span class="pub-n">{String(n).padStart(2, '0')}</span>
+              <h3 class="pub-title">{p.title}</h3>
+              <p class="pub-authors" set:html={authorHtml(p.authors)} />
+              <p class="pub-meta">
+                <span class="pub-venue">{p.venue}</span>
+                {p.abbr && <span>{p.abbr}</span>}
+                <span>{TYPE_LABEL[p.type] ?? p.type}</span>
+                {p.status && <span class="pub-status">{p.status}</span>}
+                {p.citations > 0 && <span>{p.citations} citations</span>}
+              </p>
+              <ul class="pub-links">
+                {p.doi && (
+                  <li><a href={`https://doi.org/${p.doi}`} rel="noopener" target="_blank">doi</a></li>
+                )}
+                {Object.entries(p.links).map(([k, v]) => (
+                  <li><a href={v} rel="noopener" target="_blank">{k}</a></li>
+                ))}
+                <li><button type="button" data-bib={p.key}>bibtex</button></li>
+              </ul>
+              <div class="bib" id={`bib-${p.key}`} hidden><pre>{p.raw}</pre></div>
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  ))}
+</div>
+
+<script>
+  // bibtex drawers
+  document.querySelectorAll<HTMLButtonElement>('[data-bib]').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const box = document.getElementById(`bib-${btn.dataset.bib}`);
+      if (box) box.hidden = !box.hidden;
+    });
+  });
+
+  // type / selected filter
+  const buttons = document.querySelectorAll<HTMLButtonElement>('.filters button');
+  const rows = document.querySelectorAll<HTMLElement>('#pub-root .pub');
+  const groups = document.querySelectorAll<HTMLElement>('#pub-root .year-group');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const f = btn.dataset.f;
+      buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+      const note = document.getElementById('pub-note');
+      if (note) note.hidden = true;
+      rows.forEach((r) => {
+        const show =
+          f === 'all' || (f === 'selected' ? r.dataset.selected === 'true' : r.dataset.type === f);
+        r.hidden = !show;
+      });
+      // hide a year heading whose entries are all filtered out
+      groups.forEach((g) => {
+        g.hidden = !Array.from(g.querySelectorAll<HTMLElement>('.pub')).some((r) => !r.hidden);
+      });
+    });
+  });
+</script>

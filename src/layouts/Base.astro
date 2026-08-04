@@ -1,0 +1,116 @@
+---
+import '../styles/global.css';
+import site from '../data/site.json';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+const { title, description = `${site.role} at the ${site.affiliation}, working on generative AI and user representation.` } = Astro.props;
+const pageTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.role}, ${site.affiliation}`;
+const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
+
+const nav = [
+  { href: '/', label: 'about' },
+  { href: '/publications', label: 'publications' },
+  { href: '/cv', label: 'cv' },
+  { href: site.writing, label: 'writing ↗', out: true },
+];
+---
+
+<!doctype html>
+<html lang="en" data-stock="cream">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+    <meta name="author" content={site.name} />
+    <meta name="theme-color" content="#f4efe3" />
+    <link rel="canonical" href={Astro.site ? new URL(path, Astro.site).href : Astro.url.href} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;600;700&family=Courier+Prime:wght@400;700&display=swap"
+    />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="profile" />
+    <script is:inline>
+      (function () {
+        document.documentElement.classList.add('js');
+        try {
+          var s = localStorage.getItem('stock');
+          if (s === 'black' || s === 'cream') document.documentElement.setAttribute('data-stock', s);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+
+  <body>
+    <a class="skip" href="#main">Skip to content</a>
+    <div class="stock" aria-hidden="true"></div>
+
+    <div class="shell">
+      <header class="masthead">
+        <a class="masthead-name" href="/">
+          {site.name}
+          <span>{site.role} · {site.affiliation}</span>
+        </a>
+        <nav class="nav" aria-label="Primary">
+          {nav.map((i) => (
+            <a
+              href={i.href}
+              aria-current={!i.out && path === i.href ? 'page' : undefined}
+              {...(i.out ? { rel: 'noopener', target: '_blank' } : {})}
+            >{i.label}</a>
+          ))}
+          <button class="stock-btn" type="button" id="stock">stock</button>
+        </nav>
+      </header>
+
+      <main id="main"><slot /></main>
+
+      <footer class="foot">
+        <div class="foot-links">
+          <a href={`mailto:${site.email}`}>{site.email}</a>
+          <a href={site.socials.scholar} rel="noopener" target="_blank">Scholar</a>
+          <a href={site.socials.orcid} rel="noopener" target="_blank">ORCID</a>
+          <a href={site.socials.github} rel="noopener" target="_blank">GitHub</a>
+          <a href={site.socials.linkedin} rel="noopener" target="_blank">LinkedIn</a>
+          <a href={site.portfolio} rel="noopener" target="_blank">danialamin.com</a>
+        </div>
+        <p>
+          © {new Date().getFullYear()} {site.name} · {site.location}<br />
+          Publications generated from papers.bib · set in Archivo &amp; Courier Prime
+        </p>
+      </footer>
+    </div>
+
+    <script>
+      const root = document.documentElement;
+      document.getElementById('stock')?.addEventListener('click', () => {
+        const next = root.getAttribute('data-stock') === 'black' ? 'cream' : 'black';
+        root.setAttribute('data-stock', next);
+        try { localStorage.setItem('stock', next); } catch (e) {}
+      });
+
+      // short reveal, nothing more
+      const targets = document.querySelectorAll('[data-set]');
+      if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches && 'IntersectionObserver' in window) {
+        const io = new IntersectionObserver((es) => {
+          for (const e of es) if (e.isIntersecting) { e.target.classList.add('is-set'); io.unobserve(e.target); }
+        }, { rootMargin: '0px 0px -6% 0px', threshold: 0 });
+        targets.forEach((el) => {
+          if (el.getBoundingClientRect().top < window.innerHeight * 0.95) el.classList.add('is-set');
+          else io.observe(el);
+        });
+        // never let a reveal hide content permanently
+        window.setTimeout(() => targets.forEach((el) => el.classList.add('is-set')), 2000);
+      } else {
+        targets.forEach((el) => el.classList.add('is-set'));
+      }
+    </script>
+  </body>
+</html>

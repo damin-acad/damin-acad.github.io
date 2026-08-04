@@ -1,0 +1,73 @@
+---
+import Base from '../layouts/Base.astro';
+import cv from '../data/cv.json';
+
+type Item = Record<string, any>;
+type Section = { title: string; type?: string; contents?: Item[] | string };
+
+const sections = (cv as Section[]).filter((s) => s?.title);
+
+/** al-folio's cv.yml mixes shapes per section; normalise to something printable */
+function rows(s: Section) {
+  const c = s.contents;
+  if (!c) return [];
+  if (typeof c === 'string') return [{ _text: c }];
+  return c as Item[];
+}
+---
+
+<Base title="cv" description="Curriculum vitae — education, experience, publications and service.">
+  <section class="section" data-set>
+    <h1 class="page-title">Curriculum vitae</h1>
+    <p class="page-lede">
+      Generated from the same <code>cv.yml</code> the previous site used, so it stays in one place.
+    </p>
+  </section>
+
+  {sections.map((s) => (
+    <section class="section cv-section" data-set>
+      <div class="section-head">
+        <h2 class="section-title">{s.title}</h2>
+      </div>
+
+      {rows(s).map((it) => (
+        <div class="cv-entry">
+          {it._text && <p class="cv-where">{it._text}</p>}
+
+          {(it.title || it.name || it.institution || it.position) && (
+            <div class="cv-entry-top">
+              <h3>{it.title ?? it.name ?? it.position ?? it.institution}</h3>
+              {(it.year || it.time || it.date) && (
+                <span class="cv-when">{it.year ?? it.time ?? it.date}</span>
+              )}
+            </div>
+          )}
+
+          {(it.institution || it.department || it.company || it.location) && (
+            <p class="cv-where">
+              {[it.institution, it.department, it.company, it.location].filter(Boolean).join(' · ')}
+            </p>
+          )}
+
+          {it.description && (
+            Array.isArray(it.description)
+              ? <ul>{it.description.map((d: any) => (
+                  <li>{typeof d === 'string' ? d : d.title ?? JSON.stringify(d)}</li>
+                ))}</ul>
+              : <p class="cv-where">{it.description}</p>
+          )}
+
+          {Array.isArray(it.items) && (
+            <ul>{it.items.map((d: any) => <li>{typeof d === 'string' ? d : JSON.stringify(d)}</li>)}</ul>
+          )}
+
+          {Array.isArray(it.contents) && (
+            <ul>{it.contents.map((d: any) => (
+              <li>{typeof d === 'string' ? d : d.name ?? d.title ?? JSON.stringify(d)}</li>
+            ))}</ul>
+          )}
+        </div>
+      ))}
+    </section>
+  ))}
+</Base>

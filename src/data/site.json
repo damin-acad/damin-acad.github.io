@@ -1,0 +1,27 @@
+{
+  "name": "Danial Amin",
+  "role": "Doctoral researcher",
+  "affiliation": "University of Vaasa",
+  "group": "PersonaTeam",
+  "supervisor": "Dr. Joni Salminen",
+  "supervisorUrl": "https://jonisalminen.com/",
+  "groupUrl": "https://personateam.xyz/members/",
+  "location": "Espoo, Finland",
+  "email": "writetodanialamin@gmail.com",
+  "portfolio": "https://danialamin.com",
+  "writing": "https://danialamin.com/writing",
+  "interests": [
+    "Fairness in generative AI",
+    "Human-computer interaction",
+    "User representation",
+    "GenAI personas",
+    "Personas for social good",
+    "Global South"
+  ],
+  "socials": {
+    "scholar": "https://scholar.google.com/citations?user=anC0OlUAAAAJ",
+    "orcid": "https://orcid.org/0009-0000-7597-2267",
+    "github": "https://github.com/danial-amin",
+    "linkedin": "https://linkedin.com/in/danialamin"
+  }
+}

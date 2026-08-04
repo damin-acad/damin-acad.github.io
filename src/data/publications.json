@@ -1,0 +1,683 @@
+[
+  {
+    "key": "amin2025personas_theory",
+    "type": "inproceedings",
+    "title": "\"Are These AI Personas Really Personas?\": Investigating to What Extent LLM-Generated Personas Follow Persona Design Theory",
+    "authors": [
+      "Danial Amin",
+      "Joni Salminen",
+      "Bernard J. Jansen"
+    ],
+    "venue": "Conference on Conversational User Interfaces'2026",
+    "abbr": "CUI'2026",
+    "year": 2026,
+    "status": "In review",
+    "doi": "",
+    "citations": 0,
+    "selected": false,
+    "links": {},
+    "raw": "@inproceedings{amin2025personas_theory,\n  title = {\"Are These AI Personas Really Personas?\": Investigating to What Extent LLM-Generated Personas Follow Persona Design Theory},\n  citations = {0},\n  author = {Amin, Danial and Salminen, Joni and Jansen, Bernard J.},\n  booktitle = {Conference on Conversational User Interfaces'2026},\n  year = {2026},\n  note = {In review},\n  abbr = {CUI'2026},\n  selected = {false}\n}"
+  },
+  {
+    "key": "amin2025prompts_personas_eval",
+    "type": "article",
+    "title": "“Designing Prompts to Design Personas”: A Review of Prompt Design for AI-Generated Personas from Techno-Fairness Perspective",
+    "authors": [
+      "Danial Amin",
+      "Joni Salminen",
+      "Ilkka Kaate",
+      "Bernard J. Jansen"
+    ],
+    "venue": "International Journal of Human Computer Interaction",
+    "abbr": "IJHCI",
+    "year": 2026,
+    "status": "In review",
+    "doi": "",
+    "citations": 0,
+    "selected": false,
+    "links": {},
+    "raw": "@article{amin2025prompts_personas_eval,\n  title = {“Designing Prompts to Design Personas”: A Review of Prompt Design for AI-Generated Personas from Techno-Fairness Perspective},\n  citations = {0},\n  author = {Amin, Danial and Salminen, Joni and Kaate, Ilkka and Jansen, Bernard J.},\n  journal = {International Journal of Human Computer Interaction},\n  year = {2026},\n  note = {In review},\n  abbr = {IJHCI},\n  selected = {false}\n}"
+  },
+  {
+    "key": "jansen2026survey_validatability",
+    "type": "inproceedings",
+    "title": "“Half My Survey Data Is Bad; The Problem Is, I Can't Tell Which Half”: Evaluating the Validatablity of Large-Scale Survey Data Using 176 Algorithmically Generated Personas",
+    "authors": [
+      "Bernard J. Jansen",
+      "Marwan Akari",
+      "Safa Amin",
+      "Soon-Gyo Jung",
+      "Danial Amin",
+      "Joni Salminen"
+    ],
+    "venue": "37th ACM Conference on Hypertext and Social Media (HT'26)",
+    "abbr": "HT'2026",
+    "year": 2026,
+    "status": "Accepted",
+    "doi": "",
+    "citations": 0,
+    "selected": false,
+    "links": {},
+    "raw": "@inproceedings{jansen2026survey_validatability,\n  title = {``Half My Survey Data Is Bad; The Problem Is, I Can't Tell Which Half'': Evaluating the Validatablity of Large-Scale Survey Data Using 176 Algorithmically Generated Personas},\n  citations = {0},\n  author = {Jansen, Bernard J. and Akari, Marwan and Amin, Safa and Jung, Soon-Gyo and Amin, Danial and Salminen, Joni},\n  booktitle = {37th ACM Conference on Hypertext and Social Media (HT'26)},\n  year = {2026},\n  note = {Accepted},\n  abbr = {HT'2026},\n  selected = {false}\n}"
+  },
+  {
+    "key": "xini2026meta",
+    "type": "inproceedings",
+    "title": "\"Pathways to the Metaverse\": Exploring the User Experience Mechanisms Driving Technology Acceptance in Virtual Lab Visits with an LLM-powered Avatar",
+    "authors": [
+      "Xinyi Tu",
+      "Francesco Biondani",
+      "Danial Amin",
+      "Angelica Fabillar",
+      "Thi Thu Trang Xuan",
+      "Bano Huma Adeel",
+      "M.H. Sonja Tervola",
+      "Carlo Berlingeri",
+      "Franco Fummi",
+      "Joni Salminen",
+      "Bernard J. Jansen"
+    ],
+    "venue": "Conference on Intelligent User Interfaces'2026",
+    "abbr": "IUI'2026",
+    "year": 2026,
+    "status": "Published",
+    "doi": "10.1145/3742413.3789084",
+    "citations": 1,
+    "selected": false,
+    "links": {
+      "html": "https://dl.acm.org/doi/10.1145/3742413.3789084"
+    },
+    "raw": "@inproceedings{xini2026meta,\n  title = {\"Pathways to the Metaverse\": Exploring the User Experience Mechanisms Driving Technology Acceptance in Virtual Lab Visits with an LLM-powered Avatar},\n  citations = {1},\n  author = {Tu, Xinyi and Biondani, Francesco and Amin, Danial and Fabillar, Angelica and Xuan, Thi Thu Trang and Adeel, Bano Huma and Tervola, M.H. Sonja and Berlingeri, Carlo and Fummi, Franco and Salminen, Joni and Jansen, Bernard J.},\n  booktitle = {Conference on Intelligent User Interfaces'2026},\n  year = {2026},\n  note = {Published},\n  abbr = {IUI'2026},\n  selected = {false},\n  doi = {10.1145/3742413.3789084},\n  html = {https://dl.acm.org/doi/10.1145/3742413.3789084}\n}"
+  },
+  {
+    "key": "salminen2025aipersonas",
+    "type": "article",
+    "title": "AI Representing Personas Representing User Groups: Applying the Agency Theory to Examine Interaction Challenges of Conversational Personas as Decision-Making Tools",
+    "authors": [
+      "Joni Salminen",
+      "Soon-gyo Jung",
+      "Ilkka Kaate",
+      "Trang Xuan",
+      "Jinan Azem",
+      "Aldous Kholoud",
+      "Danial Amin",
+      "Bernard J. Jansen"
+    ],
+    "venue": "Decision Support Systems",
+    "abbr": "DSS'2026",
+    "year": 2026,
+    "status": "Published",
+    "doi": "10.1016/j.dss.2026.114633",
+    "citations": 1,
+    "selected": false,
+    "links": {
+      "html": "https://doi.org/10.1016/j.dss.2026.114633"
+    },
+    "raw": "@article{salminen2025aipersonas,\n  title = {AI Representing Personas Representing User Groups: Applying the Agency Theory to Examine Interaction Challenges of Conversational Personas as Decision-Making Tools},\n  citations = {1},\n  author = {Salminen, Joni and Soon-gyo Jung and Kaate, Ilkka and Xuan, Trang and Azem, Jinan and Kholoud, Aldous and Amin, Danial and Jansen, Bernard J.},\n  journal = {Decision Support Systems},\n  year = {2026},\n  note = {Published},\n  abbr = {DSS'2026},\n  selected = {false},\n  doi = {10.1016/j.dss.2026.114633},\n  html = {https://doi.org/10.1016/j.dss.2026.114633}\n}"
+  },
+  {
+    "key": "amin2026llm_judges",
+    "type": "article",
+    "title": "Assessing Inter-Rater Agreement Among Large Language Model Judges: Evidence from Persona Evaluation Across Educational Risk Contexts",
+    "authors": [
+      "Danial Amin",
+      "Joni Salminen",
+      "Bernard J. Jansen"
+    ],
+    "venue": "Technological Forecasting and Social Change",
+    "abbr": "TFSC",
+    "year": 2026,
+    "status": "In review",
+    "doi": "",
+    "citations": 0,
+    "selected": false,
+    "links": {},
+    "raw": "@article{amin2026llm_judges,\n  title = {Assessing Inter-Rater Agreement Among Large Language Model Judges: Evidence from Persona Evaluation Across Educational Risk Contexts},\n  citations = {0},\n  author = {Amin, Danial and Salminen, Joni and Jansen, Bernard J.},\n  journal = {Technological Forecasting and Social Change},\n  year = {2026},\n  note = {In review},\n  abbr = {TFSC},\n  selected = {false}\n}"
+  },
+  {
+    "key": "amin2026bayesian_orchestration",
+    "type": "article",
+    "title": "Bayesian Orchestration of Multi-LLM Agents for Cost-Aware Sequential Decision-Making",
+    "authors": [
+      "Danial Amin"
+    ],
+    "venue": "arXiv preprint arXiv:2601.01522",
+    "abbr": "arXiv",
+    "year": 2026,
+    "status": "Published, Preprint",
+    "doi": "",
+    "citations": 3,
+    "selected": false,
+    "links": {
+      "html": "https://arxiv.org/abs/2601.01522"
+    },
+    "raw": "@article{amin2026bayesian_orchestration,\n  title = {Bayesian Orchestration of Multi-LLM Agents for Cost-Aware Sequential Decision-Making},\n  citations = {3},\n  author = {Amin, Danial},\n  journal = {arXiv preprint arXiv:2601.01522},\n  year = {2026},\n  note = {Published, Preprint},\n  abbr = {arXiv},\n  selected = {false},\n  arxiv = {2601.01522},\n  html = {https://arxiv.org/abs/2601.01522}\n}"
+  },
+  {
+    "key": "amin2025generative_review",
+    "type": "inproceedings",
+    "title": "Creating and Evaluating Personas Using Generative AI: A Scoping Review of 81 Articles",
+    "authors": [
+      "Danial Amin",
+      "Joni Salminen",
+      "Farhan Ahmed",
+      "M.H. Sonja Tervola",
+      "Sankalp Sethi",
+      "Bernard J. Jansen"
+    ],
+    "venue": "CHI Conference on Human Factors in Computing Systems (CHI'26)",
+    "abbr": "CHI'2026",
+    "year": 2026,
+    "status": "Published",
+    "doi": "10.1145/3772318.3790608",
+    "citations": 40,
+    "selected": true,
+    "links": {
+      "html": "https://dl.acm.org/doi/10.1145/3772318.3790608"
+    },
+    "raw": "@inproceedings{amin2025generative_review,\n  title = {Creating and Evaluating Personas Using Generative AI: A Scoping Review of 81 Articles},\n  citations = {40},\n  author = {Amin, Danial and Salminen, Joni and Ahmed, Farhan and Tervola, M.H. Sonja and Sethi, Sankalp and Jansen, Bernard J.},\n  booktitle = {CHI Conference on Human Factors in Computing Systems (CHI'26)},\n  year = {2026},\n  note = {Published},\n  selected = {true},\n  abbr = {CHI'2026},\n  doi = {10.1145/3772318.3790608},\n  html = {https://dl.acm.org/doi/10.1145/3772318.3790608},\n  slides = {https://speakerdeck.com/damin/creating-and-evaluating-personas-using-generative-ai-a-scoping-review-of-81-articles}\n}"
+  },
+  {
+    "key": "amin2025data_personas",
+    "type": "inproceedings",
+    "title": "Do LLMs Know How Many Personas to Generate? A Benchmarking Study in Customer Segmentation",
+    "authors": [
+      "Danial Amin",
+      "Joni Salminen",
+      "Bernard J. Jansen"
+    ],
+    "venue": "ACS/IEEE International Conference on Computer Systems and Applications'2026",
+    "abbr": "AICCSA'2026",
+    "year": 2026,
+    "status": "In review, Paper",
+    "doi": "",
+    "citations": 0,
+    "selected": false,
+    "links": {},
+    "raw": "@inproceedings{amin2025data_personas,\n  title = {Do LLMs Know How Many Personas to Generate? A Benchmarking Study in Customer Segmentation},\n  citations = {0},\n  author = {Amin, Danial and Salminen, Joni and Jansen, Bernard J.},\n  booktitle = {ACS/IEEE International Conference on Computer Systems and Applications'2026},\n  year = {2026},\n  note = {In review, Paper},\n  abbr = {AICCSA'2026},\n  selected = {false}\n}"
+  },
+  {
+    "key": "kocaballi2026generation_simulation",
+    "type": "inproceedings",
+    "title": "From Generation to Simulation: Responsible Use of AI Personas in Human-Centered Design and Research",
+    "authors": [
+      "A. Baki Kocaballi",
+      "Mirjana Prpa",
+      "Joni Salminen",
+      "Danial Amin",
+      "Bernard J. Jansen"
+    ],
+    "venue": "Extended Abstracts of the CHI Conference on Human Factors in Computing Systems'2026",
+    "abbr": "CHI'2026",
+    "year": 2026,
+    "status": "Published, Workshop",
+    "doi": "10.1145/3772363.3778745",
+    "citations": 1,
+    "selected": false,
+    "links": {
+      "html": "https://doi.org/10.1145/3772363.3778745"
+    },
+    "raw": "@inproceedings{kocaballi2026generation_simulation,\n  title = {From Generation to Simulation: Responsible Use of AI Personas in Human-Centered Design and Research},\n  citations = {1},\n  author = {Kocaballi, A. Baki and Prpa, Mirjana and Salminen, Joni and Amin, Danial and Jansen, Bernard J.},\n  booktitle = {Extended Abstracts of the CHI Conference on Human Factors in Computing Systems'2026},\n  year = {2026},\n  note = {Published, Workshop},\n  abbr = {CHI'2026},\n  selected = {false},\n  doi = {10.1145/3772363.3778745},\n  html = {https://doi.org/10.1145/3772363.3778745}\n}"
+  },
+  {
+    "key": "xuan2026priming",
+    "type": "article",
+    "title": "From Priming Modalities to Educational AI Chatbot Engagement: A Study of 67 Learners",
+    "authors": [
+      "Trang Xuan",
+      "Joni Salminen",
+      "Ilkka Kaate",
+      "Farhan Ahmed",
+      "Danial Amin",
+      "Rajat Patil",
+      "Soon-Gyo Jung",
+      "Jinan Y. Azem",
+      "Bernard J. Jansen"
+    ],
+    "venue": "International Journal of Human–Computer Interaction",
+    "abbr": "IJHCI",
+    "year": 2026,
+    "status": "Published",
+    "doi": "10.1080/10447318.2026.2654818",
+    "citations": 2,
+    "selected": false,
+    "links": {
+      "html": "https://doi.org/10.1080/10447318.2026.2654818"
+    },
+    "raw": "@article{xuan2026priming,\n  title = {From Priming Modalities to Educational AI Chatbot Engagement: A Study of 67 Learners},\n  citations = {2},\n  author = {Xuan, Trang and Salminen, Joni and Kaate, Ilkka and Ahmed, Farhan and Amin, Danial and Patil, Rajat and Jung, Soon-Gyo and Azem, Jinan Y. and Jansen, Bernard J.},\n  journal = {International Journal of Human–Computer Interaction},\n  year = {2026},\n  note = {Published},\n  abbr = {IJHCI},\n  selected = {false},\n  publisher = {Taylor \\& Francis},\n  doi = {10.1080/10447318.2026.2654818},\n  html = {https://doi.org/10.1080/10447318.2026.2654818}\n}"
+  },
+  {
+    "key": "amin2026ecosystem",
+    "type": "incollection",
+    "title": "How Can Tensions in Sustainability Transitions Be Made Visible?: Challenging the Actor-Centered Ecosystem Approach through Persona-Based Modeling",
+    "authors": [
+      "Danial Amin",
+      "Joni Salminen",
+      "Farhan Ahmed",
+      "Emillia Zemskova",
+      "Bernard J. Jansen"
+    ],
+    "venue": "Ecosystems and Networks for Sustainable Business",
+    "abbr": "Palgrave",
+    "year": 2026,
+    "status": "In review",
+    "doi": "",
+    "citations": 0,
+    "selected": true,
+    "links": {},
+    "raw": "@incollection{amin2026ecosystem,\n  title = {How Can Tensions in Sustainability Transitions Be Made Visible?: Challenging the Actor-Centered Ecosystem Approach through Persona-Based Modeling},\n  citations = {0},\n  author = {Amin, Danial and Salminen, Joni and Ahmed, Farhan and Zemskova, Emillia and Jansen, Bernard J.},\n  booktitle = {Ecosystems and Networks for Sustainable Business},\n  publisher = {Palgrave Macmillan},\n  year = {2026},\n  note = {In review},\n  abbr = {Palgrave},\n  selected = {true}\n}"
+  },
+  {
+    "key": "amin2025anthropomorphicmetadata",
+    "type": "article",
+    "title": "How to Design Anthropomorphic Attributes for Conversational Agents?: A Meta Analysis of 79 Articles",
+    "authors": [
+      "Danial Amin",
+      "Joni Salminen",
+      "Angelica Fabillar",
+      "Sercan Sengün",
+      "Bernard J. Jansen"
+    ],
+    "venue": "IEEE Transactions on Affective Computing",
+    "abbr": "TAFFC'2026",
+    "year": 2026,
+    "status": "In review",
+    "doi": "",
+    "citations": 0,
+    "selected": false,
+    "links": {},
+    "raw": "@article{amin2025anthropomorphicmetadata,\n  title = {How to Design Anthropomorphic Attributes for Conversational Agents?: A Meta Analysis of 79 Articles},\n  citations = {0},\n  author = {Amin, Danial and Salminen, Joni and Fabillar, Angelica and Sengün, Sercan and Jansen, Bernard J.},\n  journal = {IEEE Transactions on Affective Computing},\n  year = {2026},\n  note = {In review},\n  abbr = {TAFFC'2026},\n  selected = {false}\n}"
+  },
+  {
+    "key": "amin2026_moltbook",
+    "type": "article",
+    "title": "How to Model AI Agents as Personas?: Applying the Persona Ecosystem Playground to 41,300 Posts on Moltbook for Behavioral Insights",
+    "authors": [
+      "Danial Amin",
+      "Joni Salminen",
+      "Bernard J. Jansen"
+    ],
+    "venue": "Behaviour & Information Technology",
+    "abbr": "BIT",
+    "year": 2026,
+    "status": "In review",
+    "doi": "",
+    "citations": 1,
+    "selected": true,
+    "links": {
+      "html": "https://arxiv.org/abs/2603.03140"
+    },
+    "raw": "@article{amin2026_moltbook,\n  title = {How to Model AI Agents as Personas?: Applying the Persona Ecosystem Playground to 41,300 Posts on Moltbook for Behavioral Insights},\n  citations = {1},\n  author = {Amin, Danial and Salminen, Joni and Jansen, Bernard J.},\n  year = {2026},\n  journal = {Behaviour & Information Technology},\n  abbr = {BIT},\n  note = {In review},\n  selected = {true},\n  html = {https://arxiv.org/abs/2603.03140}\n}"
+  },
+  {
+    "key": "amin2025pep",
+    "type": "inproceedings",
+    "title": "Introducing Persona Ecosystem Playground (PEP): Generating Behaviorally Grounded Personas from Think-Aloud Data Using LLMs with RAG",
+    "authors": [
+      "Danial Amin",
+      "Joni Salminen",
+      "Bernard J. Jansen"
+    ],
+    "venue": "Conference on Conversational User Interfaces'2026",
+    "abbr": "CUI'2026",
+    "year": 2026,
+    "status": "Published",
+    "doi": "10.1145/3816046.3816269",
+    "citations": 0,
+    "selected": false,
+    "links": {},
+    "raw": "@inproceedings{amin2025pep,\n  title = {Introducing Persona Ecosystem Playground (PEP): Generating Behaviorally Grounded Personas from Think-Aloud Data Using LLMs with RAG},\n  citations = {0},\n  author = {Amin, Danial and Salminen, Joni and Jansen, Bernard J.},\n  booktitle = {Conference on Conversational User Interfaces'2026},\n  year = {2026},\n  note = {Published},\n  abbr = {CUI'2026},\n  selected = {false},\n  doi = {10.1145/3816046.3816269}\n}"
+  },
+  {
+    "key": "amin2024llm_personas",
+    "type": "incollection",
+    "title": "Large language models (LLMs) in human-computer interaction: Using LLM-generated personas to model everything from minority views to entire ecosystems",
+    "authors": [
+      "Danial Amin",
+      "Joni Salminen",
+      "Bernard J. Jansen",
+      "Ilkka Kaate",
+      "Waleed Akhtar"
+    ],
+    "venue": "Artificial Intelligence & Large Language Models: A Scientific Perspective",
+    "abbr": "CRC Press",
+    "year": 2026,
+    "status": "Published",
+    "doi": "10.1201/9781003492252-10",
+    "citations": 2,
+    "selected": true,
+    "links": {
+      "html": "https://doi.org/10.1201/9781003492252-10"
+    },
+    "raw": "@incollection{amin2024llm_personas,\n  title = {Large language models (LLMs) in human-computer interaction: Using LLM-generated personas to model everything from minority views to entire ecosystems},\n  citations = {2},\n  author = {Amin, Danial and Salminen, Joni and Jansen, Bernard J. and Kaate, Ilkka and Akhtar, Waleed},\n  booktitle = {Artificial Intelligence \\& Large Language Models: A Scientific Perspective},\n  publisher = {CRC Press},\n  year = {2026},\n  note = {Published},\n  abbr = {CRC Press},\n  selected = {true},\n  doi = {10.1201/9781003492252-10},\n  html = {https://doi.org/10.1201/9781003492252-10}\n}"
+  },
+  {
+    "key": "salminen2025computational_resources",
+    "type": "article",
+    "title": "On the Need for Computational Resources for the Scientific Benchmarking of Data-Driven Personas",
+    "authors": [
+      "Joni Salminen",
+      "Danial Amin",
+      "Bernard J. Jansen"
+    ],
+    "venue": "Plos One",
+    "abbr": "Plos One",
+    "year": 2026,
+    "status": "In review",
+    "doi": "",
+    "citations": 0,
+    "selected": false,
+    "links": {},
+    "raw": "@article{salminen2025computational_resources,\n  title = {On the Need for Computational Resources for the Scientific Benchmarking of Data-Driven Personas},\n  citations = {0},\n  author = {Salminen, Joni and Amin, Danial and Jansen, Bernard J.},\n  journal = {Plos One},\n  year = {2026},\n  note = {In review},\n  abbr = {Plos One}\n}"
+  },
+  {
+    "key": "salminen2026personabase",
+    "type": "inproceedings",
+    "title": "PersonaBase: A Formative Evaluation Study of Computational Resources for Data-Driven Personas",
+    "authors": [
+      "Joni Salminen",
+      "Danial Amin",
+      "Ilkka Kaate",
+      "Bernard J. Jansen"
+    ],
+    "venue": "37th ACM Conference on Hypertext and Social Media (HT'26)",
+    "abbr": "HT'2026",
+    "year": 2026,
+    "status": "Accepted",
+    "doi": "",
+    "citations": 0,
+    "selected": false,
+    "links": {},
+    "raw": "@inproceedings{salminen2026personabase,\n  title = {PersonaBase: A Formative Evaluation Study of Computational Resources for Data-Driven Personas},\n  citations = {0},\n  author = {Salminen, Joni and Amin, Danial and Kaate, Ilkka and Jansen, Bernard J.},\n  booktitle = {37th ACM Conference on Hypertext and Social Media (HT'26)},\n  year = {2026},\n  note = {Accepted},\n  abbr = {HT'2026},\n  selected = {false}\n}"
+  },
+  {
+    "key": "salminen2026personabase_nordichi",
+    "type": "inproceedings",
+    "title": "PersonaBase: Computational Resources for Advancing the Research and Practice of Data-Driven Personas",
+    "authors": [
+      "Joni Salminen",
+      "Danial Amin",
+      "Ilkka Kaate",
+      "Bernard J. Jansen"
+    ],
+    "venue": "Nordic Conference on Human-Computer Interaction (NordiCHI'26)",
+    "abbr": "NordiCHI'2026",
+    "year": 2026,
+    "status": "Accepted",
+    "doi": "",
+    "citations": 0,
+    "selected": false,
+    "links": {},
+    "raw": "@inproceedings{salminen2026personabase_nordichi,\n  title = {PersonaBase: Computational Resources for Advancing the Research and Practice of Data-Driven Personas},\n  citations = {0},\n  author = {Salminen, Joni and Amin, Danial and Kaate, Ilkka and Jansen, Bernard J.},\n  booktitle = {Nordic Conference on Human-Computer Interaction (NordiCHI'26)},\n  year = {2026},\n  note = {Accepted},\n  abbr = {NordiCHI'2026},\n  selected = {false}\n}"
+  },
+  {
+    "key": "amin2025diversity_personas",
+    "type": "article",
+    "title": "Proposing a Quantitative Framework for Persona Set Diversity Measurement as a Pathway to Inclusive User Representation",
+    "authors": [
+      "Danial Amin",
+      "Joni Salminen",
+      "Bernard J. Jansen"
+    ],
+    "venue": "IEEE Access",
+    "abbr": "IEEE Access",
+    "year": 2026,
+    "status": "In review",
+    "doi": "",
+    "citations": 0,
+    "selected": true,
+    "links": {},
+    "raw": "@article{amin2025diversity_personas,\n  title = {Proposing a Quantitative Framework for Persona Set Diversity Measurement as a Pathway to Inclusive User Representation},\n  citations = {0},\n  author = {Amin, Danial and Salminen, Joni and Jansen, Bernard J.},\n  journal = {IEEE Access},\n  year = {2026},\n  note = {In review},\n  abbr = {IEEE Access},\n  selected = {true}\n}"
+  },
+  {
+    "key": "salminen2026persona_perception_scale",
+    "type": "inproceedings",
+    "title": "Reconceptualizing the Persona Perception Scale for Non-Human Personas: A Formative Validation Study",
+    "authors": [
+      "Joni Salminen",
+      "Lene Nielsen",
+      "Farhan Ahmed",
+      "Trang Thi Thu Xuan",
+      "Rajat Patil",
+      "Ilkka Kaate",
+      "Danial Amin",
+      "Bernard J. Jansen"
+    ],
+    "venue": "Nordic Conference on Human-Computer Interaction (NordiCHI'26)",
+    "abbr": "NordiCHI'2026",
+    "year": 2026,
+    "status": "Accepted",
+    "doi": "",
+    "citations": 0,
+    "selected": false,
+    "links": {},
+    "raw": "@inproceedings{salminen2026persona_perception_scale,\n  title = {Reconceptualizing the Persona Perception Scale for Non-Human Personas: A Formative Validation Study},\n  citations = {0},\n  author = {Salminen, Joni and Nielsen, Lene and Ahmed, Farhan and Xuan, Trang Thi Thu and Patil, Rajat and Kaate, Ilkka and Amin, Danial and Jansen, Bernard J.},\n  booktitle = {Nordic Conference on Human-Computer Interaction (NordiCHI'26)},\n  year = {2026},\n  note = {Accepted},\n  abbr = {NordiCHI'2026},\n  selected = {false}\n}"
+  },
+  {
+    "key": "sethi2025lexical_diversity",
+    "type": "inproceedings",
+    "title": "\"When AI Writes Personas\": Analyzing Lexical Diversity in LLM-Generated Persona Descriptions",
+    "authors": [
+      "Sankalp Sethi",
+      "Joni Salminen",
+      "Danial Amin",
+      "Bernard J. Jansen"
+    ],
+    "venue": "Extended Abstracts of CHI Conference on Human Factors in Computing Systems'2025",
+    "abbr": "CHI'25",
+    "year": 2025,
+    "status": "Published, Extended Abstract",
+    "doi": "10.1145/3706599.3719712",
+    "citations": 16,
+    "selected": true,
+    "links": {
+      "html": "https://doi.org/10.1145/3706599.3719712",
+      "url": "https://dl.acm.org/doi/10.1145/3706599.3719712"
+    },
+    "raw": "@inproceedings{sethi2025lexical_diversity,\n  title = {\"When AI Writes Personas\": Analyzing Lexical Diversity in LLM-Generated Persona Descriptions},\n  citations = {16},\n  author = {Sethi, Sankalp and Salminen, Joni and Amin, Danial and Jansen, Bernard J.},\n  booktitle = {Extended Abstracts of CHI Conference on Human Factors in Computing Systems'2025},\n  year = {2025},\n  note = {Published, Extended Abstract},\n  doi = {10.1145/3706599.3719712},\n  abbr = {CHI'25},\n  url = {https://dl.acm.org/doi/10.1145/3706599.3719712},\n  html = {https://doi.org/10.1145/3706599.3719712},\n  selected = {true}\n}"
+  },
+  {
+    "key": "amin2025genai_harmful",
+    "type": "article",
+    "title": "Generative AI Personas Considered Harmful? Examining the Risks of Algorithmic User Representations in HCI Design",
+    "authors": [
+      "Danial Amin",
+      "Joni Salminen",
+      "Bernard J. Jansen",
+      "Joongi Shin",
+      "Dong Hun Kim"
+    ],
+    "venue": "International Journal of Human-Computer Studies",
+    "abbr": "IJHCS",
+    "year": 2025,
+    "status": "Published",
+    "doi": "10.1016/j.ijhcs.2025.103657",
+    "citations": 18,
+    "selected": true,
+    "links": {
+      "html": "https://www.sciencedirect.com/science/article/pii/S1071581925002149"
+    },
+    "raw": "@article{amin2025genai_harmful,\n  title = {Generative AI Personas Considered Harmful? Examining the Risks of Algorithmic User Representations in HCI Design},\n  citations = {18},\n  author = {Amin, Danial and Salminen, Joni and Jansen, Bernard J. and Shin, Joongi and Kim, Dong Hun},\n  journal = {International Journal of Human-Computer Studies},\n  year = {2025},\n  note = {Published},\n  abbr = {IJHCS},\n  selected = {true},\n  doi = {10.1016/j.ijhcs.2025.103657},\n  html = {https://www.sciencedirect.com/science/article/pii/S1071581925002149}\n}"
+  },
+  {
+    "key": "amin2025anthropomorphicCAs",
+    "type": "article",
+    "title": "How to Anthropomorphize Conversational Agents in Information Systems?: A Review of Humanizing Attributes",
+    "authors": [
+      "Danial Amin",
+      "Joni Salminen",
+      "Angelica Fabillar",
+      "Sercan Sengün",
+      "Bernard J. Jansen"
+    ],
+    "venue": "Online Information Review",
+    "abbr": "OIR",
+    "year": 2025,
+    "status": "In review",
+    "doi": "",
+    "citations": 0,
+    "selected": false,
+    "links": {},
+    "raw": "@article{amin2025anthropomorphicCAs,\n  title = {How to Anthropomorphize Conversational Agents in Information Systems?: A Review of Humanizing Attributes},\n  citations = {0},\n  author = {Amin, Danial and Salminen, Joni and Fabillar, Angelica and Sengün, Sercan and Jansen, Bernard J.},\n  journal = {Online Information Review},\n  year = {2025},\n  note = {In review},\n  abbr = {OIR},\n  selected = {false}\n}"
+  },
+  {
+    "key": "alqadi2025religious_personas",
+    "type": "inproceedings",
+    "title": "Representing Religious Practices via AI-Generated Personas: A Case Study of Ramadan Behaviors from Four Predominantly Muslim Countries",
+    "authors": [
+      "Leen Alqadi",
+      "Soon-gyo Jung",
+      "Danial Amin",
+      "Amani Alabed",
+      "Joni Salminen",
+      "Bernard J. Jansen"
+    ],
+    "venue": "ACS/IEEE International Conference on Computer Systems and Applications",
+    "abbr": "AICCSA'25",
+    "year": 2025,
+    "status": "Published",
+    "doi": "10.1109/AICCSA66935.2025.11315204",
+    "citations": 3,
+    "selected": false,
+    "links": {
+      "html": "https://ieeexplore.ieee.org/document/11315204"
+    },
+    "raw": "@inproceedings{alqadi2025religious_personas,\n  title = {Representing Religious Practices via AI-Generated Personas: A Case Study of Ramadan Behaviors from Four Predominantly Muslim Countries},\n  citations = {3},\n  author = {Alqadi, Leen and Jung, Soon-gyo and Amin, Danial and Alabed, Amani and Salminen, Joni and Jansen, Bernard J.},\n  booktitle = {ACS/IEEE International Conference on Computer Systems and Applications},\n  year = {2025},\n  note = {Published},\n  abbr = {AICCSA'25},\n  doi = {10.1109/AICCSA66935.2025.11315204},\n  html = {https://ieeexplore.ieee.org/document/11315204}\n}"
+  },
+  {
+    "key": "salminen2025llm_hci",
+    "type": "inproceedings",
+    "title": "The Use of Large Language Models in HCI: A Critical Analysis of Synthetic Users",
+    "authors": [
+      "Joni Salminen",
+      "Danial Amin",
+      "Soon-gyo Jung",
+      "Bernard J. Jansen"
+    ],
+    "venue": "Augmented Humans'2025",
+    "abbr": "AH'25",
+    "year": 2025,
+    "status": "Published, Poster",
+    "doi": "10.1145/3745900.3746108",
+    "citations": 9,
+    "selected": false,
+    "links": {
+      "poster": "https://www.canva.com/design/DAGhXXC8Ark/jULLmqfAdpQrER-SpsQz3A/view?utm_content=DAGhXXC8Ark&utm_campaign=designshare&utm_medium=link2&utm_source=uniquelinks&utlId=h9c837ad2d5",
+      "html": "https://dl.acm.org/doi/10.1145/3745900.3746108",
+      "url": "https://dl.acm.org/doi/10.1145/3745900.3746108"
+    },
+    "raw": "@inproceedings{salminen2025llm_hci,\n  title = {The Use of Large Language Models in HCI: A Critical Analysis of Synthetic Users},\n  citations = {9},\n  author = {Salminen, Joni and Amin, Danial and Jung, Soon-gyo and Jansen, Bernard J.},\n  booktitle = {Augmented Humans'2025},\n  year = {2025},\n  note = {Published, Poster},\n  doi = {10.1145/3745900.3746108},\n  url = {https://dl.acm.org/doi/10.1145/3745900.3746108},\n  html = {https://dl.acm.org/doi/10.1145/3745900.3746108},\n  abbr = {AH'25}\n}"
+  },
+  {
+    "key": "salminen2025ai_representation",
+    "type": "inproceedings",
+    "title": "Using AI for User Representation: An Analysis of 83 Persona Prompts",
+    "authors": [
+      "Joni Salminen",
+      "Danial Amin",
+      "Bernard J. Jansen"
+    ],
+    "venue": "ACS/IEEE International Conference on Computer Systems and Applications",
+    "abbr": "AICCSA'25",
+    "year": 2025,
+    "status": "Published",
+    "doi": "10.1109/AICCSA66935.2025.11315350",
+    "citations": 6,
+    "selected": false,
+    "links": {
+      "slides": "https://speakerdeck.com/damin/using-ai-for-user-representation-an-analysis-of-83-persona-prompts",
+      "html": "https://ieeexplore.ieee.org/document/11315350"
+    },
+    "raw": "@inproceedings{salminen2025ai_representation,\n  title = {Using AI for User Representation: An Analysis of 83 Persona Prompts},\n  citations = {6},\n  author = {Salminen, Joni and Amin, Danial and Jansen, Bernard J.},\n  booktitle = {ACS/IEEE International Conference on Computer Systems and Applications},\n  year = {2025},\n  note = {Published},\n  abbr = {AICCSA'25},\n  doi = {10.1109/AICCSA66935.2025.11315350},\n  html = {https://ieeexplore.ieee.org/document/11315350}\n}"
+  },
+  {
+    "key": "naqvi2021public_private",
+    "type": "inproceedings",
+    "title": "Role of Private-Public Partnerships in Creation of Space Awareness and Outreach in Pakistan",
+    "authors": [
+      "Najam Naqvi",
+      "Faaiz Ahmed",
+      "Usama Ahmed",
+      "Danial Amin",
+      "Faizan Malik"
+    ],
+    "venue": "International Conference on Aerospace Science and Engineering",
+    "abbr": "ICASE'21",
+    "year": 2021,
+    "status": "Published",
+    "doi": "",
+    "citations": 3,
+    "selected": false,
+    "links": {
+      "html": "https://ieeexplore.ieee.org/document/9904083"
+    },
+    "raw": "@inproceedings{naqvi2021public_private,\n  title = {Role of Private-Public Partnerships in Creation of Space Awareness and Outreach in Pakistan},\n  citations = {3},\n  author = {Naqvi, Najam and Ahmed, Faaiz and Ahmed, Usama and Amin, Danial and Malik, Faizan},\n  booktitle = {International Conference on Aerospace Science and Engineering},\n  year = {2021},\n  publisher = {ieee},\n  abbr = {ICASE'21},\n  html = {https://ieeexplore.ieee.org/document/9904083},\n  note = {Published}\n}"
+  },
+  {
+    "key": "naqvi2021sustainable_development",
+    "type": "inproceedings",
+    "title": "The Role of National Centers in Sustainable Development of Pakistan",
+    "authors": [
+      "Najam Naqvi",
+      "Faaiz Ahmed",
+      "Usama Ahmed",
+      "Danial Amin",
+      "Faizaan Malik"
+    ],
+    "venue": "International Conference on Aerospace Science and Engineering",
+    "abbr": "ICASE'21",
+    "year": 2021,
+    "status": "Published",
+    "doi": "",
+    "citations": 2,
+    "selected": false,
+    "links": {
+      "html": "https://ieeexplore.ieee.org/document/9904083"
+    },
+    "raw": "@inproceedings{naqvi2021sustainable_development,\n  title = {The Role of National Centers in Sustainable Development of Pakistan},\n  citations = {2},\n  author = {Naqvi, Najam and Ahmed, Faaiz and Ahmed, Usama and Amin, Danial and Malik, Faizaan},\n  booktitle = {International Conference on Aerospace Science and Engineering},\n  year = {2021},\n  publisher = {ieee},\n  abbr = {ICASE'21},\n  note = {Published},\n  html = {https://ieeexplore.ieee.org/document/9904083}\n}"
+  },
+  {
+    "key": "naqvi2017experts_awareness",
+    "type": "inproceedings",
+    "title": "Role of subject matter experts in creating awareness through space technology education and popularization (STEP): World space week celebrations — A case study",
+    "authors": [
+      "Najam Naqvi",
+      "Faaiz Ahmed",
+      "Usama Ahmed",
+      "Danial Amin"
+    ],
+    "venue": "International Conference on Aerospace Science and Engineering",
+    "abbr": "ICASE'17",
+    "year": 2017,
+    "status": "Published",
+    "doi": "",
+    "citations": 2,
+    "selected": false,
+    "links": {
+      "html": "https://ieeexplore.ieee.org/document/8374245"
+    },
+    "raw": "@inproceedings{naqvi2017experts_awareness,\n  title = {Role of subject matter experts in creating awareness through space technology education and popularization (STEP): World space week celebrations — A case study},\n  citations = {2},\n  author = {Naqvi, Najam and Ahmed, Faaiz and Ahmed, Usama and Amin, Danial},\n  booktitle = {International Conference on Aerospace Science and Engineering},\n  year = {2017},\n  publisher = {ieee},\n  abbr = {ICASE'17},\n  note = {Published},\n  html = {https://ieeexplore.ieee.org/document/8374245}\n}"
+  },
+  {
+    "key": "naqvi2017traditional_scientific",
+    "type": "inproceedings",
+    "title": "Unification of traditional and scientific pedagogy in Space Technology Education and Popularization (STEP): Space summer school—A case study",
+    "authors": [
+      "Najam Naqvi",
+      "Faaiz Ahmed",
+      "Usama Ahmed",
+      "Danial Amin"
+    ],
+    "venue": "International Conference on Aerospace Science and Engineering",
+    "abbr": "ICASE'17",
+    "year": 2017,
+    "status": "Published",
+    "doi": "",
+    "citations": 3,
+    "selected": false,
+    "links": {
+      "html": "https://ieeexplore.ieee.org/document/8374244"
+    },
+    "raw": "@inproceedings{naqvi2017traditional_scientific,\n  title = {Unification of traditional and scientific pedagogy in Space Technology Education and Popularization (STEP): Space summer school—A case study},\n  citations = {3},\n  author = {Naqvi, Najam and Ahmed, Faaiz and Ahmed, Usama and Amin, Danial},\n  booktitle = {International Conference on Aerospace Science and Engineering},\n  year = {2017},\n  publisher = {ieee},\n  abbr = {ICASE'17},\n  note = {Published},\n  html = {https://ieeexplore.ieee.org/document/8374244}\n}"
+  }
+]

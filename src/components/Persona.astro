@@ -249,7 +249,7 @@ const bubbles = [
    * figure stayed at zero however far the pointer moved — the labels, which read
    * var(--px, 0), were the only thing that actually shifted.
    */
-  .js .ph-figure {
+  :global(.js) .ph-figure {
     transform: translate(-50%, -50%)
       translate3d(calc(var(--px, 0) * 9px), calc(var(--py, 0) * 7px), 0)
       rotate(calc(var(--px, 0) * 1.1deg));
@@ -258,7 +258,7 @@ const bubbles = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .js .ph-figure {
+    :global(.js) .ph-figure {
       transform: translate(-50%, -50%);
     }
   }
@@ -340,7 +340,7 @@ const bubbles = [
   }
 
   /* they land one after another, like messages arriving */
-  .js .ph-bub {
+  :global(.js) .ph-bub {
     opacity: 0;
     transform: translateY(6px) scale(0.97);
     transition:
@@ -349,7 +349,7 @@ const bubbles = [
     transition-delay: calc(320ms + var(--i) * 150ms);
   }
 
-  .js .ph.is-set .ph-bub {
+  :global(.js) .ph.is-set .ph-bub {
     opacity: 1;
     transform: translate3d(calc(var(--px, 0) * -4px), calc(var(--py, 0) * -3px), 0);
     transition:
@@ -393,7 +393,7 @@ const bubbles = [
   }
 
   @media (prefers-reduced-motion: reduce) {
-    .js .ph-bub {
+    :global(.js) .ph-bub {
       opacity: 1 !important;
       transform: none !important;
     }

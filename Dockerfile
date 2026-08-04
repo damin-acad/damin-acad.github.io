@@ -11,7 +11,15 @@ WORKDIR /app
 ENV NODE_ENV=production
 ENV PORT=3000
 ENV HOST=0.0.0.0
-# the Node adapter bundles its own deps into dist/server
+
+# The Node adapter leaves its runtime dependencies external: dist/server/entry.mjs
+# imports piccolore, cookie, devalue, html-escaper, send, server-destroy,
+# unstorage, clsx, zod, @oslojs/encoding and @astrojs/internal-helpers. Copying
+# only dist produced ERR_MODULE_NOT_FOUND on boot.
+COPY package.json package-lock.json ./
+RUN npm ci --omit=dev && npm cache clean --force
+
 COPY --from=build /app/dist ./dist
+
 EXPOSE 3000
 CMD ["node", "./dist/server/entry.mjs"]

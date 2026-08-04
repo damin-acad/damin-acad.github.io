@@ -2,31 +2,28 @@
 /**
  * The hero: a persona of the persona researcher.
  *
- * Laid out the way data-driven personas are — portrait, attributes, a
- * representative quote — because that format is what the research interrogates.
- * No card, no border, no panel: the figure and the type sit directly on the
- * paper.
+ * Composition — prose on the left, the figure on the right with chat-style
+ * bubbles arranged around it, each carrying one sourced attribute. The bubbles
+ * arrive in sequence on reveal, like messages landing.
  *
- * The portrait's background is a uniform light grey (227,232,240 — 88% of its
- * border is above 200 luminance), so it is removed the way a two-ink press would
- * remove it rather than by masking: levels push the background past white, then
- * multiply lets the paper through wherever there is no ink. On black stock the
- * image inverts and screens instead, which is the same operation the other way
- * up. Nothing is cut out by hand and there is no transparent PNG to maintain.
+ * ─── the figure asset ───────────────────────────────────────────────────────
+ * FIGURE below points at the portrait as a PLACEHOLDER. The intent is a 3D
+ * character render; I cannot generate a likeness, so drop the render into
+ * public/ and change this one line. A PNG with real transparency is ideal — set
+ * FIGURE_CUTOUT to true for it, which skips the blend-mode knockout used on the
+ * photo (whose background is a flat 227,232,240 and disappears under multiply).
+ * ────────────────────────────────────────────────────────────────────────────
  *
- * Every attribute is sourced — cv.yml, papers.bib, the essay collection — and
- * the quote is verbatim. A generated persona could not say that, which is the
- * point of the note at the end.
+ * Every bubble is sourced from cv.yml, papers.bib or a published sentence.
+ * Nothing is inferred — which a generated persona could not claim, and which is
+ * the whole point of putting this format on this site.
  */
 import cv from '../data/cv.json';
 import pubs from '../data/publications.json';
 import site from '../data/site.json';
 
-interface Props {
-  essays: number;
-  essayWords: number;
-}
-const { essays, essayWords } = Astro.props;
+const FIGURE = '/prof_pic.jpg';
+const FIGURE_CUTOUT = false;
 
 type Section = { title: string; type?: string; contents?: any };
 const map = Object.fromEntries(
@@ -34,110 +31,142 @@ const map = Object.fromEntries(
     .filter((s) => s.type === 'map')
     .flatMap((s) => (s.contents as { name: string; value: any }[]).map((r) => [r.name, r.value])),
 );
-
 const interests = ((cv as Section[]).find((s) => s.title === 'Research Interests')?.contents ??
   []) as { title: string; items: string[] }[];
 
 const coauthors = new Set(pubs.flatMap((p) => p.authors).filter((a) => a !== site.name));
 const years = pubs.map((p) => p.year).filter(Boolean) as number[];
 
-const quote = {
-  text:
-    'This proposition, however, rests on a fundamental category error that conflates representational plausibility with representational validity.',
-  slug: '2025-07-02-representation',
-  where: 'The Representation Crisis',
-};
+const langs = String(map['Languages'] ?? '')
+  .split(',')
+  .map((s) => s.trim())
+  .filter(Boolean);
 
-const attrs = [
-  ['Location', map['Location'] ?? site.location],
-  ['Languages', map['Languages']],
-  ['Focus', interests.map((g) => g.title).join(' · ')],
-  [
-    'Evidence',
-    `${pubs.length} publications ${Math.min(...years)}–${Math.max(...years)} · ${coauthors.size} co-authors · ${essays} essays, ${essayWords.toLocaleString('en-GB')} words`,
-  ],
+/**
+ * Bubbles, with a position around the figure. `side` picks which edge the tail
+ * hangs from; x/y are percentages of the stage.
+ */
+const bubbles = [
+  {
+    head: 'Position',
+    body: `${site.role} · ${site.group}, ${site.affiliation}`,
+    x: 2,
+    y: 4,
+    side: 'bl',
+  },
+  { head: 'Based in', body: map['Location'] ?? site.location, x: 60, y: 20, side: 'bl' },
+  { head: 'Languages', body: langs.join(' · '), x: 0, y: 34, side: 'br' },
+  {
+    head: 'Record',
+    body: `${pubs.length} publications, ${Math.min(...years)}–${Math.max(...years)} · ${coauthors.size} co-authors`,
+    x: 55,
+    y: 52,
+    side: 'bl',
+  },
+  { head: 'Works on', body: interests.map((g) => g.title).join(' · '), x: 0, y: 70, side: 'tr' },
+  {
+    head: 'In his own words',
+    body: 'A persona can be entirely plausible and still represent no one.',
+    x: 40,
+    y: 86,
+    side: 'tl',
+    wide: true,
+  },
 ];
 ---
 
-<figure class="hero-persona" data-set>
-  <div class="hp-figure">
+<div class="ph wide" data-set>
+  <!-- left: the prose -->
+  <div class="ph-text">
+    <p class="ph-tag">Persona 01 · n = 1 · sourced, not generated</p>
+    <h1 class="ph-name">{map['Full Name'] ?? site.name}</h1>
+
+    <div class="prose ph-prose">
+      <p>
+        I am a {site.role.toLowerCase()} at the
+        <a href={site.groupUrl} rel="noopener" target="_blank">{site.affiliation}</a>, supervised by
+        <a href={site.supervisorUrl} rel="noopener" target="_blank">{site.supervisor}</a>. My work
+        is about whether generative AI can represent users fairly — how these systems build
+        personas, where they flatten the people they are meant to describe, and what that costs
+        communities already thin on the ground in the training data.
+      </p>
+      <p>
+        Alongside the doctorate I am Senior Data Science Lead at
+        <a href="https://www.eniplenitude.fr/" rel="noopener" target="_blank">ENI Plenitude</a>;
+        before that I built GenAI tools for designers at Samsung Design Innovation Center. That
+        order matters — I keep shipping the kind of system I spend my papers criticising, which is
+        a useful place to argue from.
+      </p>
+    </div>
+
+    <details class="more">
+      <summary>Longer version</summary>
+      <div class="prose">
+        <p>
+          Before Samsung I built AI systems in engineering domains across Pakistan, the USA, MENA
+          and Ireland, and came to research through practice rather than the other way round.
+        </p>
+        <p>
+          I have run space education and popularisation in Pakistan for years through Space
+          Technology Education and Popularization — World Space Week (2014–2022), Space Summer
+          School (2017–2022) and Space Camps — and volunteer with the
+          <a href="https://ncgsa.org.pk/" rel="noopener" target="_blank">National Center of GIS
+          &amp; Space Applications</a>. Four languages, some poetry and dark prose, otherwise mostly
+          overthinking or cooking.
+        </p>
+      </div>
+    </details>
+
+    <p class="ph-note">
+      Every label opposite comes from a CV, a bibliography or a published sentence — nothing is
+      inferred. A generated persona cannot make that claim, and the gap is the research.
+    </p>
+  </div>
+
+  <!-- right: the figure, with the labels arranged around it -->
+  <figure class="ph-stage">
     <img
-      src="/prof_pic.jpg"
-      alt={`Portrait of ${site.name}`}
+      class:list={['ph-figure', FIGURE_CUTOUT && 'is-cutout']}
+      src={FIGURE}
+      alt={`Figure representing ${site.name}`}
       width="590"
       height="585"
       loading="eager"
     />
-  </div>
 
-  <div class="hp-text">
-    <p class="hp-tag">Persona 01 · n = 1 · sourced, not generated</p>
-    <h1 class="hp-name">{map['Full Name'] ?? site.name}</h1>
-    <p class="hp-role">
-      {site.role}, <a href={site.groupUrl} rel="noopener" target="_blank">{site.group}</a> ·
-      {' '}{site.affiliation}
-    </p>
-
-    <dl class="hp-attrs">
+    <ul class="ph-bubbles">
       {
-        attrs.map(([k, v]) => (
-          <div>
-            <dt>{k}</dt>
-            <dd>{v}</dd>
-          </div>
+        bubbles.map((b, i) => (
+          <li
+            class:list={['ph-bub', `t-${b.side}`, b.wide && 'is-wide']}
+            style={`--x:${b.x}%;--y:${b.y}%;--i:${i}`}
+          >
+            <p class="ph-bub-h">{b.head}</p>
+            <p class="ph-bub-b">{b.body}</p>
+          </li>
         ))
       }
-    </dl>
-
-    <blockquote class="hp-quote">
-      <p>“{quote.text}”</p>
-      <footer>— <a href={`/writing/${quote.slug}`}>{quote.where}</a>, verbatim</footer>
-    </blockquote>
-
-    <figcaption class="hp-note">
-      Every attribute above comes from a CV, a bibliography or a published sentence — nothing is
-      inferred. A generated persona cannot make that claim, and the gap is the research: a persona
-      can be entirely plausible and still represent no one.
-    </figcaption>
-  </div>
-</figure>
+    </ul>
+  </figure>
+</div>
 
 <style>
-  .hero-persona {
-    margin: 0 0 1.5rem;
+  .ph {
     display: grid;
-    gap: 0.5rem 2rem;
+    gap: 1.5rem 2.5rem;
+    margin: 0 0 1.5rem;
     align-items: start;
   }
 
-  @media (min-width: 780px) {
-    .hero-persona {
-      grid-template-columns: minmax(11rem, 17rem) 1fr;
+  @media (min-width: 900px) {
+    .ph {
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1.05fr);
     }
   }
 
-  /* no frame, no background — the ink sits on the paper */
-  .hp-figure {
-    margin: 0;
-    line-height: 0;
-  }
+  /* ---- left ---- */
 
-  .hp-figure img {
-    display: block;
-    width: 100%;
-    height: auto;
-    /* push the near-white background past white so multiply erases it */
-    filter: grayscale(1) contrast(1.42) brightness(1.16);
-    mix-blend-mode: multiply;
-  }
-
-  /* on dark stock the same operation runs inverted and screens instead */
-  :global([data-stock='black']) .hp-figure img {
-    filter: grayscale(1) contrast(1.42) brightness(1.16) invert(1);
-    mix-blend-mode: screen;
-  }
-
-  .hp-tag {
+  .ph-tag {
     margin: 0 0 0.4rem;
     font-family: var(--type);
     font-size: 0.6rem;
@@ -146,81 +175,197 @@ const attrs = [
     color: var(--mark);
   }
 
-  .hp-name {
+  .ph-name {
     font-family: var(--display);
-    font-size: clamp(2.1rem, 5.5vw, 3.6rem);
+    font-size: clamp(2rem, 5vw, 3.2rem);
     line-height: 0.92;
     letter-spacing: -0.04em;
-    margin: 0 0 0.3rem;
+    margin: 0 0 0.9rem;
     font-weight: 400;
   }
 
-  .hp-role {
-    margin: 0 0 1rem;
-    font-size: 1rem;
+  .ph-prose p {
+    font-size: 1.02rem;
+    line-height: 1.66;
+  }
+
+  .ph-note {
+    margin: 1.1rem 0 0;
+    padding-top: 0.6rem;
+    border-top: 1.5px solid var(--rule);
+    font-family: var(--type);
+    font-size: 0.64rem;
+    line-height: 1.7;
     color: var(--ink-soft);
   }
 
-  .hp-attrs {
-    margin: 0 0 1.1rem;
-    border-top: 1.5px solid var(--rule);
-  }
+  /* ---- right: stage ---- */
 
-  .hp-attrs div {
-    display: grid;
-    grid-template-columns: 5.5rem 1fr;
-    gap: 0.25rem 0.9rem;
-    padding: 0.4rem 0;
-    border-bottom: 1.5px solid var(--rule);
-    font-size: 0.92rem;
-  }
-
-  .hp-attrs dt {
-    font-family: var(--type);
-    font-size: 0.62rem;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--ink-faint);
-    padding-top: 0.3em;
-  }
-
-  .hp-attrs dd {
+  .ph-stage {
+    position: relative;
     margin: 0;
+    /* the bubbles are positioned against this box, so it needs a stable ratio */
+    aspect-ratio: 4 / 5;
+  }
+
+  .ph-figure {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 62%;
+    height: auto;
+    /* the photo has a flat light backdrop, so levels + multiply erase it and the
+       paper shows through. A real cutout skips this. */
+    filter: grayscale(1) contrast(1.42) brightness(1.16);
+    mix-blend-mode: multiply;
+  }
+
+  :global([data-stock='black']) .ph-figure {
+    filter: grayscale(1) contrast(1.42) brightness(1.16) invert(1);
+    mix-blend-mode: screen;
+  }
+
+  .ph-figure.is-cutout {
+    filter: none;
+    mix-blend-mode: normal;
+  }
+
+  :global([data-stock='black']) .ph-figure.is-cutout {
+    filter: none;
+    mix-blend-mode: normal;
+  }
+
+  /* ---- bubbles ---- */
+
+  .ph-bubbles {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    position: absolute;
+    inset: 0;
+  }
+
+  .ph-bub {
+    position: absolute;
+    left: var(--x);
+    top: var(--y);
+    width: 43%;
+    background: var(--paper);
+    border: 1.5px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--mark);
+    padding: 0.32rem 0.45rem 0.38rem;
+  }
+
+  .ph-bub.is-wide {
+    width: 56%;
+  }
+
+  .ph-bub-h {
+    margin: 0 0 0.1rem;
+    font-family: var(--type);
+    font-size: 0.54rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--mark);
+  }
+
+  .ph-bub-b {
+    margin: 0;
+    font-size: 0.72rem;
+    line-height: 1.4;
     color: var(--ink);
   }
 
-  .hp-quote {
-    margin: 0 0 0.9rem;
-    padding-left: 0.9rem;
-    border-left: 3px solid var(--mark);
+  /* tails — a chat bubble points at whoever is speaking */
+  .ph-bub::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--paper);
+    border-right: 1.5px solid var(--ink);
+    border-bottom: 1.5px solid var(--ink);
   }
 
-  .hp-quote p {
-    margin: 0 0 0.3rem;
-    font-size: 1.05rem;
-    font-weight: 600;
-    line-height: 1.42;
-    text-wrap: pretty;
+  .t-bl::after {
+    left: 12px;
+    bottom: -5px;
+    transform: rotate(45deg);
   }
 
-  .hp-quote footer {
-    font-family: var(--type);
-    font-size: 0.66rem;
-    color: var(--ink-faint);
+  .t-br::after {
+    right: 12px;
+    bottom: -5px;
+    transform: rotate(45deg);
   }
 
-  .hp-note {
-    font-family: var(--type);
-    font-size: 0.66rem;
-    line-height: 1.7;
-    color: var(--ink-soft);
-    max-width: 44rem;
+  .t-tl::after {
+    left: 12px;
+    top: -5px;
+    transform: rotate(225deg);
   }
 
-  @media (max-width: 520px) {
-    .hp-attrs div {
-      grid-template-columns: 1fr;
-      gap: 0.05rem;
+  .t-tr::after {
+    right: 12px;
+    top: -5px;
+    transform: rotate(225deg);
+  }
+
+  /* they land one after another, like messages arriving */
+  .js .ph-bub {
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+    transition:
+      opacity 260ms linear,
+      transform 380ms cubic-bezier(0.34, 1.4, 0.64, 1);
+    transition-delay: calc(320ms + var(--i) * 150ms);
+  }
+
+  .js .ph.is-set .ph-bub {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* ---- narrow: the stage stops being a stage ---- */
+
+  @media (max-width: 640px) {
+    .ph-stage {
+      aspect-ratio: auto;
+    }
+
+    .ph-figure {
+      position: static;
+      transform: none;
+      width: 68%;
+      margin: 0 auto 0.9rem;
+      display: block;
+    }
+
+    .ph-bubbles {
+      position: static;
+      display: grid;
+      gap: 0.4rem;
+    }
+
+    .ph-bub {
+      position: static;
+      width: auto;
+    }
+
+    .ph-bub.is-wide {
+      width: auto;
+    }
+
+    .ph-bub::after {
+      display: none;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .js .ph-bub {
+      opacity: 1 !important;
+      transform: none !important;
     }
   }
 </style>

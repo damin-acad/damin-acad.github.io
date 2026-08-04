@@ -18,17 +18,14 @@ const TYPE_LABEL: Record<string, string> = {
 };
 
 /**
- * Surnames only, first three, then a count — thirty-one full author lists was
- * the largest block of text on the page. The complete list is the title
- * attribute and the BibTeX.
+ * Full names, every author, in order. An earlier pass truncated to three
+ * surnames plus a count to save space — wrong call on an academic page, where
+ * co-authorship is part of the record and collaborators expect to find
+ * themselves. Density is handled typographically instead: the line is set small
+ * in the mono face rather than shortened.
  */
 function authorLine(authors: string[]) {
-  const surname = (a: string) => a.split(' ').slice(-1)[0];
-  const shown = authors
-    .slice(0, 3)
-    .map((a) => (a === site.name ? `<b>${surname(a)}</b>` : surname(a)));
-  const rest = authors.length - shown.length;
-  return shown.join(', ') + (rest > 0 ? ` +${rest}` : '');
+  return authors.map((a) => (a === site.name ? `<b>${a}</b>` : a)).join(', ');
 }
 
 const typeCounts = Object.keys(TYPE_LABEL).map((t) => ({

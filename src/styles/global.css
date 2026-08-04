@@ -66,8 +66,14 @@
   --t-4: clamp(2.6rem, 6vw, 4.2rem);
 
   --gutter: clamp(1rem, 4vw, 2.25rem);
-  --shell: 62rem;
-  --measure: 38rem;
+  /* The shell is a reading column, not a canvas. It used to be 62rem while
+     prose was capped at 38rem, so text filled 61% of it and 384px sat empty on
+     the right — which read as broken rather than as a margin. The shell is the
+     measure now, and the few blocks that genuinely need width (the projector,
+     publication rows, the persona) break out with .wide. */
+  --shell: 46rem;
+  --wide: 74rem;
+  --measure: 46rem;
 
   --ease: cubic-bezier(0.25, 0.9, 0.3, 1);
 }
@@ -111,6 +117,17 @@ body {
   z-index: 1;
   width: min(100% - 2 * var(--gutter), var(--shell));
   margin-inline: auto;
+}
+
+/**
+ * Break out of the reading column, symmetrically. When the requested width
+ * exceeds the shell the margins go negative, which widens the element without
+ * moving its centre. No transform, so nothing overlaps in flow.
+ */
+.wide {
+  --w: min(100vw - 2 * var(--gutter), var(--wide));
+  width: var(--w);
+  margin-inline: calc((100% - var(--w)) / 2);
 }
 
 /* ---------- masthead ---------- */
@@ -253,7 +270,7 @@ h3 {
 
 .page-lede {
   margin: 0 0 1.5rem;
-  max-width: var(--measure);
+  max-width: 42rem;
   color: var(--ink-soft);
   font-size: var(--t-1);
 }
@@ -315,7 +332,7 @@ h3 {
 }
 
 .prose {
-  max-width: var(--measure);
+  max-width: 42rem;
 }
 
 .prose p {
@@ -1088,4 +1105,10 @@ details[open] > .cv-summary::after {
 .pub-links button {
   font-size: 0.62rem;
   padding: 0.08rem 0.32rem;
+}
+
+/* full author lists run long, so they get their own measure and leading */
+.pub-authors {
+  max-width: 62ch;
+  line-height: 1.5;
 }

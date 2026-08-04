@@ -4,7 +4,7 @@ date: 2025-10-27
 excerpt: "Hard-won lessons from the field on what actually works when building AI agent systems. Skip the hype, learn the patterns."
 tags: ["AI-agents", "software-patterns", "agentic-frameworks"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-10-27-patterns-antipatterns"
+extractSlug: "2025-10-27-patterns-antipatterns"
 ---
 
 You're building an AI agent. It needs to call APIs, make decisions, handle errors, and not hallucinate your production database into oblivion. Simple, right?

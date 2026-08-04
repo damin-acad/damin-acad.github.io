@@ -4,7 +4,7 @@ date: 2025-11-21
 excerpt: "ChatGPT asks permission. Claude assumes control. Gemini can't decide. As models converge on capability, personality becomes the product."
 tags: ["generativeAI", "personality", "product", "LLMs"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-11-21-llm-personalities"
+extractSlug: "2025-11-21-llm-personalities"
 ---
 
 Every major LLM can write code, analyze documents, and answer complex questions. The technical gap between frontier models is narrowing. Yet users have strong preferences—not because one model is smarter, but because they have fundamentally different personalities.

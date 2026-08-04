@@ -4,7 +4,7 @@ date: 2025-07-02
 excerpt: "The proliferation of LLM-generated synthetic users in design and research creates a fundamental crisis of representation that undermines the very purpose of user-centered design. This analysis exposes the clarity deficit inherent in synthetic user generation and its profound implications for design validity."
 tags: ["synthetic-users", "llm", "user-research", "representation", "design-methodology"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-07-02-representation"
+extractSlug: "2025-07-02-representation"
 ---
 
 The rapid adoption of Large Language Model-generated synthetic users represents one of the most profound methodological shifts in user-centered design since the emergence of digital interfaces. Proponents herald these systems as democratizing user research, reducing costs, and accelerating design cycles. Critics dismiss them as shallow approximations that cannot capture the complexity of human experience. **Both perspectives miss the fundamental issue: synthetic users create a crisis of representational clarity that undermines the epistemological foundations of user-centered design.**

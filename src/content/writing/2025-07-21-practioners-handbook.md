@@ -4,7 +4,7 @@ date: 2025-07-21
 excerpt: "Effective LLM prompting for industry research isn't about perfect instructions—it's about applying battle-tested heuristics that consistently produce actionable insights. These practical principles transform generic AI interactions into focused research partnerships."
 tags: ["llm", "bias", "evaluation", "objectivity", "generativeAI", "fair-AI,", "food", "for", "thought"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-07-21-practioners-handbook"
+extractSlug: "2025-07-21-practioners-handbook"
 ---
 
 After years of crafting prompts for industry reports across technology, finance, and engineering sectors, a pattern emerges: **the difference between mediocre and exceptional LLM research output isn't sophisticated prompt engineering. Rather, it's consistently applying simple heuristics that most people ignore.**

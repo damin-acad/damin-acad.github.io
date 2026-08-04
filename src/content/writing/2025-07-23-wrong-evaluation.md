@@ -4,7 +4,7 @@ date: 2025-07-23
 excerpt: "We're celebrating AI systems for acing human exams while ignoring what truly matters—their ability to navigate ethical complexity, understand nuance, and grapple with the moral weight of real-world decisions. It's time to rethink how we measure artificial intelligence."
 tags: ["generativeAI", "fair-AI", "ethics", "morality", "food-for-thought"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-07-23-wrong-evaluation"
+extractSlug: "2025-07-23-wrong-evaluation"
 ---
 
 Every few months, the headlines trumpet the same story: "AI Aces Medical Boards!" "ChatGPT Scores a Gold in International Maths Olympiad" "New Model Conquers Graduate School Tests!" We applaud these achievements as if they represent meaningful milestones in GenAI, but we're fundamentally missing the point.

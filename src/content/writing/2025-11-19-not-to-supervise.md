@@ -4,7 +4,7 @@ date: 2025-11-19
 excerpt: "Hard-won lessons from the field on what actually works when building AI agent systems. Skip the hype, learn the patterns."
 tags: ["leadership", "management", "supervision"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-11-19-not-to-supervise"
+extractSlug: "2025-11-19-not-to-supervise"
 ---
 
 Supervision is where most organizational dysfunction starts. Not from malice, but from managers who treat people like interchangeable parts, demand superhuman effort as baseline, and wonder why their teams burn out or leave.

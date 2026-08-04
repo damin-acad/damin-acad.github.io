@@ -4,7 +4,7 @@ date: 2026-01-09
 excerpt: "The industry built transformers for language and forgot that most enterprise data moves through time. Now we're realizing that temporal patterns require fundamentally different approaches than next-token prediction."
 tags: ["time-series", "forecasting", "machine-learning", "enterprise-ai"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2026-01-09-timeseries-blind-spot"
+extractSlug: "2026-01-09-timeseries-blind-spot"
 ---
 
 The generative AI wave swept through 2023-2025 with transformer architectures conquering text, images, video, audio. Every modality got its foundation model. Every domain got its specialized variant.

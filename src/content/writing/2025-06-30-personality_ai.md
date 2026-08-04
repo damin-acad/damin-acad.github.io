@@ -4,7 +4,7 @@ date: 2025-06-30
 excerpt: "Designing personality into LLM agents isn't cosmetic enhancement—it's a fundamental requirement for creating trustworthy, effective, and sustainable human-AI interactions. This article argues for deliberate personality design as a core component of AI agent architecture."
 tags: ["llm-agents", "personality", "human-ai-interaction", "trust", "design"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-06-30-personality_ai"
+extractSlug: "2025-06-30-personality_ai"
 ---
 
 The proposition that Large Language Model agents should possess distinct personalities challenges a foundational assumption in contemporary AI development: that optimal systems are personality-neutral, maximally flexible, and universally applicable. This mechanistic paradigm, while appealing in its apparent objectivity, fundamentally misapprehends the nature of intelligent interaction and the cognitive requirements for effective human-AI collaboration.

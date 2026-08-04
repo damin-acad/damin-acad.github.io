@@ -4,7 +4,7 @@ date: 2025-09-22
 excerpt: "Large Language Models have consumed the internet's collective knowledge, but as we enter the era of synthetic training data, we're creating a closed-loop system that may be fundamentally limiting AI's potential. Here's why the current LLM paradigm faces an existential data crisis."
 tags: ["generativeAI", "ethics", "food-for-thought", "data-crises"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-09-22-llm-fossilized"
+extractSlug: "2025-09-22-llm-fossilized"
 ---
 
 The AI industry has built a $150 billion ecosystem on consuming finite human knowledge while pretending that resource is infinite. We've hit peak data, and the implications are catastrophic for current AI development.

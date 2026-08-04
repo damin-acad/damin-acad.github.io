@@ -4,7 +4,7 @@ date: 2025-09-25
 excerpt: "Every LLM has a distinct personality that fundamentally warps the information it provides. As we mistake these AI quirks for objective intelligence, we're unknowingly filtering all human knowledge through a handful of synthetic worldviews. The implications are more profound than anyone realizes."
 tags: ["generativeAI", "personality", "bias", "information-distortion"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-09-25-personality-in-llm"
+extractSlug: "2025-09-25-personality-in-llm"
 ---
 
 Here's a thought experiment that will change how you see every AI interaction: **Large Language Models don't just process information—they possess distinct personalities that fundamentally distort everything they tell you.**

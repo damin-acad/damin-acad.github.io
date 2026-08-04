@@ -4,7 +4,7 @@ date: 2025-03-05
 excerpt: "Generative AI has become a frequent topic of strategic discussions in boardrooms across industries. While the technology offers remarkable capabilities, there's often a significant gap between executive expectations and practical realities. This guide provides a framework for aligning AI implementation with business realities."
 tags: ["generativeAI", "executive-strategy", "ai-implementation", "business-strategy", "ai-governance", "AI-landscape", "Tech-tidbits"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-03-05-expectations"
+extractSlug: "2025-03-05-expectations"
 ---
 
 Generative AI (GenAI) has become a frequent topic of strategic discussions in boardrooms across industries. While the technology offers remarkable capabilities, there's often a significant gap between executive expectations and practical realities. This disconnect can lead to misallocated resources, implementation challenges, and, ultimately, diminished confidence in AI initiatives.

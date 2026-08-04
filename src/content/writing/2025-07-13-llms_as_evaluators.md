@@ -4,7 +4,7 @@ date: 2025-07-13
 excerpt: "As LLMs increasingly evaluate other LLMs, grade student work, and assess human performance, we create a circular system where artificial intelligence defines its own success criteria. The implications extend far beyond technical metrics to fundamental questions about authority, standards, and who gets to decide what constitutes quality."
 tags: ["llm", "bias", "evaluation", "objectivity", "generativeAI", "fair-AI,", "food", "for", "thought"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-07-13-llms_as_evaluators"
+extractSlug: "2025-07-13-llms_as_evaluators"
 ---
 
 A professor uses Claude to grade student essays. A company deploys GPT-4 to evaluate job applications. Researchers rely on LLMs to assess the quality of other LLM outputs. **We are quietly constructing a world where artificial intelligence doesn't just produce content—it defines what counts as good content.**

@@ -4,7 +4,7 @@ date: 2025-07-10
 excerpt: "As generative AI systems become integral to our digital lives, UNESCO's Red Teaming playbook reveals the urgent need for systematic bias testing. But should we test for biases or accept them as reflections of human complexity? The answer reveals fundamental questions about fairness, representation, and the future of AI for social good."
 tags: ["llm", "bias", "representation", "objectivity", "generativeAI", "fair-AI,", "food", "for", "thought"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-07-10-red_teaming"
+extractSlug: "2025-07-10-red_teaming"
 ---
 
 When we ask AI systems to help educate our children, recommend content, or assist with hiring decisions, we expect fair and unbiased responses. When these systems analyze résumés, we want merit-based evaluations. When they create educational content, we demand equal representation. **But what if the very notion of “unbiased” AI is not just impossible but fundamentally misguided in how we approach it?**

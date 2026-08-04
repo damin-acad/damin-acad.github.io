@@ -4,7 +4,7 @@ date: 2025-04-16
 excerpt: "Despite advances in generative AI capabilities, enterprises continue to struggle with generic AI systems that lack specialized expertise in critical domains. This research-backed framework explores how purpose-built, persona-driven AI agents can replace monolithic generalist systems."
 tags: ["ai", "architecture", "personas", "multi-agent", "systems", "enterprise-ai"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-04-15-specialist-vs-generalist"
+extractSlug: "2025-04-15-specialist-vs-generalist"
 ---
 
 Despite advances in generative AI capabilities, enterprises continue to struggle with generic AI systems that lack specialized expertise in critical domains. Recent research indicates this is not merely an implementation challenge but a fundamental architectural limitation. The solution lies in a strategic shift: replacing monolithic generalist AI systems with purpose-built, persona-driven AI agents that can be summoned on demand for their specialized expertise.

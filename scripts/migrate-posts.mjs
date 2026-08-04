@@ -65,8 +65,9 @@ for (const file of files) {
     excerpt ? `excerpt: "${excerpt}"` : 'excerpt: ""',
     tags.length ? `tags: [${tags.map((t) => JSON.stringify(t)).join(', ')}]` : 'tags: []',
     fm.featured ? 'featured: true' : 'featured: false',
-    // where the short version lives, so the two sites point at each other
-    `extract: "https://danialamin.com/writing/essays/${slug}"`,
+    // just the slug; the page composes the URL from the current environment's
+    // origin, so local runs link to the local portfolio
+    `extractSlug: "${slug}"`,
     '---',
     '',
     body,

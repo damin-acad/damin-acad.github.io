@@ -4,7 +4,7 @@ date: 2025-07-26
 excerpt: "With AI companies collectively failing basic safety standards while racing toward AGI, we need radical reforms that go far beyond voluntary pledges and self-assessment. Here's what genuine AI safety accountability would require—and why the industry won't adopt it voluntarily."
 tags: ["generativeAI", "fair-AI", "ethics", "morality", "food-for-thought"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-07-26-ai-safety-pt2"
+extractSlug: "2025-07-26-ai-safety-pt2"
 ---
 
 The diagnosis is clear from Part 1: the AI industry is systemically failing at safety while racing toward potentially catastrophic capabilities. But identifying the disease is only half the battle. The harder question is what genuine AI safety accountability would actually look like—and why the industry's current trajectory makes voluntary reform impossible.

@@ -4,7 +4,7 @@ date: 2025-07-22
 excerpt: "Imagine a digital version of yourself that contains every memory you've ever formed, every decision you've ever made, and every conversation you've ever had—powered by an LLM that can think, reason, and respond as you would. This isn't science fiction; it's the logical next step in AI development."
 tags: ["digital-twin", "human-memory", "generativeAI", "food-for-thought"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-07-22-digital-twin"
+extractSlug: "2025-07-22-digital-twin"
 ---
 
 Picture this: It's 2035, and your grandmother has just passed away. But before you say goodbye, you open an app and there she is—not a static recording or a chatbot with pre-programmed responses, but a dynamic digital being that remembers every story she told you, every piece of advice she gave, and every inside joke you shared. She can tell you about her childhood in 1940s Cairo, offer comfort in her exact voice and manner, and even learn new things about the family after she's gone.

@@ -4,7 +4,7 @@ date: 2025-12-30
 excerpt: "A researcher's journey through conferences, publications, rejections, and the reality of academic progress in 2025."
 tags: ["academia", "research", "reflection", "career"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-12-30-year-of-firsts"
+extractSlug: "2025-12-30-year-of-firsts"
 ---
 
 My professor called it "the year of firsts." I hadn't thought about it that way until he said it—just kept moving from one thing to the next, chasing deadlines and opportunities as they came.

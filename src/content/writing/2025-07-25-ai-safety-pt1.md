@@ -4,7 +4,7 @@ date: 2025-07-25
 excerpt: "The Future of Life Institute's latest AI Safety Index reveals a devastating truth—even the \"best\" AI companies barely scrape a C+ grade while racing toward AGI. With no company achieving adequate safety standards and critical gaps widening between capability and control, we're witnessing the collapse of AI safety theater in real time."
 tags: ["generativeAI", "fair-AI", "ethics", "morality", "food-for-thought"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-07-25-ai-safety-pt1"
+extractSlug: "2025-07-25-ai-safety-pt1"
 ---
 
 The emperor has no clothes, and the AI safety empire is crumbling in broad daylight.

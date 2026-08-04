@@ -1,6 +1,7 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
+import { portfolioExtract, PORTFOLIO_IS_LOCAL } from '../../lib/origins';
 
 export async function getStaticPaths() {
   const posts = await getCollection('writing');
@@ -22,10 +23,13 @@ const fmt = (d: Date) =>
     <p class="byline">
       {fmt(post.data.date)} · {words.toLocaleString('en-GB')} words
       {
-        post.data.extract && (
+        post.data.extractSlug && (
           <>
             {' · '}
-            <a href={post.data.extract} rel="noopener" target="_blank">short version</a>
+            <a href={portfolioExtract(post.data.extractSlug)} rel="noopener" target="_blank">
+              short version
+            </a>
+            {PORTFOLIO_IS_LOCAL && <span> (local)</span>}
           </>
         )
       }

@@ -4,7 +4,7 @@ date: 2025-10-12
 excerpt: "Groundbreaking research from Anthropic, UK AISI, and the Alan Turing Institute reveals that as few as 250 malicious documents can backdoor language models of any size. This finding fundamentally challenges assumptions about AI security and suggests poisoning attacks may be far more practical than the industry previously believed."
 tags: ["generativeAI", "AI-security", "data-poisoning", "backdoors", "training-vulnerabilities"]
 featured: true
-extract: "https://danialamin.com/writing/essays/2025-10-12-poison-llm"
+extractSlug: "2025-10-12-poison-llm"
 ---
 
 A collaborative study between Anthropic's Alignment Science team, the UK AI Security Institute, and the Alan Turing Institute has uncovered a critical vulnerability in large language model training: **attackers need only inject 250 malicious documents to successfully backdoor models regardless of their size or training data volume.** This finding fundamentally challenges the prevailing assumption that poisoning attacks require controlling a percentage of training data.

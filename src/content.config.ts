@@ -9,8 +9,8 @@ const writing = defineCollection({
     excerpt: z.string().default(''),
     tags: z.array(z.string()).default([]),
     featured: z.boolean().default(false),
-    /** the ~300-word version on the portfolio */
-    extract: z.string().url().optional(),
+    /** slug of the ~300-word version on the portfolio */
+    extractSlug: z.string().optional(),
   }),
 });
 

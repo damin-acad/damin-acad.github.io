@@ -1,12 +1,19 @@
 ---
 import pubs from '../data/publications.json';
 import site from '../data/site.json';
+import Plate from './Plate.astro';
 
 interface Props {
   selectedOnly?: boolean;
   showFilters?: boolean;
+  /**
+   * The per-paper mark. On for the full list, off for the selected-publications
+   * teaser on the homepage — same rule the portfolio follows: the marks live on the
+   * pages that are about the works, and a teaser stays bare.
+   */
+  plates?: boolean;
 }
-const { selectedOnly = false, showFilters = false } = Astro.props;
+const { selectedOnly = false, showFilters = false, plates = true } = Astro.props;
 
 const items = selectedOnly ? pubs.filter((p) => p.selected) : pubs;
 const years = [...new Set(items.map((p) => p.year))].sort((a, b) => (b ?? 0) - (a ?? 0));
@@ -103,7 +110,12 @@ let n = 0;
                   data-doi={p.doi ? 'true' : 'false'}
                   data-search={search}
                 >
-                  <span class="pub-n">{String(n).padStart(2, '0')}</span>
+                  <span class="pub-n">
+                    {String(n).padStart(2, '0')}
+                    {/* seeded by title, not doi: papers gain a doi when they land and a
+                        paper should not change its mark on the day it is published */}
+                    {plates && <Plate seed={p.title} size={32} class="pub-plate" />}
+                  </span>
                   <h3 class="pub-title">
                     {p.doi ? (
                       <a href={`https://doi.org/${p.doi}`} rel="noopener" target="_blank">

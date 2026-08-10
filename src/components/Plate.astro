@@ -1,0 +1,98 @@
+---
+/**
+ * The plate for one piece — see src/lib/plate.ts for how it is composed.
+ *
+ * Printed twice: the mark ink underneath, offset by a unit or two and multiplied
+ * into the paper, then the ink pass on top. Both read from the stock's own tokens
+ * (--ink, --mark, --blend), so the plate follows the paper into black without a
+ * second palette.
+ *
+ * The same component runs on the portfolio, where the tokens are named differently
+ * (--ink-k, --ink-a, --plate-blend). The geometry is shared by copy; only these
+ * four declarations differ between the two repos.
+ *
+ * Decorative, so it is aria-hidden — the title beside it is the content.
+ */
+import { plateFor, pathFor, type Variant } from '../lib/plate';
+
+interface Props {
+  /** anything stable per piece; the collection id or the title */
+  seed: string;
+  /** rendered size in px */
+  size?: number;
+  /** stamp for list rails, poster for the big marks */
+  variant?: Variant;
+  class?: string;
+}
+
+const { seed, size = 72, variant = 'stamp', class: cls } = Astro.props;
+const plate = plateFor(seed, variant);
+const [ox, oy] = plate.offset;
+---
+
+<svg
+  class:list={['plate', `plate-${variant}`, cls]}
+  viewBox="0 0 100 100"
+  width={size}
+  height={size}
+  aria-hidden="true"
+  focusable="false"
+>
+  <g transform={`rotate(${plate.rotate.toFixed(2)} 50 50)`}>
+    {/* the mark ink, out of register */}
+    <g class="plate-mark" transform={`translate(${ox.toFixed(2)} ${oy.toFixed(2)})`}>
+      {plate.shapes.map((shape) => {
+        const g = pathFor(shape);
+        const turn = `rotate(${shape.turn * 90} ${shape.x + shape.s / 2} ${shape.y + shape.s / 2})`;
+        return (
+          <g transform={turn}>
+            {g.d && <path d={g.d} />}
+            {g.circle && (
+              <circle cx={g.circle.cx} cy={g.circle.cy} r={g.circle.r} fill="none" stroke-width={g.circle.w} />
+            )}
+            {g.rects?.map(([x, y, w, h]) => <rect x={x} y={y} width={w} height={h} />)}
+          </g>
+        );
+      })}
+    </g>
+
+    {/* the ink pass */}
+    <g class="plate-ink">
+      {plate.shapes.map((shape) => {
+        const g = pathFor(shape);
+        const turn = `rotate(${shape.turn * 90} ${shape.x + shape.s / 2} ${shape.y + shape.s / 2})`;
+        return (
+          <g transform={turn}>
+            {g.d && <path d={g.d} />}
+            {g.circle && (
+              <circle cx={g.circle.cx} cy={g.circle.cy} r={g.circle.r} fill="none" stroke-width={g.circle.w} />
+            )}
+            {g.rects?.map(([x, y, w, h]) => <rect x={x} y={y} width={w} height={h} />)}
+          </g>
+        );
+      })}
+    </g>
+  </g>
+</svg>
+
+<style>
+  .plate {
+    display: block;
+    flex: none;
+  }
+
+  .plate-ink {
+    fill: var(--ink);
+    stroke: var(--ink);
+  }
+
+  .plate-mark {
+    fill: var(--mark);
+    stroke: var(--mark);
+    mix-blend-mode: var(--blend);
+  }
+
+  .plate-poster {
+    transform: rotate(-0.8deg);
+  }
+</style>

@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { getCollection } from 'astro:content';
 import site from '../../data/site.json';
+import Plate from '../../components/Plate.astro';
 
 const posts = (await getCollection('writing')).sort(
   (a, b) => b.data.date.valueOf() - a.data.date.valueOf(),
@@ -28,7 +29,10 @@ const fmt = (d: Date) =>
       {
         posts.map((p, i) => (
           <li class="pub">
-            <span class="pub-n">{String(i + 1).padStart(2, '0')}</span>
+            <span class="pub-n">
+              {String(i + 1).padStart(2, '0')}
+              <Plate seed={p.id} size={32} class="pub-plate" />
+            </span>
             <h3 class="pub-title"><a href={`/writing/${p.id}`}>{p.data.title}</a></h3>
             {/* the excerpt is 40+ words x 27 rows; the title and length are
                 enough for an index, and the piece itself is one click away */}

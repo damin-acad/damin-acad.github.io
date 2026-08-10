@@ -2,6 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import { getCollection, render } from 'astro:content';
 import { portfolioExtract, PORTFOLIO_IS_LOCAL } from '../../lib/origins';
+import Plate from '../../components/Plate.astro';
 
 export async function getStaticPaths() {
   const posts = await getCollection('writing');
@@ -26,7 +27,10 @@ const fmt = (d: Date) =>
 <Base title={post.data.title} description={post.data.excerpt}>
   <article class="essay">
     <header class="essay-head">
-      <p class="section-tab">Essay</p>
+      <div class="essay-mark">
+        <Plate seed={post.id} size={64} variant="poster" />
+        <p class="section-tab">Essay</p>
+      </div>
       <h1 class="page-title">{post.data.title}</h1>
       {post.data.excerpt && <p class="page-lede">{post.data.excerpt}</p>}
     </header>

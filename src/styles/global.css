@@ -1219,3 +1219,39 @@ details[open] > .cv-summary::after {
 .prose-wide :is(h2, h3) {
   scroll-margin-top: 5.5rem;
 }
+
+/* ---------- plates ----------
+
+   The generated mark per piece (src/lib/plate.ts, shared by copy with the
+   portfolio). A stamp under the row number in the indexes; a poster beside the
+   section tab at the head of an essay. */
+
+/**
+ * The rail is a stack now: index, mark, and — on a selected paper — the star, which
+ * is a ::after and therefore always lands last. Evenly spaced by one gap rather than
+ * by margins, so the star does not read as orphaned below the plate.
+ */
+.pub-n {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.3rem;
+}
+
+.pub-plate {
+  opacity: 0.85;
+}
+
+.pub:hover .pub-plate {
+  opacity: 1;
+}
+
+.essay-mark {
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
+}
+
+.essay-mark .section-tab {
+  margin-bottom: 0;
+}

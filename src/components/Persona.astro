@@ -41,13 +41,19 @@ const map = Object.fromEntries(
     .filter((s) => s.type === 'map')
     .flatMap((s) => (s.contents as { name: string; value: any }[]).map((r) => [r.name, r.value])),
 );
-const interests = ((cv as Section[]).find((s) => s.title === 'Research Interests')?.contents ??
-  []) as { title: string; items: string[] }[];
 
 
+/**
+ * Languages, without the CEFR grades.
+ *
+ * cv.yml records them as "English (C1), French (A1), Urdu (C2), Punjabi (C1)".
+ * Printing "English (C1)" on a page listing twenty-one English-language
+ * publications reads as a self-assessment that the rest of the page disproves.
+ * The grades stay in the CV, where a grade is the point.
+ */
 const langs = String(map['Languages'] ?? '')
   .split(',')
-  .map((s) => s.trim())
+  .map((s) => s.replace(/\s*\([^)]*\)\s*$/, '').trim())
   .filter(Boolean);
 
 /**
@@ -57,7 +63,7 @@ const langs = String(map['Languages'] ?? '')
 const bubbles = [
   {
     head: 'Position',
-    body: `${site.role} · ${site.group}, ${site.affiliation}`,
+    body: `${site.post.role} · ${site.post.org}, ${site.post.parent}`,
     x: 2,
     y: 4,
     side: 'bl',
@@ -71,7 +77,21 @@ const bubbles = [
     y: 52,
     side: 'bl',
   },
-  { head: 'Works on', body: interests.map((g) => g.title).join(' · '), x: 0, y: 70, side: 'tr' },
+  {
+    head: 'Works on',
+    /**
+     * His actual subjects, from site.json.
+     *
+     * This used to print the section headings of cv.yml's Research Interests —
+     * "AI Ethics and Bias Mitigation · Human-Computer Interaction · Machine
+     * Learning Applications" — which is a taxonomy anyone could claim, and the
+     * one generic line on a page whose whole argument is that it is specific.
+     */
+    body: site.interests.slice(0, 4).join(' · '),
+    x: 0,
+    y: 70,
+    side: 'tr',
+  },
   {
     head: 'In his own words',
     body: 'A persona can be entirely plausible and still represent no one.',
@@ -91,19 +111,21 @@ const bubbles = [
 
     <div class="prose ph-prose">
       <p>
-        I am a {site.role.toLowerCase()} at the
-        <a href={site.groupUrl} rel="noopener" target="_blank">{site.affiliation}</a>, supervised by
-        <a href={site.supervisorUrl} rel="noopener" target="_blank">{site.supervisor}</a>. My work
-        is about whether generative AI can represent users fairly — how these systems build
-        personas, where they flatten the people they are meant to describe, and what that costs
-        communities already thin on the ground in the training data.
+        I am {site.post.role} at the {site.post.org}, {site.post.parent}, where I build the kind of
+        generative AI system I spend my papers criticising. That order matters — it is a useful
+        place to argue from.
       </p>
       <p>
-        Alongside the doctorate I am Senior Data Science Lead at
-        <a href="https://www.eniplenitude.fr/" rel="noopener" target="_blank">ENI Plenitude</a>;
-        before that I built GenAI tools for designers at Samsung Design Innovation Center. That
-        order matters — I keep shipping the kind of system I spend my papers criticising, which is
-        a useful place to argue from.
+        Alongside that I am a {site.doctorate.role.toLowerCase()} at the <a
+          href={site.doctorate.groupUrl}
+          rel="noopener"
+          target="_blank">{site.doctorate.affiliation}</a>, in {site.doctorate.group}, supervised by <a
+          href={site.doctorate.supervisorUrl}
+          rel="noopener"
+          target="_blank">{site.doctorate.supervisor}</a>. My work is about whether generative AI
+        can represent users fairly — how these systems build
+        personas, where they flatten the people they are meant to describe, and what that costs
+        communities already thin on the ground in the training data.
       </p>
     </div>
 
@@ -111,8 +133,9 @@ const bubbles = [
       <summary>Longer version</summary>
       <div class="prose">
         <p>
-          Before Samsung I built AI systems in engineering domains across Pakistan, the USA, MENA
-          and Ireland, and came to research through practice rather than the other way round.
+          Before the lab I built GenAI tools for designers at Samsung Design Innovation Center,
+          and before that AI systems in engineering domains across Pakistan, the USA, MENA and
+          Ireland. I came to research through practice rather than the other way round.
         </p>
         <p>
           I have run space education and popularisation in Pakistan for years through Space

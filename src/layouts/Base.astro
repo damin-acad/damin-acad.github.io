@@ -6,8 +6,8 @@ interface Props {
   title?: string;
   description?: string;
 }
-const { title, description = `${site.role} at the ${site.affiliation}, working on generative AI and user representation.` } = Astro.props;
-const pageTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.role}, ${site.affiliation}`;
+const { title, description = `${site.post.role} at the ${site.post.org}, ${site.post.parent}, and ${site.doctorate.role.toLowerCase()} at the ${site.doctorate.affiliation} — working on generative AI and user representation.` } = Astro.props;
+const pageTitle = title ? `${title} · ${site.name}` : `${site.name} — ${site.post.role}, ${site.post.parent}`;
 const path = Astro.url.pathname.replace(/\/+$/, '') || '/';
 
 const nav = [
@@ -57,7 +57,8 @@ const nav = [
       <header class="masthead">
         <a class="masthead-name" href="/" data-name={site.name}>
           {site.name}
-          <span>{site.role} · {site.affiliation}</span>
+          {/* both posts, in the order he holds them — the lab leads */}
+          <span>{site.post.role}, {site.post.parent} · {site.doctorate.role}, {site.doctorate.affiliation}</span>
         </a>
         <nav class="nav" aria-label="Primary">
           {nav.map((i) => (

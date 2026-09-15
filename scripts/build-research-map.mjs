@@ -219,7 +219,7 @@ function relax(pts, sizes, rounds = 320) {
 
 /* ---------- run ---------- */
 
-const pubs = JSON.parse(await readFile('src/data/publications.json', 'utf8'));
+const pubs = JSON.parse(await readFile('src/data/publications.json', 'utf8')).entries;
 const docs = pubs.map((p) => ({ key: p.key, title: p.title, year: p.year, text: p.title }));
 
 const MIN_DF = 2;

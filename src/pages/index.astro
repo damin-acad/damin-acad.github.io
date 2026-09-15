@@ -4,9 +4,9 @@ import Persona from '../components/Persona.astro';
 import PublicationList from '../components/PublicationList.astro';
 import PubStats from '../components/PubStats.astro';
 import site from '../data/site.json';
-import pubs from '../data/publications.json';
+import { publications as pubs, selected as selectedPubs, tally } from '../lib/publications';
 
-const selected = pubs.filter((p) => p.selected);
+const selected = selectedPubs;
 ---
 
 <Base>
@@ -21,7 +21,7 @@ const selected = pubs.filter((p) => p.selected);
   <section class="section" data-set id="publications">
     <div class="section-head">
       <h2 class="section-title">Publications</h2>
-      <span class="section-count"><a href="/publications">all {pubs.length} · projector · bibtex</a></span>
+      <span class="section-count"><a href="/publications">{tally.landed} published · {tally.inReview} in review · bibtex</a></span>
     </div>
         <PubStats />
     <p class="typed" style="margin-bottom:0.75rem">Selected — starred in the full list</p>

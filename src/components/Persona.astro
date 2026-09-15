@@ -31,7 +31,7 @@
  * the whole point of putting this format on this site.
  */
 import cv from '../data/cv.json';
-import pubs from '../data/publications.json';
+import { publications as pubs, tally, coauthors, span } from '../lib/publications';
 import site from '../data/site.json';
 import figure from '../../public/figure.svg?raw';
 
@@ -44,8 +44,6 @@ const map = Object.fromEntries(
 const interests = ((cv as Section[]).find((s) => s.title === 'Research Interests')?.contents ??
   []) as { title: string; items: string[] }[];
 
-const coauthors = new Set(pubs.flatMap((p) => p.authors).filter((a) => a !== site.name));
-const years = pubs.map((p) => p.year).filter(Boolean) as number[];
 
 const langs = String(map['Languages'] ?? '')
   .split(',')
@@ -68,7 +66,7 @@ const bubbles = [
   { head: 'Languages', body: langs.join(' · '), x: 0, y: 34, side: 'br' },
   {
     head: 'Record',
-    body: `${pubs.length} publications, ${Math.min(...years)}–${Math.max(...years)} · ${coauthors.size} co-authors`,
+    body: `${tally.landed} published, ${tally.inReview} in review, ${span} · ${coauthors.size} co-authors`,
     x: 55,
     y: 52,
     side: 'bl',

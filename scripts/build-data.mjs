@@ -109,7 +109,30 @@ function parseBib(src) {
       }
     }
 
-    const venue = fields.booktitle ?? fields.journal ?? fields.publisher ?? fields.school ?? '';
+    const note = cleanTex(fields.note ?? '');
+
+    /**
+     * Where a manuscript has been *submitted* is not part of the public record.
+     *
+     * An entry that reads "In review at IEEE Access" for a year and then appears
+     * somewhere else has published its own rejection. papers.bib keeps the
+     * target — it is the working record, and he needs to know where things sit —
+     * but neither the page nor the BibTeX download carries it until the paper is
+     * accepted. Accepted and published work keeps its venue: that part is a fact.
+     */
+    const underReview = /^in review/i.test(note);
+
+    /**
+     * `note` packs two different things into one string: where the paper stands
+     * ("Published", "Accepted", "In review") and what form it took ("Workshop",
+     * "Poster", "Extended Abstract"). Rendered whole, a plain "Published" paper
+     * got no label at all while a poster got "Published, Poster" — so IUI, DSS
+     * and PEP looked like they were missing something the others had. Split, the
+     * page can say the form and stay quiet about the ordinary case.
+     */
+    const [state, form = ''] = note.split(',').map((x) => x.trim());
+    const rawVenue = fields.booktitle ?? fields.journal ?? fields.publisher ?? fields.school ?? '';
+    const venue = underReview ? '' : rawVenue;
 
     /**
      * Every link al-folio surfaced, in the order it showed them. The first pass
@@ -146,6 +169,17 @@ function parseBib(src) {
     }
 
     const scholarId = (fields.google_scholar_id ?? '').trim();
+    const doi = cleanTex(fields.doi ?? '');
+
+    /**
+     * A "HTML" button beside a "doi" button that lands on the same article is
+     * two buttons doing one job — dl.acm.org/doi/10.1145/X and
+     * doi.org/10.1145/X differ only in which redirect you take. Anything whose
+     * URL contains the DOI is that link, so the DOI button stands for it.
+     * A publisher page that does not carry the DOI in its URL is a genuinely
+     * different landing page and survives.
+     */
+    const shown = doi ? links.filter((l) => !l.href.includes(doi)) : links;
 
     out.push({
       key: m[2],
@@ -153,17 +187,33 @@ function parseBib(src) {
       title: cleanTex(fields.title ?? ''),
       authors: parseAuthors(fields.author),
       venue: cleanTex(venue),
-      abbr: cleanTex(fields.abbr ?? ''),
+      // the rows are grouped under a year heading already, so an abbr that
+      // carries its own year is both redundant and — CHI'2026 beside CHI'25
+      // beside a bare IJHCI — inconsistent about how
+      abbr: underReview ? '' : cleanTex(fields.abbr ?? '').replace(/[\u2019'"]\s*\d{2,4}$/, ''),
       year: Number((fields.year ?? '').replace(/\D/g, '')) || null,
-      status: cleanTex(fields.note ?? ''),
-      doi: cleanTex(fields.doi ?? ''),
+      status: note,
+      state,
+      form,
+      underReview,
+      doi,
       citations: Number((fields.citations ?? '').replace(/\D/g, '')) || 0,
-      selected: /true/i.test(fields.selected ?? ''),
+      /**
+       * Reading order for the front of the record, 1 first; 0 means not
+       * selected. al-folio used a boolean, which left the order to fall out of
+       * the year sort — so whichever paper happened to sort first led the
+       * homepage, and for a while that was an under-review submission.
+       */
+      selected: /^\d+$/.test((fields.selected ?? '').trim())
+        ? Number((fields.selected ?? '').trim())
+        : 0,
       scholarId,
-      links,
+      links: shown,
       // kept so the site can offer a real .bib download per entry
       raw: `@${type}{${m[2]},\n${Object.entries(fields)
         .filter(([k, v]) => v && !k.startsWith('url_') && !['img', 'bibtex_show', 'google_scholar_id'].includes(k))
+        // same rule as the page: a manuscript under review does not name its target
+        .filter(([k]) => !(underReview && ['booktitle', 'journal', 'publisher', 'school', 'abbr'].includes(k)))
         .map(([k, v]) => `  ${k} = {${v.replace(/\s+/g, ' ').trim()}}`)
         .join(',\n')}\n}`,
     });
@@ -183,7 +233,19 @@ if (missing.length) {
   console.warn(`  warning: ${missing.length} entr(y|ies) missing title or year:`, missing.map((p) => p.key));
 }
 
-await writeFile('src/data/publications.json', JSON.stringify(pubs, null, 2) + '\n');
+/**
+ * When this was built.
+ *
+ * The citation counts are copied by hand into papers.bib, so they are a snapshot
+ * and will drift. An undated number reads as current; a dated one is honest and
+ * costs a line. The page prints it beside the total.
+ */
+const generated = new Date().toISOString().slice(0, 10);
+
+await writeFile(
+  'src/data/publications.json',
+  JSON.stringify({ generated, entries: pubs }, null, 2) + '\n',
+);
 
 const byYear = pubs.reduce((acc, p) => ((acc[p.year] = (acc[p.year] ?? 0) + 1), acc), {});
 console.log(`publications.json: ${pubs.length} entries`);

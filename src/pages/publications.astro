@@ -2,22 +2,21 @@
 import Base from '../layouts/Base.astro';
 import PublicationList from '../components/PublicationList.astro';
 import Projector from '../components/Projector.astro';
-import pubs from '../data/publications.json';
 import site from '../data/site.json';
+import { publications as pubs, tally, coauthors, generated } from '../lib/publications';
 
 const years = [...new Set(pubs.map((p) => p.year))].filter(Boolean).sort();
 const withDoi = pubs.filter((p) => p.doi).length;
-const coauthors = new Set(pubs.flatMap((p) => p.authors).filter((a) => a !== site.name));
 ---
 
-<Base title="publications" description={`${pubs.length} publications on generative AI, personas and user representation.`}>
+<Base title="publications" description={`${tally.landed} published and ${tally.inReview} under-review works on generative AI, personas and user representation.`}>
   <section class="section" data-set>
     <p class="section-tab">Fig. 1 — record</p>
     <h1 class="page-title">Publications</h1>
     <p class="page-lede">
-      {pubs.length} entries, {years[0]}–{years[years.length - 1]}, generated from
-      <code>papers.bib</code> — {withDoi} with a DOI, {coauthors.size} co-authors. Every entry
-      carries its BibTeX.
+      {tally.landed} published or accepted and {tally.inReview} under review, {years[0]}–{years[years.length - 1]},
+      generated from <code>papers.bib</code> — {withDoi} with a DOI, {coauthors.size} co-authors.
+      Every entry carries its BibTeX. Citation counts as of {generated}.
     </p>
   </section>
 

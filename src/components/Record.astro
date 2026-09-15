@@ -1,0 +1,156 @@
+---
+/**
+ * Education, service and awards — the three things an academic reader looks for
+ * and the new site did not carry.
+ *
+ * All of it is already in _legacy/_data/cv.yml, so this reads the same file the
+ * CV page read rather than restating it somewhere it can drift.
+ */
+import cv from '../data/cv.json';
+
+type Section = { title: string; type?: string; contents?: any };
+const sections = cv as Section[];
+const find = (title: string) => sections.find((s) => s.title === title)?.contents ?? [];
+
+type Degree = { title: string; institution: string; year: string; description?: string[] };
+type Years = { year: string | number; items: string[] };
+
+/**
+ * Degrees, not certificates.
+ *
+ * cv.yml files four distance-learning "Micro Masters" and a Design Thinking
+ * certificate under Education alongside the doctorate, the MBA and the
+ * aerospace degree. For this audience the certificates dilute rather than add,
+ * and the data already separates them: every one of them is marked Distance
+ * Learning and every degree is marked On-Campus.
+ */
+const education = (find('Education') as Degree[]).filter((d) =>
+  (d.description ?? []).some((line) => /on-campus/i.test(line)),
+);
+
+/**
+ * Awards worth the space.
+ *
+ * The same rule as the education list, applied by hand because the data does
+ * not mark it: the MOOC platforms hand out a scholarship or a badge for
+ * finishing a course, and listing those beside a salutatorianship makes the
+ * whole list read as padding. Edit this one line to bring them back.
+ */
+const MOOC = /udacity|futurelearn|future learn|world ?quant|mckinsey|microsoft/i;
+const awards = (find('Honors and Awards') as Years[])
+  .map((y) => ({ ...y, items: y.items.filter((i) => !MOOC.test(i)) }))
+  .filter((y) => y.items.length);
+
+const service = find('Participation & Volunteering') as Years[];
+
+const blocks = [
+  { title: 'Service', rows: service },
+  { title: 'Awards', rows: awards },
+];
+---
+
+<div class="rec">
+  <div class="rec-block">
+    <h3 class="rec-title">Education</h3>
+    <ul class="rec-list">
+      {
+        education.map((d) => (
+          <li class="rec-row">
+            <span class="rec-year">{d.year}</span>
+            <span class="rec-body">
+              <strong>{d.title}</strong>
+              <span class="rec-where">{d.institution}</span>
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </div>
+
+  {
+    blocks.map((b) => (
+      <div class="rec-block">
+        <h3 class="rec-title">{b.title}</h3>
+        <ul class="rec-list">
+          {b.rows.map((y) => (
+            <li class="rec-row">
+              <span class="rec-year">{y.year}</span>
+              <span class="rec-body">
+                {y.items.map((i) => (
+                  <span class="rec-item">{i}</span>
+                ))}
+              </span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))
+  }
+</div>
+
+<style>
+  .rec {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(17rem, 1fr));
+    gap: 1.5rem 2rem;
+  }
+
+  .rec-title {
+    font-family: var(--type);
+    font-size: 0.66rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    margin: 0 0 0.5rem;
+    padding-bottom: 0.35rem;
+    border-bottom: 1.5px solid var(--ink);
+  }
+
+  .rec-list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+
+  .rec-row {
+    display: grid;
+    grid-template-columns: 5.5rem 1fr;
+    gap: 0 0.8rem;
+    padding: 0.45rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .rec-year {
+    font-family: var(--type);
+    font-size: 0.64rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    padding-top: 0.15rem;
+  }
+
+  .rec-body {
+    font-size: 0.87rem;
+    line-height: 1.45;
+  }
+
+  .rec-body strong {
+    display: block;
+  }
+
+  .rec-where,
+  .rec-item {
+    display: block;
+    color: var(--ink-faint);
+  }
+
+  .rec-item + .rec-item {
+    margin-top: 0.25rem;
+  }
+
+  @media (max-width: 34rem) {
+    .rec-row {
+      grid-template-columns: 1fr;
+      gap: 0.15rem;
+    }
+  }
+</style>

@@ -12,9 +12,11 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 // js-yaml v4 ships named ESM exports, not a default
 import { load as loadYaml } from 'js-yaml';
+import { readdir } from 'node:fs/promises';
 
 const BIB = '_legacy/_bibliography/papers.bib';
 const CV = '_legacy/_data/cv.yml';
+const NEWS = '_legacy/_news';
 
 /* ---------- bibtex ---------- */
 
@@ -252,6 +254,74 @@ console.log(`publications.json: ${pubs.length} entries`);
 console.log('  by year:', Object.entries(byYear).sort((a, b) => b[0] - a[0]).map(([y, n]) => `${y}:${n}`).join(' '));
 console.log('  by type:', Object.entries(pubs.reduce((a, p) => ((a[p.type] = (a[p.type] ?? 0) + 1), a), {})).map(([t, n]) => `${t}:${n}`).join(' '));
 console.log('  selected:', pubs.filter((p) => p.selected).length, '| with doi:', pubs.filter((p) => p.doi).length);
+
+// a paper marked selected but unranked would silently drop out of the front of
+// the record, which is the failure the ranks were introduced to stop
+const stillTrue = (await readFile(BIB, 'utf8')).match(/selected=\{true\}/gi) ?? [];
+if (stillTrue.length) {
+  console.warn(`  warning: ${stillTrue.length} entr(y|ies) still use selected={true}; give them a rank`);
+}
+
+const wrongly = pubs.filter((p) => p.selected && !/^(Published|Accepted)/i.test(p.status));
+if (wrongly.length) {
+  throw new Error(
+    `selected but not published or accepted: ${wrongly.map((p) => p.key).join(', ')}`,
+  );
+}
+
+/* ---------- news ---------- */
+
+/**
+ * The announcements the old site carried, which the new one dropped.
+ *
+ * Academic visitors read a news strip to see whether someone is active — an
+ * acceptance, a talk, a paper landing. Without one the most recent sign of life
+ * on any of the three sites was April. These are the al-folio `_news` files,
+ * read from the same `_legacy` tree as the bibliography and the CV, so there is
+ * one place to add the next one.
+ *
+ * Each file is Jekyll frontmatter (a `date`) followed by a paragraph of HTML.
+ */
+function parseNews(src) {
+  const m = /^---\n([\s\S]*?)\n---\n([\s\S]*)$/.exec(src);
+  if (!m) return null;
+  const date = /^date:\s*(.+)$/m.exec(m[1])?.[1]?.trim();
+  const text = m[2].trim().replace(/\s+/g, ' ');
+  return date && text ? { date, text } : null;
+}
+
+/**
+ * One link in the old news was wrong rather than missing.
+ *
+ * The April CHI item and the March book-chapter item both pointed at the same
+ * LinkedIn post — the book chapter's. A link that goes somewhere confidently
+ * wrong is worse than no link, so a duplicate href is stripped from the later
+ * item and the text stays. Put the real URL in _legacy/_news and it comes back.
+ */
+const news = [];
+for (const f of (await readdir(NEWS)).filter((n) => n.endsWith('.md')).sort()) {
+  const item = parseNews(await readFile(`${NEWS}/${f}`, 'utf8'));
+  if (item) news.push({ ...item, file: f });
+}
+news.sort((a, b) => (a.date < b.date ? 1 : -1));
+
+const seenHref = new Set();
+let stripped = 0;
+for (const item of news) {
+  const href = /href=['"]([^'"]+)['"]/.exec(item.text)?.[1];
+  if (!href) continue;
+  if (seenHref.has(href)) {
+    item.text = item.text.replace(/\s*<a[^>]*>.*?<\/a>\s*/g, ' ').trim();
+    item.duplicateLinkRemoved = true;
+    stripped++;
+  } else {
+    seenHref.add(href);
+  }
+}
+
+await writeFile('src/data/news.json', JSON.stringify(news, null, 2) + '\n');
+console.log(`news.json: ${news.length} items, newest ${news[0]?.date}`);
+if (stripped) console.log(`  ${stripped} duplicate link(s) stripped — see the note in build-data.mjs`);
 
 const cv = loadYaml(await readFile(CV, 'utf8'));
 await writeFile('src/data/cv.json', JSON.stringify(cv, null, 2) + '\n');

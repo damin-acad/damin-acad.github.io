@@ -1,0 +1,76 @@
+---
+/**
+ * The news strip the al-folio site had and this one dropped.
+ *
+ * It is the cheapest signal an academic page gives: whether the person is
+ * currently doing anything. Without it the most recent sign of life across all
+ * three of his sites was an April item, which reads as abandoned rather than
+ * busy.
+ *
+ * Items come from _legacy/_news via scripts/build-data.mjs, newest first, so
+ * adding one is a file in the same tree as the bibliography and the CV.
+ */
+import news from '../data/news.json';
+
+type Item = { date: string; text: string; duplicateLinkRemoved?: boolean };
+const items = news as Item[];
+
+const fmt = (d: string) =>
+  new Date(`${d}T00:00:00Z`).toLocaleDateString('en-GB', {
+    timeZone: 'UTC',
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+  });
+---
+
+<ul class="news">
+  {
+    items.map((n) => (
+      <li class="news-item">
+        <time class="news-date" datetime={n.date}>{fmt(n.date)}</time>
+        {/* the announcements are authored HTML in this repo, not user input */}
+        <p class="news-text" set:html={n.text} />
+      </li>
+    ))
+  }
+</ul>
+
+<style>
+  .news {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1.5px solid var(--ink);
+  }
+
+  .news-item {
+    display: grid;
+    grid-template-columns: 7.5rem 1fr;
+    gap: 0 1rem;
+    padding: 0.7rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .news-date {
+    font-family: var(--type);
+    font-size: 0.66rem;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--ink-faint);
+    padding-top: 0.2rem;
+  }
+
+  .news-text {
+    margin: 0;
+    font-size: 0.92rem;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 34rem) {
+    .news-item {
+      grid-template-columns: 1fr;
+      gap: 0.2rem;
+    }
+  }
+</style>

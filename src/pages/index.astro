@@ -3,6 +3,8 @@ import Base from '../layouts/Base.astro';
 import Persona from '../components/Persona.astro';
 import PublicationList from '../components/PublicationList.astro';
 import PubStats from '../components/PubStats.astro';
+import News from '../components/News.astro';
+import Record from '../components/Record.astro';
 import site from '../data/site.json';
 import { publications as pubs, selected as selectedPubs, tally } from '../lib/publications';
 
@@ -26,6 +28,21 @@ const selected = selectedPubs;
         <PubStats />
     <p class="typed" style="margin-bottom:0.75rem">Selected — starred in the full list</p>
     <PublicationList selectedOnly plates={false} />
+  </section>
+
+  {/* id="news" is the target of the /news redirect from the old al-folio path */}
+  <section class="section" data-set id="news">
+    <div class="section-head">
+      <h2 class="section-title">News</h2>
+    </div>
+    <News />
+  </section>
+
+  <section class="section" data-set id="record">
+    <div class="section-head">
+      <h2 class="section-title">Education, service and awards</h2>
+    </div>
+    <Record />
   </section>
 
 </Base>

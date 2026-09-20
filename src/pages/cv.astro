@@ -1,0 +1,134 @@
+---
+/**
+ * The CV page.
+ *
+ * The al-folio site had one at /cv/ for two years. The new site had only a PDF
+ * download, so every old bookmark — and the address printed in the LaTeX CV's
+ * own header — answered 404 the moment the domain moved across.
+ *
+ * It renders from _legacy/_data/cv.yml, the same file the old page read and the
+ * same file the homepage takes Education, Service and Awards from, so the two
+ * cannot disagree. The PDF stays the thing you hand to someone; this is the
+ * thing a search engine and a programme chair can read without downloading
+ * anything.
+ */
+import Base from '../layouts/Base.astro';
+import Record from '../components/Record.astro';
+import cv from '../data/cv.json';
+import site from '../data/site.json';
+
+type Section = { title: string; type?: string; contents?: any };
+const sections = cv as Section[];
+const find = (title: string) => sections.find((s) => s.title === title)?.contents ?? [];
+
+type Post = { title: string; institution: string; year: string; description?: string[] };
+const experience = find('Experience') as Post[];
+const summary = (find('Profile Summary') as string[]) ?? [];
+---
+
+<Base
+  title="cv"
+  description={`${site.post.role} at the ${site.post.org}, ${site.post.parent}, and ${site.doctorate.role.toLowerCase()} at the ${site.doctorate.affiliation}.`}
+>
+  <section class="section" data-set>
+    <p class="section-tab">Curriculum vitae</p>
+    <h1 class="page-title">CV</h1>
+    <p class="page-lede">
+      {site.post.role} at the {site.post.org}, {site.post.parent} · {site.doctorate.role} at the
+      {' '}{site.doctorate.affiliation}, in {site.doctorate.group}.
+      {' '}<a href={site.cv} download>Download the PDF ↓</a>
+    </p>
+    {
+      typeof summary[0] === 'string' && (
+        <p class="cv-summary">{summary[0]}</p>
+      )
+    }
+  </section>
+
+  <section class="section" data-set>
+    <div class="section-head"><h2 class="section-title">Experience</h2></div>
+    <ul class="cv-posts">
+      {
+        experience.map((p) => (
+          <li class="cv-post">
+            <p class="cv-post-head">
+              <strong>{p.title}</strong>
+              <span class="cv-post-where">{p.institution}</span>
+              <span class="cv-post-year">{p.year}</span>
+            </p>
+            {p.description?.length ? (
+              <ul class="cv-post-did">
+                {p.description.map((d) => <li>{d}</li>)}
+              </ul>
+            ) : null}
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+
+  <section class="section" data-set>
+    <div class="section-head"><h2 class="section-title">Education, service and awards</h2></div>
+    <Record />
+  </section>
+
+  <section class="section" data-set>
+    <div class="section-head"><h2 class="section-title">Publications</h2></div>
+    <p class="page-lede">
+      The record, with BibTeX on every entry, is on <a href="/publications">the publications page</a>.
+    </p>
+  </section>
+</Base>
+
+<style>
+  .cv-summary {
+    max-width: 62ch;
+    margin: 0.8rem 0 0;
+    line-height: 1.65;
+  }
+
+  .cv-posts {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    border-top: 1.5px solid var(--ink);
+  }
+
+  .cv-post {
+    padding: 0.85rem 0;
+    border-bottom: 1px solid var(--rule);
+  }
+
+  .cv-post-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: baseline;
+    gap: 0 0.7rem;
+    margin: 0;
+  }
+
+  .cv-post-where {
+    color: var(--ink-faint);
+  }
+
+  /* the date sits at the end of the line on wide screens and wraps under on narrow */
+  .cv-post-year {
+    margin-left: auto;
+    font-family: var(--type);
+    font-size: 0.66rem;
+    letter-spacing: 0.06em;
+    color: var(--ink-faint);
+    white-space: nowrap;
+  }
+
+  .cv-post-did {
+    margin: 0.4rem 0 0;
+    padding-left: 1.1rem;
+    color: var(--ink-soft);
+  }
+
+  .cv-post-did li {
+    margin-top: 0.2rem;
+    line-height: 1.5;
+  }
+</style>

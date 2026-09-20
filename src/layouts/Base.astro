@@ -80,6 +80,10 @@ const nav = [
           <a href={`mailto:${site.email}`}>{site.email}</a>
           <a href={site.socials.scholar} rel="noopener" target="_blank">Scholar</a>
           <a href={site.socials.orcid} rel="noopener" target="_blank">ORCID</a>
+          {/* both came from the al-folio _data/socials.yml, which the new site had
+              dropped — an academic reader looks for these two by name */}
+          <a href={site.socials.acm} rel="noopener" target="_blank">ACM DL</a>
+          <a href={site.socials.researchgate} rel="noopener" target="_blank">ResearchGate</a>
           <a href={site.socials.github} rel="noopener" target="_blank">GitHub</a>
           <a href={site.cv} download>CV (PDF)</a>
           <a href={site.socials.linkedin} rel="noopener" target="_blank">LinkedIn</a>

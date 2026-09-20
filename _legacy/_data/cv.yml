@@ -91,54 +91,62 @@
 - title: Experience
   type: time_table
   contents:
+    - title: Head of AI and Data
+      institution: Stealth GenAI Impact Lab, Illusian Ventures
+      year: 2026 - Present
+      description:
+        - Leading the generative AI evaluation framework to assess the impact of generative AI on society
+    - title: Senior Data Scientist
+      institution: ENI Plenitude
+      year: 2025 - 2026
+      description:
+        - Led the data science practice, developing solutions for marketing, energy consumption, prediction and forecasting
+        - Built orchestrated solutions for churn prediction driven by price sensitivity, and a simulator for the effect of price on churn, acquisition and expected margins
+        - Led a team of four early- to mid-level practitioners in applied data science practice, particularly in production
     - title: AI Research Scientist
       institution: Samsung Design Innovation Center
-      year: 2024 - Present
+      year: 2024 - 2025
       description:
-        - Developing the internal design companion for product and computational designers, combining the Generative and Predictive AI solutions to support data-driven design optimization
-        - Spearheading development of multi-stages unstructured DB to act as ground truth for the LLM to enhance the data-driven design optimization process at SDIC
+        - Developed the internal design companion for product and computational designers, combining generative and predictive AI to support data-driven design optimization
+        - Spearheaded a multi-stage unstructured database to act as ground truth for the LLM behind that process
     - title: AI & Data Science Lead
       institution: i13 Ventures Studio
       year: 2023 - 2024
       description:
-        - Developed an LLM-based venture innovator, improving product performance by grounding and contextualizing the model through multi-query, re-ranking RAG algorithms
-        - Created AI-based financial advisor, optimizing savings and investment plans by 25% through explainable AI advice using observer/observee agentic framework
-        - Designed short, medium, and long-term strategy for business incubation using generative AI, enhancing incubation cycle impact by 30% with a focus on explainability
-        - Mentored and nurtured startups, increasing implementation of AI solutions by 50%, focusing on ethical AI and bias mitigation in emerging markets of South Africa
-        - Envisioned AI and ML strategy, leading to a 15% improvement in organizational efficiency
+        - Developed an LLM-based venture innovator, grounding and contextualizing the model through multi-query, re-ranking RAG
+        - Created an AI financial advisor using an observer/observee agentic framework
+        - Mentored startups on AI adoption with a focus on ethical AI and bias mitigation in emerging markets
     - title: Head of Data Analytics | Lead Data Scientist
       institution: Abacus Global
       year: 2023
       description:
-        - Improved data processing speed by 40% and predictive analytics model accuracy by 25% through the implementation of a big data analytics framework
-        - Led a cross-functional team to drive data-centric strategies, addressing biases and ensuring fair data practices
-        - Developed solutions that improved customer satisfaction by 30% by addressing biases in data analysis
+        - Implemented a big data analytics framework, improving processing speed and model accuracy
+        - Led a cross-functional team on data-centric strategy, addressing bias and fair data practice
     - title: Lead Data Scientist
       institution: Automat Solutions Inc
       year: 2022 - 2023
       description:
-        - Built machine learning pipelines for battery performance prediction, achieving 95% accuracy by accurately estimating the algorithmic uncertainties
-        - Optimized battery material performance, increasing throughput by 40%, by using a combination of optimization algorithms
-        - Automated ML pipelines, classifying chemical compositions with 90% precision, focusing on explainability and fairness
+        - Built machine learning pipelines for battery performance prediction, estimating algorithmic uncertainty
+        - Optimized battery material performance and automated pipelines classifying chemical compositions
     - title: Lead ML Engineer
       institution: Omdena Inc
       year: 2021 - 2022
       description:
-        - Improved image classification model accuracy by 12%, leading a team of 5 engineers to tackle recall minimization by incorporating HIL feedback
-        - Developed an object recognition pipeline, enhancing detection accuracy by 15%, with a focus on reducing bias in image datasets
+        - Led a team of five engineers on image classification, minimizing recall loss with human-in-the-loop feedback
+        - Developed an object recognition pipeline with a focus on reducing bias in image datasets
     - title: Assistant Manager
       institution: Government of Pakistan
       year: 2017 - 2022
       description:
-        - Implemented a fuel consumption estimator, increasing accuracy by 72%, by developing surrogate model
-        - Developed a SMART Maintenance System, optimizing schedules for 52 aircraft components through anomaly detection algorithm in time series data
-        - Introduced AI-enabled early warning systems, reducing flight risks by 27% through risk assessment models
+        - Implemented a fuel consumption estimator using a surrogate model
+        - Developed a SMART maintenance system for 52 aircraft components through anomaly detection on time series
+        - Introduced AI-enabled early warning systems for flight risk assessment
     - title: Teaching Assistant
       institution: Institute of Space Technology
       year: 2016 - 2017
       description:
-        - Assisted in Aero-Vehicle Performance and Design courses by providing hands-on tutorials and problem-solving exercises
-        - Supported course material development, enhancing the learning experience for over 100 students by focusing on hands-on and applied content
+        - Assisted in Aero-Vehicle Performance and Design, running tutorials and problem-solving sessions
+        - Supported course material development for over 100 students
 
 - title: Skills and Competencies
   type: nested_list
@@ -323,15 +331,25 @@
 - title: Participation & Volunteering
   type: time_table
   contents:
-    - year: 2025
+    - year: 2024-26
       items:
-        - Program Committee Member, WebScience Conference
+        - "Peer Reviewer, journals: International Journal of Human-Computer Studies; Expert Systems with Applications; ACM Transactions on Computer-Human Interaction; Online Information Review; Computers in Human Behavior; International Journal of Human-Computer Interaction; Climate Services"
+    - year: 2025-26
+      items:
+        - "Peer Reviewer, conferences: WebSci'25 Papers; NordiCHI'26 Papers; CHI'26 Posters; CUI'26 Papers; CUI'26 Short Papers & Works-in-Progress; EICS'26 Late-Breaking Results; IUI'26 Posters; TEI'26 Work-in-Progress; Wirtschaftsinformatik'26; AIES'26"
+        - "Program Committee Member, WebSci'25, NordiCHI'26, AIES'26"
+    - year: 2026
+      items:
+        - Workshop Organizer, CHI Workshop
+        - "Special Recognition for reviewing, CHI'26 Posters and NordiCHI'26 Papers"
     - year: 2024
       items:
-        - "Participant, Hi Paris Summer School for AI & Data for Science, Business and Society"
-    - year: 2017-23
+        - "Participant, Hi! PARIS Summer School on AI & Data for Science, Business and Society"
+    - year: 2017-23, 26
       items:
         - Facilitator, Space Summer School at National Center of GIS & Space Applications
+    - year: 2015-23
+      items:
         - Resource Person, World Space Week at Institute of Space Technology
     - year: 2017-21
       items:

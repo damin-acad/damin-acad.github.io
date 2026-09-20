@@ -64,7 +64,25 @@ function parseAuthors(raw) {
     .filter(Boolean);
 }
 
-function parseBib(src) {
+function parseBib(input) {
+  /**
+   * Commented-out entries are commented out.
+   *
+   * The entry scanner below looks for `@type{key,` anywhere in the file, which
+   * meant a `%`-commented entry was still parsed and still published — the one
+   * convention anybody uses to retire a paper from a bibliography did nothing
+   * here. Nine entries were retired from the CV that way and would have gone on
+   * appearing on the site.
+   *
+   * Lines whose first non-space character is `%` are dropped before scanning.
+   * An escaped `\%` inside a field is mid-line and survives, which is the only
+   * place a literal percent appears in this file.
+   */
+  const src = input
+    .split('\n')
+    .filter((line) => !/^\s*%/.test(line))
+    .join('\n');
+
   const out = [];
   const re = /@(\w+)\s*\{\s*([^,\s]+)\s*,/g;
   let m;

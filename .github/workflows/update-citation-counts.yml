@@ -1,5 +1,13 @@
-# Refresh citations={} in papers.bib via Semantic Scholar Graph API.
+# Refresh citations={} in _legacy/_bibliography/papers.bib via Semantic Scholar,
+# then regenerate the JSON the site actually renders.
+#
 # Optional repo secret: SEMANTIC_SCHOLAR_API_KEY (higher rate limits).
+#
+# NOTE ON SCHEDULING: GitHub runs `schedule` triggers from the repository's
+# DEFAULT branch only. The default is still `main`, which holds the retired
+# al-folio site — so until the default is changed to the branch that serves the
+# live site, this fires only via workflow_dispatch. Run it by hand from the
+# Actions tab, or make this branch the default and the Monday cron starts working.
 
 name: Update citation counts
 
@@ -26,14 +34,34 @@ jobs:
         with:
           python-version: '3.12'
 
+      - name: Set up Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+
       - name: Refresh citation counts
         env:
           SEMANTIC_SCHOLAR_API_KEY: ${{ secrets.SEMANTIC_SCHOLAR_API_KEY }}
           S2_REQUEST_GAP: '1.5'
-        run: python3 _scripts/update_citation_counts.py
+        # the script resolves its own bib as parents[1]/_bibliography/papers.bib,
+        # which under _legacy/_scripts/ is already the right file — only the path
+        # to the script itself had to move
+        run: python3 _legacy/_scripts/update_citation_counts.py
+
+      - name: Regenerate the site data
+        # papers.bib is the source, but the pages render src/data/publications.json.
+        # Refreshing the bib alone would update nothing anyone can see, and would
+        # leave the committed JSON — including its `generated` date, which the page
+        # prints as "citations as of" — disagreeing with the bibliography.
+        run: |
+          npm ci
+          npm run data
 
       - name: Commit and push if changed
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
           commit_message: 'chore: refresh citation counts from Semantic Scholar'
-          file_pattern: _bibliography/papers.bib
+          file_pattern: |
+            _legacy/_bibliography/papers.bib
+            src/data/publications.json
